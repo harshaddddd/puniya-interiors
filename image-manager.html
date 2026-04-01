@@ -1721,7 +1721,7 @@
        CLOUDINARY UPLOAD WIDGET — IMAGES
     ════════════════════════════════════════════ */
     function openUploadWidget(pageId, slotKey, folder) {
-      if (CLOUDINARY_CLOUD_NAME === 'dgo738djk' || CLOUDINARY_UPLOAD_PRESET === 'puniya-interiors') {
+      if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME' || CLOUDINARY_UPLOAD_PRESET === 'YOUR_UPLOAD_PRESET') {
         const warn = document.getElementById(`cld-warn-${pageId}-${slotKey}`);
         if (warn) warn.style.display = 'block';
         showToast('Add your Cloudinary credentials first — see top of script.', false);
@@ -1773,7 +1773,7 @@
        CLOUDINARY UPLOAD WIDGET — VIDEOS
     ════════════════════════════════════════════ */
     function openVideoUploadWidget(slotKey) {
-      if (CLOUDINARY_CLOUD_NAME === 'dgo738djk' || CLOUDINARY_UPLOAD_PRESET === 'puniya-interiors') {
+      if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME' || CLOUDINARY_UPLOAD_PRESET === 'YOUR_UPLOAD_PRESET') {
         const warn = document.getElementById(`vcld-warn-${slotKey}`);
         if (warn) warn.style.display = 'block';
         showToast('Add your Cloudinary credentials first — see top of script.', false);
