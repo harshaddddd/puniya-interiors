@@ -723,7 +723,47 @@
   </a>
   <script src="js/script.js" defer></script>
   <script>
-    /* Jumpnav scroll arrow — hide when scrolled to end */
+    /* ═══════════════════════════════════════════════════════
+       IMAGE SHEET LOADER — custom-furniture.html
+       ⚠️  Paste your Google Sheet IMAGE CSV URL here.
+    ═══════════════════════════════════════════════════════ */
+    const IMAGE_SHEET_CSV_URL = 'YOUR_IMAGE_SHEET_CSV_URL_HERE';
+
+    async function loadImagesFromSheet() {
+      const url = IMAGE_SHEET_CSV_URL !== 'YOUR_IMAGE_SHEET_CSV_URL_HERE' ? IMAGE_SHEET_CSV_URL : null;
+      if (!url) return;
+      try {
+        const res = await fetch(url + '&t=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) return;
+        const rows = parseImageCSV(await res.text());
+        rows.forEach(row => {
+          if (!row.slot_key || !row.image_url) return;
+          document.querySelectorAll('img').forEach(img => {
+            if (img.src && img.src.includes(row.slot_key)) img.src = row.image_url;
+          });
+        });
+      } catch(e) { console.warn('PI: Could not load image sheet.', e); }
+    }
+
+    function parseImageCSV(txt) {
+      const lines = txt.trim().split('\n');
+      const hdrs = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
+      return lines.slice(1).map(line => {
+        const cols=[]; let cur='',q=false;
+        for(const ch of line){ if(ch==='"') q=!q; else if(ch===','&&!q){cols.push(cur.trim());cur='';} else cur+=ch; }
+        cols.push(cur.trim());
+        const o={};
+        hdrs.forEach((h,i)=>o[h]=(cols[i]||'').replace(/^"|"$/g,'').trim());
+        return o;
+      }).filter(r=>r.slot_key&&r.image_url&&r.image_url.startsWith('http'));
+    }
+
+    loadImagesFromSheet();
+  </script>
+
+
+  <script>
+    /* Jumpnav scroll arrow */
     (function(){
       var nav=document.querySelector('.section-jumpnav');
       var inner=nav&&nav.querySelector('.jumpnav-inner');
@@ -735,4 +775,3 @@
   </script>
 </body>
 </html>
-
