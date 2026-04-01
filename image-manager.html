@@ -15,6 +15,8 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
       rel="stylesheet" />
   </noscript>
+  <!-- Cloudinary Upload Widget -->
+  <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
   <style>
     :root {
       --bg: #F7F5F0;
@@ -598,6 +600,78 @@
     .btn-discard:hover {
       color: var(--cream);
       border-color: var(--muted);
+    }
+
+    .btn-upload {
+      width: 100%;
+      margin-top: 7px;
+      background: rgba(166, 124, 82, .08);
+      border: 1.5px dashed rgba(166, 124, 82, .45);
+      color: var(--gold);
+      font-family: var(--font);
+      font-size: .78rem;
+      font-weight: 700;
+      padding: .55rem .75rem;
+      border-radius: 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all var(--t);
+      letter-spacing: .03em;
+    }
+
+    .btn-upload:hover {
+      background: rgba(166, 124, 82, .16);
+      border-color: var(--gold);
+    }
+
+    .btn-upload svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .btn-upload-video {
+      background: rgba(90, 154, 106, .08);
+      border-color: rgba(90, 154, 106, .45);
+      color: #5a9a6a;
+    }
+
+    .btn-upload-video:hover {
+      background: rgba(90, 154, 106, .16);
+      border-color: #5a9a6a;
+    }
+
+    .upload-or {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 7px 0 3px;
+      font-size: .7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    .upload-or::before,
+    .upload-or::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .cloudinary-not-configured {
+      font-size: .72rem;
+      color: #c08a4a;
+      background: rgba(201, 169, 110, .08);
+      border: 1px solid rgba(201, 169, 110, .2);
+      border-radius: 6px;
+      padding: .4rem .65rem;
+      margin-top: 6px;
+      display: none;
     }
 
     @media (max-width: 500px) {
@@ -1331,6 +1405,15 @@
 
   <script>
     /* ════════════════════════════════════════════
+       CLOUDINARY CONFIG
+       ⚠️  Replace these two values with your own:
+       1. Go to cloudinary.com → Dashboard → copy Cloud Name
+       2. Go to Settings → Upload → Upload Presets → copy Preset Name
+    ════════════════════════════════════════════ */
+    const CLOUDINARY_CLOUD_NAME  = 'dgo738djk';   // ← replace this
+    const CLOUDINARY_UPLOAD_PRESET = 'puniya-interiors'; // ← replace this
+
+    /* ════════════════════════════════════════════
        PASSWORD — SHA-256 of "Interior@2025"
     ════════════════════════════════════════════ */
     const CORRECT_HASH = 'a3b68f7f8febf83a4dc144b14e0129d7937dc800c79161784501d68293cb7773';
@@ -1594,7 +1677,7 @@
           <div class="img-preview">
             <div class="placeholder">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <span>images/${slot.filename}</span>
+              <span>${folder}/${slot.filename}</span>
             </div>
             <img ${previewSrc ? `src="${previewSrc}"` : ''} alt="${slot.alt}"
               onload="this.style.opacity=1;this.previousElementSibling.style.display='none'"
@@ -1605,10 +1688,18 @@
           <div class="img-info">
             <div class="img-slot-name">${slot.label}</div>
             <div class="img-alt">${slot.alt}</div>
-            <code class="img-current">images/${slot.filename}</code>
+            <code class="img-current">${folder}/${slot.filename}</code>
+            <button class="btn-upload" onclick="openUploadWidget('${page.id}','${slot.key}','${folder}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+              Upload Photo
+            </button>
+            <div class="cloudinary-not-configured" id="cld-warn-${page.id}-${slot.key}">
+              \u26a0\ufe0f Set CLOUDINARY_CLOUD_NAME &amp; CLOUDINARY_UPLOAD_PRESET at the top of the script first.
+            </div>
+            <div class="upload-or">or paste URL</div>
             <div class="input-row">
               <input class="url-input" type="url" id="input-${page.id}-${slot.key}"
-                placeholder="Paste new image URL\u2026"
+                placeholder="Paste image URL\u2026"
                 value="${currentVal}" />
               <button class="btn-apply" onclick="applyChange('${page.id}','${slot.key}')">Apply</button>
             </div>
@@ -1626,6 +1717,106 @@
     /* ════════════════════════════════════════════
        APPLY CHANGE
     ════════════════════════════════════════════ */
+    /* ════════════════════════════════════════════
+       CLOUDINARY UPLOAD WIDGET — IMAGES
+    ════════════════════════════════════════════ */
+    function openUploadWidget(pageId, slotKey, folder) {
+      if (CLOUDINARY_CLOUD_NAME === 'dgo738djk' || CLOUDINARY_UPLOAD_PRESET === 'puniya-interiors') {
+        const warn = document.getElementById(`cld-warn-${pageId}-${slotKey}`);
+        if (warn) warn.style.display = 'block';
+        showToast('Add your Cloudinary credentials first — see top of script.', false);
+        return;
+      }
+      // Derive a clean Cloudinary subfolder from the folder path (e.g. images/projects → puniya/projects)
+      const subFolder = 'puniya/' + folder.replace('images/', '');
+      const widget = cloudinary.createUploadWidget({
+        cloudName: CLOUDINARY_CLOUD_NAME,
+        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+        folder: subFolder,
+        sources: ['local', 'camera', 'url'],
+        multiple: false,
+        cropping: false,
+        resourceType: 'image',
+        clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp'],
+        maxFileSize: 10000000, // 10MB
+        styles: {
+          palette: {
+            window: '#FFFFFF',
+            windowBorder: '#D1CCC4',
+            tabIcon: '#A67C52',
+            menuIcons: '#A67C52',
+            textDark: '#2C2A28',
+            textLight: '#FFFFFF',
+            link: '#A67C52',
+            action: '#A67C52',
+            inactiveTabIcon: '#9C958E',
+            error: '#b05a5a',
+            inProgress: '#A67C52',
+            complete: '#5a9a6a',
+            sourceBg: '#F7F5F0'
+          }
+        }
+      }, (error, result) => {
+        if (!error && result && result.event === 'success') {
+          const url = result.info.secure_url;
+          // Auto-fill the input and apply
+          const input = document.getElementById(`input-${pageId}-${slotKey}`);
+          if (input) { input.value = url; }
+          applyChange(pageId, slotKey);
+          showToast('Photo uploaded & applied!', true);
+        }
+      });
+      widget.open();
+    }
+
+    /* ════════════════════════════════════════════
+       CLOUDINARY UPLOAD WIDGET — VIDEOS
+    ════════════════════════════════════════════ */
+    function openVideoUploadWidget(slotKey) {
+      if (CLOUDINARY_CLOUD_NAME === 'dgo738djk' || CLOUDINARY_UPLOAD_PRESET === 'puniya-interiors') {
+        const warn = document.getElementById(`vcld-warn-${slotKey}`);
+        if (warn) warn.style.display = 'block';
+        showToast('Add your Cloudinary credentials first — see top of script.', false);
+        return;
+      }
+      const widget = cloudinary.createUploadWidget({
+        cloudName: CLOUDINARY_CLOUD_NAME,
+        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+        folder: 'puniya/videos',
+        sources: ['local', 'url'],
+        multiple: false,
+        resourceType: 'video',
+        clientAllowedFormats: ['mp4', 'mov', 'webm'],
+        maxFileSize: 200000000, // 200MB
+        styles: {
+          palette: {
+            window: '#FFFFFF',
+            windowBorder: '#D1CCC4',
+            tabIcon: '#5a9a6a',
+            menuIcons: '#5a9a6a',
+            textDark: '#2C2A28',
+            textLight: '#FFFFFF',
+            link: '#5a9a6a',
+            action: '#5a9a6a',
+            inactiveTabIcon: '#9C958E',
+            error: '#b05a5a',
+            inProgress: '#5a9a6a',
+            complete: '#5a9a6a',
+            sourceBg: '#F7F5F0'
+          }
+        }
+      }, (error, result) => {
+        if (!error && result && result.event === 'success') {
+          const url = result.info.secure_url;
+          const input = document.getElementById(`vmanual-${slotKey}`);
+          if (input) { input.value = url; }
+          applyManualVideo(slotKey);
+          showToast('Video uploaded & applied!', true);
+        }
+      });
+      widget.open();
+    }
+
     function applyChange(pageId, slotKey) {
       const input = document.getElementById(`input-${pageId}-${slotKey}`);
       const url = input.value.trim();
@@ -1885,9 +2076,17 @@ Replace with: the new URL
             </code>
             ${source === 'sheet'
             ? `<div class="vid-sheet-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg> Loaded from Google Sheet</div>`
-            : `<div class="vid-manual-row">
+            : `<button class="btn-upload btn-upload-video" onclick="openVideoUploadWidget('${slot.key}')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+                  Upload Video
+                </button>
+                <div class="cloudinary-not-configured" id="vcld-warn-${slot.key}">
+                  \u26a0\ufe0f Set CLOUDINARY_CLOUD_NAME &amp; CLOUDINARY_UPLOAD_PRESET at the top of the script first.
+                </div>
+                <div class="upload-or">or paste URL</div>
+                <div class="vid-manual-row">
                   <input class="vid-manual-input" id="vmanual-${slot.key}" type="url"
-                    placeholder="Or paste Cloudinary .mp4 URL directly…"
+                    placeholder="Paste Cloudinary .mp4 URL directly…"
                     value="${source === 'manual' ? url : ''}" />
                   <button class="btn-apply" onclick="applyManualVideo('${slot.key}')">Apply</button>
                 </div>
