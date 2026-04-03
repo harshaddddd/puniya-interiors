@@ -1,219 +1,1240 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Image Manager — Puniya Interiors</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
     rel="stylesheet" media="print" onload="this.media='all'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet" /></noscript>
-  <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+      rel="stylesheet" />
+  </noscript>
   <style>
     :root {
-      --bg: #F7F5F0; --surface: #EAE6DF; --card: #ffffff; --border: #D1CCC4;
-      --gold: #A67C52; --gold-lt: #c4a07a; --cream: #2C2A28; --text: #6B6560;
-      --muted: #9C958E; --green: #5a9a6a; --red: #b05a5a;
+      --bg: #F7F5F0;
+      --surface: #EAE6DF;
+      --card: #ffffff;
+      --border: #D1CCC4;
+      --gold: #A67C52;
+      --gold-lt: #c4a07a;
+      --cream: #2C2A28;
+      --text: #6B6560;
+      --muted: #9C958E;
+      --green: #5a9a6a;
+      --red: #b05a5a;
       --font-serif: 'Playfair Display', Georgia, serif;
       --font: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --r: 10px; --t: 0.22s ease;
+      --r: 10px;
+      --t: 0.22s ease;
     }
-    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:14px; line-height:1.6; -webkit-font-smoothing:antialiased; min-height:100vh; }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
 
     /* ── LOGIN ── */
-    #login { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem; }
-    .login-box { width:100%; max-width:360px; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2.25rem; }
-    .login-logo { text-align:center; margin-bottom:2rem; }
-    .login-logo-icon { display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; background:rgba(201,169,110,.1); border:1px solid rgba(201,169,110,.2); border-radius:12px; margin-bottom:.9rem; }
-    .login-logo-icon svg { width:24px; height:24px; color:var(--gold); }
-    .login-logo h1 { font-family:var(--font-serif); font-size:1.2rem; font-weight:400; color:var(--cream); }
-    .login-logo p { color:var(--muted); font-size:.78rem; margin-top:.2rem; }
-    label { display:block; font-size:.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:.45rem; }
-    input[type=password] { width:100%; background:var(--card); border:1px solid var(--border); color:var(--cream); font-family:var(--font); font-size:.9rem; padding:.7rem .9rem; border-radius:var(--r); outline:none; transition:border-color var(--t); }
-    input[type=password]:focus { border-color:rgba(166,124,82,.5); }
-    .login-btn { width:100%; margin-top:1.1rem; background:var(--gold); color:#fff; border:none; border-radius:var(--r); padding:.8rem; font-family:var(--font); font-size:.88rem; font-weight:700; cursor:pointer; transition:background var(--t); }
-    .login-btn:hover { background:var(--gold-lt); }
-    .login-err { font-size:.8rem; color:#d06a5a; text-align:center; margin-top:.6rem; display:none; }
-    .login-err.show { display:block; }
+    #login {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 360px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.25rem;
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-logo-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      background: rgba(201, 169, 110, .1);
+      border: 1px solid rgba(201, 169, 110, .2);
+      border-radius: 12px;
+      margin-bottom: .9rem;
+    }
+
+    .login-logo-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--gold);
+    }
+
+    .login-logo h1 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--cream);
+    }
+
+    .login-logo p {
+      color: var(--muted);
+      font-size: .78rem;
+      margin-top: .2rem;
+    }
+
+    label {
+      display: block;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .45rem;
+    }
+
+    input[type=password] {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--cream);
+      font-family: var(--font);
+      font-size: .9rem;
+      padding: .7rem .9rem;
+      border-radius: var(--r);
+      outline: none;
+      transition: border-color var(--t);
+    }
+
+    input[type=password]:focus {
+      border-color: rgba(166, 124, 82, .5);
+    }
+
+    .login-btn {
+      width: 100%;
+      margin-top: 1.1rem;
+      background: var(--gold);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--r);
+      padding: .8rem;
+      font-family: var(--font);
+      font-size: .88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--t);
+    }
+
+    .login-btn:hover {
+      background: var(--gold-lt);
+    }
+
+    .login-err {
+      font-size: .8rem;
+      color: #d06a5a;
+      text-align: center;
+      margin-top: .6rem;
+      display: none;
+    }
+
+    .login-err.show {
+      display: block;
+    }
 
     /* ── TOP BAR ── */
-    #app { display:none; }
-    .topbar { position:sticky; top:0; z-index:50; height:58px; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,4vw,2rem); background:rgba(247,245,240,.95); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
-    .topbar-brand { font-family:var(--font-serif); font-size:1rem; color:var(--gold); }
-    .topbar-brand span { color:var(--muted); font-family:var(--font); font-size:.78rem; font-weight:400; }
-    .topbar-right { display:flex; align-items:center; gap:.75rem; }
-    .btn-save-all { background:var(--gold); color:#fff; border:none; border-radius:8px; padding:.45rem 1.1rem; font-family:var(--font); font-size:.78rem; font-weight:700; cursor:pointer; transition:background var(--t); display:flex; align-items:center; gap:6px; }
-    .btn-save-all:hover { background:var(--gold-lt); }
-    .btn-save-all svg { width:13px; height:13px; }
-    .btn-logout { background:none; border:1px solid var(--border); color:var(--muted); font-family:var(--font); font-size:.75rem; padding:.4rem .8rem; border-radius:6px; cursor:pointer; transition:all var(--t); }
-    .btn-logout:hover { color:var(--cream); border-color:var(--muted); }
+    #app {
+      display: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1rem, 4vw, 2rem);
+      background: rgba(247, 245, 240, .95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-brand {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--gold);
+    }
+
+    .topbar-brand span {
+      color: var(--muted);
+      font-family: var(--font);
+      font-size: .78rem;
+      font-weight: 400;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .btn-save-all {
+      background: var(--gold);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: .45rem 1.1rem;
+      font-family: var(--font);
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--t);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-save-all:hover {
+      background: var(--gold-lt);
+    }
+
+    .btn-save-all svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .btn-logout {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font);
+      font-size: .75rem;
+      padding: .4rem .8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all var(--t);
+    }
+
+    .btn-logout:hover {
+      color: var(--cream);
+      border-color: var(--muted);
+    }
 
     /* ── LAYOUT ── */
-    .wrap { max-width:1100px; margin:0 auto; padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,4vw,2rem) 6rem; }
-    .page-title { margin-bottom:.4rem; font-family:var(--font-serif); font-size:clamp(1.5rem,3.5vw,2rem); font-weight:400; color:var(--cream); }
-    .page-title em { font-style:italic; color:var(--gold); }
-    .page-sub { color:var(--muted); font-size:.85rem; margin-bottom:2.5rem; }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem) 5rem;
+    }
 
-    /* ── TABS ── */
-    .tab-bar { display:flex; gap:4px; margin-bottom:2rem; border-bottom:1px solid var(--border); padding-bottom:0; }
-    .tab-btn { background:none; border:none; border-bottom:2px solid transparent; padding:.55rem 1.1rem; font-family:var(--font); font-size:.82rem; font-weight:600; color:var(--muted); cursor:pointer; margin-bottom:-1px; transition:all var(--t); display:flex; align-items:center; gap:6px; }
-    .tab-btn:hover { color:var(--cream); }
-    .tab-btn.active { color:var(--gold); border-bottom-color:var(--gold); }
-    .tab-btn svg { width:14px; height:14px; }
-    .tab-panel { display:none; }
-    .tab-panel.active { display:block; }
+    .page-title {
+      margin-bottom: .4rem;
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 400;
+      color: var(--cream);
+    }
+
+    .page-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .page-sub {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-bottom: 2.5rem;
+    }
 
     /* ── SECTION ── */
-    .section { margin-bottom:3rem; }
-    .section-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:1rem; padding-bottom:.65rem; border-bottom:1px solid var(--border); }
-    .section-head-left { display:flex; align-items:center; gap:10px; }
-    .section-icon { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-    .section-icon svg { width:14px; height:14px; }
-    .ic-home { background:rgba(201,169,110,.1); color:var(--gold); }
-    .ic-kitchen,.ic-kitchen-accessories { background:rgba(90,154,106,.1); color:#7abe8d; }
-    .ic-furniture,.ic-furniture-categories { background:rgba(90,133,176,.1); color:#7aa8d4; }
-    .ic-portfolio { background:rgba(180,90,130,.1); color:#d4779c; }
-    .ic-about { background:rgba(166,124,82,.12); color:#a67c52; }
-    .section-label { font-size:.85rem; font-weight:600; color:var(--cream); }
-    .section-file { font-size:.73rem; color:var(--muted); background:rgba(0,0,0,.04); padding:1px 6px; border-radius:4px; font-family:monospace; }
+    .section {
+      margin-bottom: 2.5rem;
+    }
 
-    /* ── GRIDS ── */
-    /* Default grid — auto-fill */
-    .img-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; }
-    /* 2×2 for Portfolio — Projects */
-    .img-grid-2col { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
-    /* 3×3 for Kitchen Accessories & Furniture Categories */
-    .img-grid-3col { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    @media(max-width:900px) { .img-grid-3col { grid-template-columns:repeat(2,1fr); } }
-    @media(max-width:600px) { .img-grid-2col,.img-grid-3col { grid-template-columns:1fr; } }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+      padding-bottom: .65rem;
+      border-bottom: 1px solid var(--border);
+    }
 
-    /* Project group — card with sub-grid inside */
-    .project-group { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1rem; margin-bottom:1rem; }
-    .project-group-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:.75rem; padding-bottom:.6rem; border-bottom:1px solid var(--border); }
-    .project-group-title { font-size:.8rem; font-weight:700; color:var(--cream); letter-spacing:.04em; }
-    .project-group-meta { font-size:.72rem; color:var(--muted); margin-top:2px; }
-    .project-group-actions { display:flex; gap:6px; }
-    .btn-add-photo { background:rgba(166,124,82,.1); border:1px solid rgba(166,124,82,.25); color:var(--gold); font-family:var(--font); font-size:.72rem; font-weight:700; padding:.3rem .7rem; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:4px; transition:all var(--t); }
-    .btn-add-photo:hover { background:rgba(166,124,82,.2); }
-    .btn-add-photo svg { width:11px; height:11px; }
-    .btn-delete-project { background:rgba(176,90,90,.08); border:1px solid rgba(176,90,90,.2); color:var(--red); font-family:var(--font); font-size:.72rem; font-weight:700; padding:.3rem .7rem; border-radius:6px; cursor:pointer; transition:all var(--t); }
-    .btn-delete-project:hover { background:rgba(176,90,90,.15); }
-    .project-photos-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; }
+    .section-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .ic-home {
+      background: rgba(201, 169, 110, .1);
+      color: var(--gold);
+    }
+
+    .ic-kitchen {
+      background: rgba(90, 154, 106, .1);
+      color: #7abe8d;
+    }
+
+    .ic-furniture {
+      background: rgba(90, 133, 176, .1);
+      color: #7aa8d4;
+    }
+
+    .ic-portfolio {
+      background: rgba(180, 90, 130, .1);
+      color: #d4779c;
+    }
+
+    .ic-about {
+      background: rgba(166, 124, 82, .12);
+      color: #a67c52;
+    }
+
+    .section-label {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    .section-file {
+      font-size: .73rem;
+      color: var(--muted);
+      background: rgba(0, 0, 0, .04);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    /* ── GRID ── */
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
 
     /* ── CARD ── */
-    .img-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; transition:border-color var(--t); position:relative; }
-    .img-card.dirty { border-color:rgba(201,169,110,.4); }
-    .img-card.saved { border-color:rgba(90,154,106,.5); }
-    .img-preview { position:relative; aspect-ratio:4/3; background:var(--surface); overflow:hidden; }
-    .img-preview img { width:100%; height:100%; object-fit:cover; display:block; transition:opacity .3s; }
-    .img-preview .placeholder { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:var(--muted); font-size:.75rem; }
-    .img-preview .placeholder svg { width:28px; height:28px; opacity:.3; }
-    .img-preview .status-dot { position:absolute; top:8px; right:8px; width:8px; height:8px; border-radius:50%; background:var(--border); }
-    .img-card.dirty .status-dot { background:var(--gold); }
-    .img-card.saved .status-dot { background:var(--green); }
-    .img-info { padding:.75rem .85rem; }
-    .img-slot-name { font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-bottom:.25rem; }
-    .img-alt { font-size:.78rem; color:var(--text); line-height:1.4; margin-bottom:.6rem; }
-    .img-current { font-size:.7rem; font-family:monospace; color:var(--muted); background:rgba(0,0,0,.03); border:1px solid var(--border); border-radius:4px; padding:3px 6px; word-break:break-all; margin-bottom:.6rem; display:block; }
-    .input-row { display:flex; gap:6px; }
-    .url-input { flex:1; min-width:0; background:rgba(0,0,0,.04); border:1px solid var(--border); color:var(--cream); font-family:var(--font); font-size:.8rem; padding:.5rem .7rem; border-radius:7px; outline:none; transition:border-color var(--t); }
-    .url-input:focus { border-color:rgba(166,124,82,.45); }
-    .url-input::placeholder { color:var(--muted); font-size:.77rem; }
-    .btn-apply { background:rgba(166,124,82,.1); border:1px solid rgba(166,124,82,.2); color:var(--gold); font-family:var(--font); font-size:.75rem; font-weight:600; padding:.5rem .75rem; border-radius:7px; cursor:pointer; white-space:nowrap; transition:all var(--t); }
-    .btn-apply:hover { background:rgba(166,124,82,.2); }
+    .img-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: border-color var(--t);
+    }
 
-    /* Delete photo button on card */
-    .btn-remove-photo { position:absolute; top:6px; left:6px; background:rgba(176,90,90,.85); border:none; color:#fff; width:22px; height:22px; border-radius:50%; font-size:13px; line-height:1; cursor:pointer; display:none; align-items:center; justify-content:center; z-index:5; }
-    .img-card:hover .btn-remove-photo { display:flex; }
+    .img-card.dirty {
+      border-color: rgba(201, 169, 110, .4);
+    }
 
-    /* ── UPLOAD BUTTON ── */
-    .btn-upload { width:100%; margin-top:7px; background:rgba(166,124,82,.08); border:1.5px dashed rgba(166,124,82,.45); color:var(--gold); font-family:var(--font); font-size:.78rem; font-weight:700; padding:.55rem .75rem; border-radius:7px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:7px; transition:all var(--t); letter-spacing:.03em; }
-    .btn-upload:hover { background:rgba(166,124,82,.16); border-color:var(--gold); }
-    .btn-upload svg { width:14px; height:14px; flex-shrink:0; }
-    .btn-upload-video { background:rgba(90,154,106,.08); border-color:rgba(90,154,106,.45); color:#5a9a6a; }
-    .btn-upload-video:hover { background:rgba(90,154,106,.16); border-color:#5a9a6a; }
-    .upload-or { display:flex; align-items:center; gap:8px; margin:7px 0 3px; font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; }
-    .upload-or::before,.upload-or::after { content:''; flex:1; height:1px; background:var(--border); }
-    .cloudinary-not-configured { font-size:.72rem; color:#c08a4a; background:rgba(201,169,110,.08); border:1px solid rgba(201,169,110,.2); border-radius:6px; padding:.4rem .65rem; margin-top:6px; display:none; }
+    .img-card.saved {
+      border-color: rgba(90, 154, 106, .5);
+    }
 
-    /* ── ADD NEW PROJECT PANEL ── */
-    .add-project-panel { background:var(--card); border:2px dashed rgba(166,124,82,.3); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; }
-    .add-project-panel h3 { font-size:.8rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; display:flex; align-items:center; gap:6px; }
-    .add-project-panel h3 svg { width:14px; height:14px; }
-    .add-project-form { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    @media(max-width:600px) { .add-project-form { grid-template-columns:1fr; } }
-    .form-field { display:flex; flex-direction:column; gap:4px; }
-    .form-field label { font-size:.7rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); margin-bottom:0; }
-    .form-field input, .form-field select { background:rgba(0,0,0,.04); border:1px solid var(--border); color:var(--cream); font-family:var(--font); font-size:.82rem; padding:.5rem .7rem; border-radius:7px; outline:none; transition:border-color var(--t); }
-    .form-field input:focus, .form-field select:focus { border-color:rgba(166,124,82,.45); }
-    .form-field select option { background:#fff; color:var(--cream); }
-    .btn-create-project { grid-column:1/-1; background:var(--gold); color:#fff; border:none; border-radius:8px; padding:.65rem 1rem; font-family:var(--font); font-size:.82rem; font-weight:700; cursor:pointer; transition:background var(--t); display:flex; align-items:center; justify-content:center; gap:7px; margin-top:4px; }
-    .btn-create-project:hover { background:var(--gold-lt); }
-    .btn-create-project svg { width:14px; height:14px; }
+    .img-preview {
+      position: relative;
+      aspect-ratio: 4/3;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .img-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity .3s;
+    }
+
+    .img-preview .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    .img-preview .placeholder svg {
+      width: 28px;
+      height: 28px;
+      opacity: .3;
+    }
+
+    .img-preview .status-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .img-card.dirty .status-dot {
+      background: var(--gold);
+    }
+
+    .img-card.saved .status-dot {
+      background: var(--green);
+    }
+
+    .img-info {
+      padding: .75rem .85rem;
+    }
+
+    .img-slot-name {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .25rem;
+    }
+
+    .img-alt {
+      font-size: .78rem;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: .6rem;
+    }
+
+    .img-current {
+      font-size: .7rem;
+      font-family: monospace;
+      color: var(--muted);
+      background: rgba(0, 0, 0, .03);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 6px;
+      word-break: break-all;
+      margin-bottom: .6rem;
+      display: block;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .url-input {
+      flex: 1;
+      min-width: 0;
+      background: rgba(0, 0, 0, .04);
+      border: 1px solid var(--border);
+      color: var(--cream);
+      font-family: var(--font);
+      font-size: .8rem;
+      padding: .5rem .7rem;
+      border-radius: 7px;
+      outline: none;
+      transition: border-color var(--t);
+    }
+
+    .url-input:focus {
+      border-color: rgba(166, 124, 82, .45);
+    }
+
+    .url-input::placeholder {
+      color: var(--muted);
+      font-size: .77rem;
+    }
+
+    .btn-apply {
+      background: rgba(166, 124, 82, .1);
+      border: 1px solid rgba(166, 124, 82, .2);
+      color: var(--gold);
+      font-family: var(--font);
+      font-size: .75rem;
+      font-weight: 600;
+      padding: .5rem .75rem;
+      border-radius: 7px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--t);
+    }
+
+    .btn-apply:hover {
+      background: rgba(166, 124, 82, .2);
+    }
 
     /* ── TOAST ── */
-    #toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(6px); background:var(--surface); border:1px solid var(--border); color:var(--cream); font-size:.82rem; padding:.6rem 1.2rem; border-radius:8px; opacity:0; transition:all .3s; z-index:999; pointer-events:none; white-space:nowrap; }
-    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-    #toast.success { border-color:rgba(90,154,106,.4); color:#7abe8d; }
+    #toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--cream);
+      font-size: .82rem;
+      padding: .6rem 1.2rem;
+      border-radius: 8px;
+      opacity: 0;
+      transition: all .3s;
+      z-index: 999;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #toast.success {
+      border-color: rgba(90, 154, 106, .4);
+      color: #7abe8d;
+    }
 
     /* ── SAVE PANEL ── */
-    .save-panel { position:fixed; bottom:0; left:0; right:0; background:rgba(247,245,240,.97); border-top:1px solid var(--border); padding:1rem clamp(1rem,4vw,2rem); display:none; align-items:center; justify-content:space-between; gap:1rem; z-index:40; backdrop-filter:blur(12px); }
-    .save-panel.show { display:flex; }
-    .save-panel p { font-size:.82rem; color:var(--muted); }
-    .save-panel p strong { color:var(--gold); }
-    .save-panel-btns { display:flex; gap:8px; flex-shrink:0; }
-    .btn-download { background:var(--gold); color:#fff; border:none; border-radius:8px; padding:.55rem 1.2rem; font-family:var(--font); font-size:.82rem; font-weight:700; cursor:pointer; transition:background var(--t); display:flex; align-items:center; gap:7px; }
-    .btn-download:hover { background:var(--gold-lt); }
-    .btn-download svg { width:14px; height:14px; }
-    .btn-discard { background:none; border:1px solid var(--border); color:var(--muted); font-family:var(--font); font-size:.8rem; padding:.5rem 1rem; border-radius:8px; cursor:pointer; transition:all var(--t); }
-    .btn-discard:hover { color:var(--cream); border-color:var(--muted); }
+    .save-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(247, 245, 240, .97);
+      border-top: 1px solid var(--border);
+      padding: 1rem clamp(1rem, 4vw, 2rem);
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+    }
 
-    /* ── VIDEO PANEL ── */
-    .cloud-hero { background:linear-gradient(135deg,#1a1410 0%,#2a2018 100%); border-radius:14px; padding:2rem; margin-bottom:1.5rem; display:flex; align-items:flex-start; gap:1.5rem; }
-    .cloud-hero-icon { width:48px; height:48px; flex-shrink:0; background:rgba(184,148,90,.15); border:1px solid rgba(184,148,90,.25); border-radius:12px; display:flex; align-items:center; justify-content:center; }
-    .cloud-hero-icon svg { width:22px; height:22px; color:var(--gold); }
-    .cloud-hero h2 { font-family:var(--font-serif); font-size:1.3rem; font-weight:400; color:#fff; margin-bottom:.3rem; }
-    .cloud-hero p { font-size:.82rem; color:rgba(255,255,255,.6); line-height:1.6; }
-    .video-slots-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
-    .video-slot-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
-    .video-slot-card.connected { border-color:rgba(90,154,106,.4); }
-    .vid-preview { position:relative; aspect-ratio:16/9; background:#111; overflow:hidden; }
-    .vid-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:rgba(255,255,255,.3); font-size:.75rem; }
-    .vid-placeholder svg { width:32px; height:32px; opacity:.3; }
-    .vid-preview video { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
-    .vid-badge { position:absolute; bottom:8px; left:8px; background:rgba(0,0,0,.65); color:#fff; font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:2px 8px; border-radius:4px; }
-    .vid-status-dot { position:absolute; top:8px; right:8px; width:8px; height:8px; border-radius:50%; background:var(--border); }
-    .video-slot-card.connected .vid-status-dot { background:var(--green); }
-    .vid-info { padding:.85rem; }
-    .vid-label { font-size:.78rem; font-weight:600; color:var(--cream); margin-bottom:.5rem; display:flex; align-items:center; gap:6px; }
-    .vid-label svg { width:13px; height:13px; color:var(--gold); flex-shrink:0; }
-    .vid-url-display { display:block; font-size:.68rem; font-family:monospace; border-radius:5px; padding:4px 7px; margin-bottom:.6rem; word-break:break-all; }
-    .vid-url-display.has-url { background:rgba(90,154,106,.08); color:#5a9a6a; border:1px solid rgba(90,154,106,.2); }
-    .vid-url-display.no-url { background:rgba(0,0,0,.03); color:var(--muted); border:1px solid var(--border); }
-    .vid-manual-row { display:flex; gap:6px; margin-top:.5rem; }
-    .vid-manual-input { flex:1; min-width:0; background:rgba(0,0,0,.04); border:1px solid var(--border); color:var(--cream); font-family:var(--font); font-size:.78rem; padding:.45rem .65rem; border-radius:7px; outline:none; transition:border-color var(--t); }
-    .vid-manual-input:focus { border-color:rgba(166,124,82,.45); }
-    .vid-manual-input::placeholder { color:var(--muted); font-size:.74rem; }
-    .vid-sheet-note { font-size:.7rem; color:var(--muted); margin-top:.4rem; display:flex; align-items:center; gap:4px; }
-    .vid-sheet-note svg { width:11px; height:11px; flex-shrink:0; }
-    .sheet-connect-box { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.25rem; margin-bottom:1.5rem; }
-    .sheet-connect-box h3 { font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--cream); margin-bottom:.85rem; }
-    .sheet-input-row { display:flex; gap:8px; }
-    .sheet-url-input { flex:1; min-width:0; background:rgba(0,0,0,.04); border:1px solid var(--border); color:var(--cream); font-family:var(--font); font-size:.8rem; padding:.55rem .8rem; border-radius:8px; outline:none; transition:border-color var(--t); }
-    .sheet-url-input:focus { border-color:rgba(166,124,82,.45); }
-    .sheet-url-input::placeholder { color:var(--muted); font-size:.77rem; }
-    .btn-connect { background:var(--gold); color:#fff; border:none; border-radius:8px; padding:.55rem 1rem; font-family:var(--font); font-size:.78rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px; white-space:nowrap; transition:background var(--t); }
-    .btn-connect:hover { background:var(--gold-lt); }
-    .btn-connect svg { width:13px; height:13px; }
-    .sheet-status { display:flex; align-items:center; gap:8px; margin-top:.7rem; font-size:.78rem; color:var(--muted); min-height:20px; }
-    .sheet-status svg { width:14px; height:14px; flex-shrink:0; }
-    .sheet-status.ok { color:var(--green); }
-    .sheet-status.err { color:var(--red); }
-    .sheet-status.loading { color:var(--gold); }
+    .save-panel.show {
+      display: flex;
+    }
+
+    .save-panel p {
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    .save-panel p strong {
+      color: var(--gold);
+    }
+
+    .save-panel-btns {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-download {
+      background: var(--gold);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: .55rem 1.2rem;
+      font-family: var(--font);
+      font-size: .82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--t);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .btn-download:hover {
+      background: var(--gold-lt);
+    }
+
+    .btn-download svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .btn-discard {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font);
+      font-size: .8rem;
+      padding: .5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--t);
+    }
+
+    .btn-discard:hover {
+      color: var(--cream);
+      border-color: var(--muted);
+    }
+
+    @media (max-width: 500px) {
+      .img-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .save-panel {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* ── TABS ── */
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: .55rem 1.1rem;
+      font-family: var(--font);
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      margin-bottom: -1px;
+      transition: all var(--t);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn:hover {
+      color: var(--cream);
+    }
+
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    .tab-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* ── CLOUDINARY PANEL ── */
+    .cloud-hero {
+      background: linear-gradient(135deg, #1a1410 0%, #2a2018 100%);
+      border-radius: 14px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .cloud-hero-icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      background: rgba(184, 148, 90, .15);
+      border: 1px solid rgba(184, 148, 90, .25);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cloud-hero-icon svg {
+      width: 22px;
+      height: 22px;
+      color: var(--gold);
+    }
+
+    .cloud-hero h2 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: .3rem;
+    }
+
+    .cloud-hero p {
+      font-size: .82rem;
+      color: rgba(255, 255, 255, .55);
+      line-height: 1.6;
+    }
+
+    .cloud-steps {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cloud-steps h3 {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+    }
+
+    .step-item {
+      display: flex;
+      gap: .85rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      background: rgba(166, 124, 82, .12);
+      border: 1px solid rgba(166, 124, 82, .25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .68rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .step-text {
+      font-size: .82rem;
+      color: var(--text);
+      line-height: 1.5;
+      padding-top: 2px;
+    }
+
+    .step-text strong {
+      color: var(--cream);
+    }
+
+    .step-text code {
+      font-size: .75rem;
+      background: rgba(0, 0, 0, .05);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+    }
+
+    .step-text a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .step-text a:hover {
+      text-decoration: underline;
+    }
+
+    .sheet-connect-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sheet-connect-box h3 {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .sheet-input-row {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .sheet-url-input {
+      flex: 1;
+      min-width: 0;
+      background: rgba(0, 0, 0, .04);
+      border: 1px solid var(--border);
+      color: var(--cream);
+      font-family: var(--font);
+      font-size: .82rem;
+      padding: .65rem .9rem;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color var(--t);
+    }
+
+    .sheet-url-input:focus {
+      border-color: rgba(166, 124, 82, .45);
+    }
+
+    .sheet-url-input::placeholder {
+      color: var(--muted);
+    }
+
+    .btn-connect {
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .65rem 1.3rem;
+      font-family: var(--font);
+      font-size: .8rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background var(--t);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .btn-connect:hover {
+      background: var(--gold-lt);
+    }
+
+    .btn-connect svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .sheet-status {
+      margin-top: .8rem;
+      font-size: .8rem;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: .55rem .8rem;
+      border-radius: 7px;
+    }
+
+    .sheet-status.ok {
+      display: flex;
+      background: rgba(90, 154, 106, .08);
+      color: #5a9a6a;
+      border: 1px solid rgba(90, 154, 106, .2);
+    }
+
+    .sheet-status.err {
+      display: flex;
+      background: rgba(176, 90, 90, .08);
+      color: #b05a5a;
+      border: 1px solid rgba(176, 90, 90, .2);
+    }
+
+    .sheet-status.loading {
+      display: flex;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .sheet-status svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .video-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .video-slot-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+
+    .video-slot-card.connected {
+      border-color: rgba(90, 154, 106, .4);
+    }
+
+    .video-slot-card.error-state {
+      border-color: rgba(176, 90, 90, .3);
+    }
+
+    .vid-preview {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .vid-preview video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .vid-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, .3);
+      font-size: .75rem;
+    }
+
+    .vid-placeholder svg {
+      width: 32px;
+      height: 32px;
+      opacity: .4;
+    }
+
+    .vid-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0, 0, 0, .6);
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .vid-status-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .2);
+    }
+
+    .video-slot-card.connected .vid-status-dot {
+      background: #5a9a6a;
+    }
+
+    .video-slot-card.error-state .vid-status-dot {
+      background: #b05a5a;
+    }
+
+    .vid-info {
+      padding: .8rem .9rem;
+    }
+
+    .vid-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .25rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vid-label svg {
+      width: 12px;
+      height: 12px;
+      color: var(--gold);
+    }
+
+    .vid-desc {
+      font-size: .8rem;
+      color: var(--text);
+      margin-bottom: .5rem;
+    }
+
+    .vid-url-display {
+      font-size: .7rem;
+      font-family: monospace;
+      color: var(--muted);
+      background: rgba(0, 0, 0, .03);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 6px;
+      word-break: break-all;
+      display: block;
+      margin-bottom: .6rem;
+      min-height: 24px;
+    }
+
+    .vid-url-display.has-url {
+      color: #5a9a6a;
+      border-color: rgba(90, 154, 106, .25);
+    }
+
+    .vid-url-display.no-url {
+      color: var(--muted);
+      font-style: italic;
+      font-family: var(--font);
+    }
+
+    .vid-manual-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .vid-manual-input {
+      flex: 1;
+      min-width: 0;
+      background: rgba(0, 0, 0, .04);
+      border: 1px solid var(--border);
+      color: var(--cream);
+      font-family: var(--font);
+      font-size: .78rem;
+      padding: .45rem .65rem;
+      border-radius: 7px;
+      outline: none;
+      transition: border-color var(--t);
+    }
+
+    .vid-manual-input:focus {
+      border-color: rgba(166, 124, 82, .45);
+    }
+
+    .vid-manual-input::placeholder {
+      color: var(--muted);
+      font-size: .74rem;
+    }
+
+    .vid-sheet-note {
+      font-size: .7rem;
+      color: var(--muted);
+      margin-top: .4rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vid-sheet-note svg {
+      width: 11px;
+      height: 11px;
+      flex-shrink: 0;
+    }
+
+    .cloud-sheet-template {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cloud-sheet-template h3 {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .75rem;
+    }
+
+    .sheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .78rem;
+    }
+
+    .sheet-table th {
+      text-align: left;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: .4rem .65rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sheet-table td {
+      padding: .5rem .65rem;
+      border-bottom: 1px solid rgba(209, 204, 196, .5);
+      font-family: monospace;
+      font-size: .75rem;
+      color: var(--cream);
+    }
+
+    .sheet-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .sheet-table td:first-child {
+      color: var(--muted);
+    }
+
+    .sheet-table td.example-url {
+      color: var(--gold);
+      font-size: .7rem;
+    }
+
+    /* ══ UPLOAD GRID (Category Images) ══ */
+    .upload-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .upload-slot {
+      background: var(--card);
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color .22s, box-shadow .22s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .upload-slot:hover,
+    .upload-slot.drag-over {
+      border-color: var(--gold);
+      border-style: solid;
+      box-shadow: 0 0 0 3px rgba(166,124,82,.1);
+    }
+
+    .upload-slot.has-image {
+      border-style: solid;
+      border-color: rgba(90,154,106,.4);
+    }
+
+    .upload-slot-preview {
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .upload-slot-preview img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: opacity .3s, transform .4s;
+    }
+
+    .upload-slot:hover .upload-slot-preview img { transform: scale(1.04); }
+
+    .upload-slot-empty {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px; color: var(--muted);
+      transition: opacity .2s;
+    }
+
+    .upload-slot-empty svg { width: 32px; height: 32px; opacity: .3; }
+    .upload-slot-empty span { font-size: .75rem; text-align: center; line-height: 1.4; }
+
+    .upload-slot.has-image .upload-slot-empty { opacity: 0; pointer-events: none; }
+
+    .upload-slot-overlay {
+      position: absolute; inset: 0;
+      background: rgba(26,20,16,.75);
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; color: #fff; font-size: .78rem; font-weight: 600;
+      opacity: 0; transition: opacity .22s;
+    }
+
+    .upload-slot.has-image:hover .upload-slot-overlay { opacity: 1; }
+    .upload-slot-overlay svg { width: 16px; height: 16px; }
+
+    .upload-slot-info {
+      padding: .65rem .85rem;
+    }
+
+    .upload-slot-title {
+      font-size: .73rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .2rem;
+    }
+
+    .upload-slot-desc {
+      font-size: .78rem; color: var(--text); line-height: 1.4;
+      margin-bottom: .4rem;
+    }
+
+    .upload-slot-cat {
+      display: inline-block;
+      font-size: .65rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 4px; color: #fff;
+    }
+
+    .upload-slot-filename {
+      font-size: .68rem; font-family: monospace;
+      color: var(--muted); margin-top: .3rem; display: block;
+    }
+
+    .upload-slot-status {
+      position: absolute; top: 8px; right: 8px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--border); transition: background .3s;
+    }
+
+    .upload-slot.has-image .upload-slot-status { background: var(--green); }
+
+    /* hidden file input */
+    .upload-slot input[type=file] {
+      position: absolute; inset: 0; opacity: 0;
+      cursor: pointer; font-size: 0;
+    }
+
+    @media (max-width: 600px) {
+      .upload-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 420px) {
+      .upload-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
+
 <body>
 
   <!-- ════ LOGIN ════ -->
@@ -221,7 +1242,10 @@
     <div class="login-box">
       <div class="login-logo">
         <div class="login-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
         </div>
         <h1>Puniya Interiors</h1>
         <p>Image Manager · Admin Only</p>
@@ -229,7 +1253,9 @@
       <label for="pwd">Password</label>
       <input type="password" id="pwd" placeholder="Enter password…" autocomplete="current-password" />
       <button class="login-btn" id="login-btn">Sign In</button>
-      <a href="index.html" style="display:block;text-align:center;margin-top:1rem;color:var(--muted);font-size:.8rem;text-decoration:none;font-weight:500;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">← Back to Website</a>
+      <a href="index.html"
+        style="display: block; text-align: center; margin-top: 1rem; color: var(--muted); font-size: 0.8rem; text-decoration: none; font-weight: 500; transition: color var(--t);"
+        onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">← Back to Website</a>
       <p class="login-err" id="login-err">Incorrect password.</p>
     </div>
   </div>
@@ -243,8 +1269,10 @@
       </div>
       <div class="topbar-right">
         <button class="btn-save-all" id="btn-save-all">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Save All Changes
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          Download Updated Files
         </button>
         <button class="btn-logout" id="btn-logout">Sign Out</button>
       </div>
@@ -252,123 +1280,240 @@
 
     <div class="wrap">
       <h1 class="page-title">Website <em>Image Manager</em></h1>
-      <p class="page-sub">Upload photos, manage all website images and videos from one place. Changes save automatically to Google Sheet.</p>
+      <p class="page-sub">Manage all website images and videos from one place.</p>
 
       <!-- TABS -->
       <div class="tab-bar">
         <button class="tab-btn active" id="tab-images" onclick="switchTab('images')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
           Images
         </button>
-        <button class="tab-btn" id="tab-portfolio" onclick="switchTab('portfolio')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Portfolio Projects
-        </button>
-        <button class="tab-btn" id="tab-accessories" onclick="switchTab('accessories')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/></svg>
-          Kitchen &amp; Furniture
-        </button>
         <button class="tab-btn" id="tab-videos" onclick="switchTab('videos')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polygon points="23 7 16 12 23 17 23 7" />
+            <rect x="1" y="5" width="15" height="14" rx="2" />
+          </svg>
           Videos
-          <span id="vid-connected-badge" style="display:none;background:rgba(90,154,106,.15);color:#5a9a6a;border:1px solid rgba(90,154,106,.3);font-size:.65rem;font-weight:700;padding:1px 7px;border-radius:10px;">LIVE</span>
+          <span id="vid-connected-badge"
+            style="display:none;background:rgba(90,154,106,.15);color:#5a9a6a;border:1px solid rgba(90,154,106,.3);font-size:.65rem;font-weight:700;padding:1px 7px;border-radius:10px;">LIVE</span>
+        </button>
+        <button class="tab-btn" id="tab-category" onclick="switchTab('category')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          Category Images
+          <span id="cat-count-badge" style="display:none;background:rgba(184,148,90,.15);color:var(--gold);border:1px solid rgba(184,148,90,.3);font-size:.65rem;font-weight:700;padding:1px 7px;border-radius:10px;">0</span>
         </button>
       </div>
 
-      <!-- ══ IMAGES TAB ══ -->
+      <!-- IMAGES TAB -->
       <div class="tab-panel active" id="panel-images">
         <div id="sections-container"></div>
       </div>
 
-      <!-- ══ PORTFOLIO TAB ══ -->
-      <div class="tab-panel" id="panel-portfolio">
-
-        <!-- Add New Project -->
-        <div class="add-project-panel">
-          <h3>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-            Add New Project
-          </h3>
-          <div class="add-project-form">
-            <div class="form-field">
-              <label>Project Name</label>
-              <input type="text" id="new-proj-name" placeholder="e.g. The Sharma Residence" />
-            </div>
-            <div class="form-field">
-              <label>Category</label>
-              <select id="new-proj-category">
-                <option value="renovation">Full Renovation</option>
-                <option value="kitchen">Modular Kitchen</option>
-                <option value="furniture">Furniture &amp; Décor</option>
-                <option value="bedroom">Bedroom</option>
-                <option value="commercial">Commercial</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label>Location (e.g. Baner, Pune)</label>
-              <input type="text" id="new-proj-location" placeholder="e.g. Baner, Pune" />
-            </div>
-            <div class="form-field">
-              <label>Tag Label (shown on card)</label>
-              <input type="text" id="new-proj-tag" placeholder="e.g. 3BHK Full Renovation" />
-            </div>
-            <button class="btn-create-project" onclick="createProject()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-              Create Project &amp; Add Photos
-            </button>
-          </div>
-        </div>
-
-        <!-- Project list rendered here -->
-        <div id="portfolio-projects-container"></div>
-      </div>
-
-      <!-- ══ KITCHEN & FURNITURE ACCESSORIES TAB ══ -->
-      <div class="tab-panel" id="panel-accessories">
-        <div id="accessories-container"></div>
-      </div>
-
-      <!-- ══ VIDEOS TAB ══ -->
+      <!-- VIDEOS TAB -->
       <div class="tab-panel" id="panel-videos">
+
+        <!-- Hero banner -->
         <div class="cloud-hero">
           <div class="cloud-hero-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" />
+            </svg>
           </div>
           <div>
-            <h2>Video Manager</h2>
-            <p>Upload videos directly using the Upload button on each slot. They go straight to your Cloudinary account and appear on the portfolio page automatically.</p>
+            <h2>Cloudinary Video Manager</h2>
+            <p>Upload your videos to Cloudinary (free), paste their URLs into a Google Sheet, then connect the sheet
+              here. Your website will automatically use those videos &mdash; no code changes needed.</p>
           </div>
         </div>
+
+        <!-- Setup steps -->
+        <div class="cloud-steps">
+          <h3>How to Set Up (One Time)</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Upload videos to Cloudinary</strong> &mdash; Go to <a
+                  href="https://cloudinary.com" target="_blank">cloudinary.com</a> (free account), upload your
+                <code>.mp4</code> files. Copy each video's URL (ends in <code>.mp4</code>).</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>Create a Google Sheet</strong> &mdash; Make a new Google Sheet with exactly
+                <strong>4 columns</strong>: <code>slot_key</code>, <code>label</code>, <code>cloudinary_url</code>,
+                <code>notes</code>. See the template below.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Publish the Sheet as CSV</strong> &mdash; In Google Sheets: <em>File &rarr;
+                  Share &rarr; Publish to web &rarr; choose "Comma-separated values (.csv)" &rarr; Publish</em>. Copy
+                the URL it gives you.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-text"><strong>Paste the CSV URL below</strong> and click Connect. This page will
+                instantly load your video URLs. Anytime you update the sheet, just click Refresh.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sheet template -->
+        <div class="cloud-sheet-template">
+          <h3>Google Sheet Template &mdash; Exact Format Required</h3>
+          <table class="sheet-table">
+            <thead>
+              <tr>
+                <th>slot_key</th>
+                <th>label</th>
+                <th>cloudinary_url</th>
+                <th>notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>video-1</td>
+                <td>Video 1 &mdash; Full Home Renovation</td>
+                <td class="example-url">https://res.cloudinary.com/YOUR_CLOUD/video/upload/v123/home-renovation.mp4</td>
+                <td>Wakad project</td>
+              </tr>
+              <tr>
+                <td>video-2</td>
+                <td>Video 2 &mdash; Island Kitchen Reveal</td>
+                <td class="example-url">https://res.cloudinary.com/YOUR_CLOUD/video/upload/v123/kitchen-baner.mp4</td>
+                <td>Baner project</td>
+              </tr>
+              <tr>
+                <td>video-3</td>
+                <td>Video 3 &mdash; Master Suite Walkthrough</td>
+                <td class="example-url">https://res.cloudinary.com/YOUR_CLOUD/video/upload/v123/bedroom-kharadi.mp4</td>
+                <td>Kharadi project</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Connect sheet -->
         <div class="sheet-connect-box">
-          <h3>Connect Google Sheet (for bulk video management)</h3>
+          <h3>Connect Your Google Sheet</h3>
           <div class="sheet-input-row">
-            <input class="sheet-url-input" id="sheet-csv-url" type="url" placeholder="Paste Google Sheet CSV URL here… (File → Share → Publish to web)" autocomplete="off" />
+            <input class="sheet-url-input" id="sheet-csv-url" type="url"
+              placeholder="Paste Google Sheet CSV URL here&hellip; (from File &rarr; Share &rarr; Publish to web)"
+              autocomplete="off" />
             <button class="btn-connect" id="btn-connect-sheet" onclick="connectSheet()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" />
+              </svg>
               Connect
             </button>
           </div>
           <div class="sheet-status" id="sheet-status">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="sheet-status-icon"></svg>
             <span id="sheet-status-text"></span>
-            <button onclick="refreshSheet()" id="btn-refresh-sheet" style="display:none;margin-left:auto;background:none;border:1px solid rgba(90,154,106,.3);color:#5a9a6a;font-family:var(--font);font-size:.75rem;font-weight:600;padding:.2rem .6rem;border-radius:5px;cursor:pointer;">&#8635; Refresh</button>
+            <button onclick="refreshSheet()" id="btn-refresh-sheet"
+              style="display:none;margin-left:auto;background:none;border:1px solid rgba(90,154,106,.3);color:#5a9a6a;font-family:var(--font);font-size:.75rem;font-weight:600;padding:.2rem .6rem;border-radius:5px;cursor:pointer;">&#8635;
+              Refresh</button>
           </div>
         </div>
-        <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem;">Video Slots — portfolio.html</div>
-        <div class="video-slots-grid" id="video-slots-grid"></div>
-      </div>
 
-    </div><!-- /wrap -->
-  </div><!-- /app -->
+        <!-- Video slots -->
+        <div>
+          <div
+            style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem;">
+            Video Slots &mdash; portfolio.html</div>
+          <div class="video-slots-grid" id="video-slots-grid"></div>
+        </div>
+
+      </div><!-- /panel-videos -->
+
+      <!-- ════ CATEGORY IMAGES TAB ════ -->
+      <div class="tab-panel" id="panel-category">
+
+        <!-- Intro -->
+        <div style="background:linear-gradient(135deg,#1a1410,#251c14);border-radius:14px;padding:1.75rem 2rem;margin-bottom:1.75rem;display:flex;align-items:flex-start;gap:1.25rem;">
+          <div style="width:46px;height:46px;flex-shrink:0;background:rgba(184,148,90,.15);border:1px solid rgba(184,148,90,.25);border-radius:11px;display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" style="width:20px;height:20px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <div>
+            <h2 style="font-family:var(--font-serif);font-size:1.25rem;font-weight:400;color:#fff;margin-bottom:.3rem;">Category Image Manager</h2>
+            <p style="font-size:.83rem;color:rgba(255,255,255,.5);line-height:1.55;">Upload and manage images for the kitchen finish categories and furniture room categories shown on the product pages. <strong style="color:rgba(255,255,255,.7);">Click any slot to upload directly from your device</strong> — or drag &amp; drop a photo onto it.</p>
+          </div>
+        </div>
+
+        <!-- KITCHEN CATEGORIES -->
+        <div class="section" id="cat-section-kitchen">
+          <div class="section-head">
+            <div class="section-icon ic-kitchen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            </div>
+            <div>
+              <div class="section-label">Kitchen Category Images</div>
+              <span class="section-file">modular-kitchens.html → Category Showcase section</span>
+            </div>
+          </div>
+          <div style="font-size:.78rem;color:var(--muted);margin-bottom:1rem;padding:.6rem .8rem;background:rgba(90,154,106,.05);border:1px solid rgba(90,154,106,.15);border-radius:7px;">
+            💡 These images appear in the <strong>filterable category gallery</strong> on the Modular Kitchens page. Click a slot below to upload your photo — it will preview instantly.
+          </div>
+          <div class="upload-grid" id="cat-kitchen-grid"></div>
+        </div>
+
+        <!-- FURNITURE CATEGORIES -->
+        <div class="section" id="cat-section-furniture" style="margin-top:2.5rem;">
+          <div class="section-head">
+            <div class="section-icon ic-furniture">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+            </div>
+            <div>
+              <div class="section-label">Furniture Category Images</div>
+              <span class="section-file">custom-furniture.html → Category Showcase section</span>
+            </div>
+          </div>
+          <div style="font-size:.78rem;color:var(--muted);margin-bottom:1rem;padding:.6rem .8rem;background:rgba(90,133,176,.05);border:1px solid rgba(90,133,176,.15);border-radius:7px;">
+            💡 These images appear in the <strong>filterable room gallery</strong> on the Custom Furniture page. Each slot shows the category it belongs to — upload your best project photos here.
+          </div>
+          <div class="upload-grid" id="cat-furniture-grid"></div>
+        </div>
+
+        <!-- HOW TO USE -->
+        <div style="margin-top:2.5rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;">
+          <h3 style="font-size:.9rem;font-weight:700;color:var(--cream);margin-bottom:1rem;display:flex;align-items:center;gap:8px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="width:16px;height:16px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            How to Upload Category Photos
+          </h3>
+          <ol style="list-style:decimal;padding-left:1.3rem;font-size:.82rem;color:var(--text);line-height:2;">
+            <li><strong>Click any image slot</strong> below — a file picker opens on your device</li>
+            <li>Select a <strong>.jpg, .jpeg, .png, or .webp</strong> photo (max 8MB recommended)</li>
+            <li>The photo appears as a <strong>live preview</strong> immediately</li>
+            <li>Click <strong>"Download Updated Files"</strong> in the top bar to get the updated HTML files</li>
+            <li>Upload those HTML files to your web host to go live</li>
+          </ol>
+          <div style="margin-top:1rem;padding:.65rem .85rem;background:rgba(166,124,82,.06);border-radius:7px;font-size:.78rem;color:var(--muted);">
+            ⚠️ <strong style="color:var(--cream);">Note:</strong> Photo uploads are previewed locally and embedded as data URLs in the downloaded HTML. For best performance, also upload your images to your <code>images/</code> folder on your web host and use the URL method in the Images tab.
+          </div>
+        </div>
+
+      </div><!-- /panel-category -->
+
+    </div>
+  </div>
 
   <!-- Save Panel -->
   <div class="save-panel" id="save-panel">
-    <p><strong id="dirty-count">0</strong> change(s) pending — click Save to push to Google Sheet.</p>
+    <p><strong id="dirty-count">0</strong> image(s) changed — download updated files to go live.</p>
     <div class="save-panel-btns">
-      <button class="btn-discard" id="btn-discard">Discard</button>
+      <button class="btn-discard" id="btn-discard">Discard Changes</button>
       <button class="btn-download" id="btn-download-panel">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Save All &amp; Push Live
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download Files
       </button>
     </div>
   </div>
@@ -376,847 +1521,889 @@
   <div id="toast"></div>
 
   <script>
-  /* ════════════════════════════════════════════════════════════════
-     ⚙️  CONFIG — Replace all 4 values below. See guide in Apps Script file.
-  ════════════════════════════════════════════════════════════════ */
-  const CLOUDINARY_CLOUD_NAME    = 'dgo738djk';          // ← cloudinary.com → Dashboard
-  const CLOUDINARY_UPLOAD_PRESET = 'puniya-interiors';       // ← Settings → Upload → Upload Presets
-  const SHEET_CSV_URL            = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTnQxFhcSgqB_tv89Jflh3pLKzxprMkwtvUa-Bk_r5b3KDCF9QCSrSC1qC1Iz1FCXsDqTWnGka7_LnM/pub?output=csv'; // ← Google Sheet → File → Publish to web → CSV
-  const APPS_SCRIPT_URL          = 'https://script.google.com/macros/s/AKfycbwnJuspJoCR29IhslDFCafeRd3mkPFN4eDnW_WEFEcQF_7H_V7mKP9YQMyqj13erz6Mcw/exec';      // ← From Apps Script deployment (see apps-script.gs)
+    /* ════════════════════════════════════════════
+       PASSWORD — SHA-256 of "Interior@2025"
+    ════════════════════════════════════════════ */
+    const CORRECT_HASH = 'a3b68f7f8febf83a4dc144b14e0129d7937dc800c79161784501d68293cb7773';
+    // We compute at runtime so no plain text in source
 
-  /* ════ PASSWORD (SHA-256 of "Interior@2025") ════ */
-  const CORRECT_HASH = 'a3b68f7f8febf83a4dc144b14e0129d7937dc800c79161784501d68293cb7773';
-  async function sha256(str) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  }
-
-  /* ════ STATIC IMAGE PAGES (not portfolio projects) ════ */
-  const PAGES = [
-    { id:'brand', label:'Brand Assets', file:'(all pages)', icon:'home', folder:'images',
-      slots:[{ key:'logo', filename:'logo.png', label:'Company Logo', alt:'Puniya Interiors Logo' }] },
-    { id:'index', label:'Home Page', file:'index.html', icon:'home', folder:'images',
-      slots:[
-        { key:'hero-photo-1', filename:'hero-photo-1.jpg', label:'Hero Photo 1', alt:'Premium modular kitchen by Puniya Interiors' },
-        { key:'hero-photo-2', filename:'hero-photo-2.jpg', label:'Hero Photo 2', alt:'Custom wardrobe and bedroom interior' },
-        { key:'hero-photo-3', filename:'hero-photo-3.jpg', label:'Hero Photo 3', alt:'Living room with TV unit' },
-        { key:'hero-photo-4', filename:'hero-photo-4.jpg', label:'Hero Photo 4', alt:'False ceiling with cove lighting' },
-        { key:'hero-photo-5', filename:'hero-photo-5.jpg', label:'Hero Photo 5', alt:'Complete home renovation' },
-        { key:'kitchen-card', filename:'kitchen-card.jpg', label:'Services — Kitchen Card', alt:'Modular kitchen design card' },
-        { key:'furniture-card', filename:'furniture-card.jpg', label:'Services — Furniture Card', alt:'Custom furniture card' },
-        { key:'ceiling-card', filename:'ceiling-card.jpg', label:'Services — Ceiling Card', alt:'False ceiling card' },
-        { key:'before-room', filename:'before-room.jpg', label:'Before/After — BEFORE', alt:'Before renovation photo' },
-        { key:'after-room', filename:'after-room.jpg', label:'Before/After — AFTER', alt:'After renovation photo' },
-      ]},
-    { id:'kitchens', label:'Modular Kitchens Page', file:'modular-kitchens.html', icon:'kitchen', folder:'images',
-      slots:[
-        { key:'kitchen-hero', filename:'kitchen-hero.jpg', label:'Hero Banner', alt:'Premium modular kitchen hero' },
-        { key:'kitchen-portrait', filename:'kitchen-portrait.jpg', label:'Feature Portrait', alt:'Elegant modular kitchen portrait' },
-        { key:'kitchen-straight', filename:'kitchen-straight.jpg', label:'Straight / L-Shape Layout', alt:'Straight L-shape modular kitchen' },
-        { key:'kitchen-island', filename:'kitchen-island.jpg', label:'Island Kitchen Layout', alt:'Island kitchen Pune' },
-        { key:'k-gallery-1', filename:'k-gallery-1.jpg', label:'Kitchen Gallery 1', alt:'Kitchen project 1' },
-        { key:'k-gallery-2', filename:'k-gallery-2.jpg', label:'Kitchen Gallery 2', alt:'Kitchen project 2' },
-        { key:'k-gallery-3', filename:'k-gallery-3.jpg', label:'Kitchen Gallery 3', alt:'Kitchen project 3' },
-        { key:'k-gallery-4', filename:'k-gallery-4.jpg', label:'Kitchen Gallery 4', alt:'Kitchen project 4' },
-        { key:'k-gallery-5', filename:'k-gallery-5.jpg', label:'Kitchen Gallery 5', alt:'Kitchen project 5' },
-      ]},
-    { id:'furniture', label:'Furniture Page', file:'custom-furniture.html', icon:'furniture', folder:'images',
-      slots:[
-        { key:'furniture-hero', filename:'furniture-hero.jpg', label:'Hero Banner', alt:'Complete interior solutions hero' },
-        { key:'balcony-card', filename:'balcony-card.jpg', label:'Balcony Section', alt:'Balcony interior design' },
-        { key:'wallpaper-card', filename:'wallpaper-card.jpg', label:'Wallpaper Section', alt:'Custom designed wallpapers' },
-        { key:'office-card', filename:'office-card.jpg', label:'Office Section', alt:'Office interior design' },
-        { key:'shop-card', filename:'shop-card.jpg', label:'Shop Section', alt:'Retail shop interior design' },
-        { key:'mall-card', filename:'mall-card.jpg', label:'Mall Section', alt:'Mall and commercial interior' },
-        { key:'craftsmanship', filename:'craftsmanship.jpg', label:'Craftsmanship Photo', alt:'Craftsmen at work' },
-        { key:'f-gallery-1', filename:'f-gallery-1.jpg', label:'Furniture Gallery 1', alt:'Wardrobe project' },
-        { key:'f-gallery-2', filename:'f-gallery-2.jpg', label:'Furniture Gallery 2', alt:'Living room project' },
-        { key:'f-gallery-3', filename:'f-gallery-3.jpg', label:'Furniture Gallery 3', alt:'Bedroom project' },
-        { key:'f-gallery-4', filename:'f-gallery-4.jpg', label:'Furniture Gallery 4', alt:'False ceiling project' },
-        { key:'f-gallery-5', filename:'f-gallery-5.jpg', label:'Furniture Gallery 5', alt:'Entrance design' },
-      ]},
-    { id:'about', label:'About Page', file:'about.html', icon:'about', folder:'images',
-      slots:[
-        { key:'about-hero', filename:'about-hero.jpg', label:'Hero Banner', alt:'Puniya Interiors showroom Dhanori Pune' },
-        { key:'founder', filename:'founder.jpg', label:'Founder Portrait', alt:'Founder of Puniya Interiors' },
-        { key:'team-1', filename:'team-1.jpg', label:'Founder Card Photo', alt:'Founder photo card' },
-      ]},
-    { id:'portfolio-hero-only', label:'Portfolio Page — Hero', file:'portfolio.html', icon:'portfolio', folder:'images/projects',
-      slots:[
-        { key:'portfolio-hero', filename:'portfolio-hero.jpg', label:'Portfolio Hero Banner', alt:'Completed interior projects hero' },
-      ]},
-  ];
-
-  /* ════ ACCESSORY PAGES (3×3 grid) ════ */
-  const ACCESSORY_PAGES = [
-    { id:'kitchen-accessories', label:'Kitchen Accessories', file:'modular-kitchens.html', icon:'kitchen', folder:'images/kitchen-accessories',
-      slots:[
-        { key:'ka-tandems', filename:'ka-tandems.jpg', label:'Tandems', alt:'Tandem deep drawer system' },
-        { key:'ka-ss-trolleys', filename:'ka-ss-trolleys.jpg', label:'SS Trolleys', alt:'Stainless steel pull-out trolley' },
-        { key:'ka-pantry-unit', filename:'ka-pantry-unit.jpg', label:'Pantry Unit', alt:'Floor-to-ceiling pantry unit' },
-        { key:'ka-tall-unit', filename:'ka-tall-unit.jpg', label:'Tall Unit', alt:'Full-height tall unit kitchen' },
-        { key:'ka-rolling-shutter', filename:'ka-rolling-shutter.jpg', label:'Rolling Shutter Unit', alt:'Rolling shutter appliance cabinet' },
-        { key:'ka-wicker-baskets', filename:'ka-wicker-baskets.jpg', label:'Wicker Baskets', alt:'Wicker pull-out vegetable baskets' },
-        { key:'ka-loft', filename:'ka-loft.jpg', label:'Loft Storage', alt:'Overhead loft cabinet kitchen' },
-        { key:'ka-platform-top', filename:'ka-platform-top.jpg', label:'Platform Top', alt:'Quartz granite kitchen platform top' },
-        { key:'ka-handles', filename:'ka-handles.jpg', label:'Premium Handles', alt:'Premium kitchen cabinet handles' },
-        { key:'ka-magic-corner', filename:'ka-magic-corner.jpg', label:'Magic Corner', alt:'Magic corner rotating cabinet' },
-        { key:'ka-larder-pullout', filename:'ka-larder-pullout.jpg', label:'Pantry Pull-Out Larder', alt:'Pantry pull-out larder spice storage' },
-        { key:'ka-masala-pullout', filename:'ka-masala-pullout.jpg', label:'Masala Pull-Out', alt:'Masala pull-out spice drawer' },
-        { key:'ka-dbr-lift', filename:'ka-dbr-lift.jpg', label:'DBR Lift-Up Elevator', alt:'DBR pull-down lift-up basket elevator' },
-      ]},
-    { id:'furniture-categories', label:'Furniture Categories', file:'custom-furniture.html', icon:'furniture', folder:'images/furniture-categories',
-      slots:[
-        { key:'fc-bedroom', filename:'fc-bedroom.jpg', label:'Bedroom', alt:'Bedroom interior design' },
-        { key:'fc-living-room', filename:'fc-living-room.jpg', label:'Living Room', alt:'Living room TV unit interior' },
-        { key:'fc-entrance', filename:'fc-entrance.jpg', label:'Entrance', alt:'Entrance foyer interior design' },
-        { key:'fc-balcony', filename:'fc-balcony.jpg', label:'Balcony', alt:'Balcony interior design' },
-        { key:'fc-false-ceiling', filename:'fc-false-ceiling.jpg', label:'False Ceiling & Civil', alt:'False ceiling and civil work' },
-        { key:'fc-lighting', filename:'fc-lighting.jpg', label:'Lighting', alt:'Interior lighting design' },
-        { key:'fc-wallpaper', filename:'fc-wallpaper.jpg', label:'Wallpapers', alt:'Custom wallpaper installation' },
-        { key:'fc-tiles', filename:'fc-tiles.jpg', label:'Tiles', alt:'Tile flooring and wall design' },
-        { key:'fc-commercial', filename:'fc-commercial.jpg', label:'Commercial', alt:'Commercial interior design' },
-      ]},
-  ];
-
-  /* ════ PORTFOLIO PROJECTS (dynamic — loaded from sheet / localStorage) ════ */
-  let PROJECTS = [
-    { id:'proj-kulkarni', name:'The Kulkarni Residence', category:'renovation', location:'Viman Nagar, Pune', tag:'Full Home Renovation · 3BHK',
-      photos:[
-        { key:'p-turnkey-1',  url:'', label:'Cover Photo' },
-        { key:'p-turnkey-1b', url:'', label:'Photo 2' },
-        { key:'p-turnkey-1c', url:'', label:'Photo 3' },
-        { key:'p-turnkey-1d', url:'', label:'Photo 4' },
-        { key:'p-turnkey-1e', url:'', label:'Photo 5' },
-      ]},
-    { id:'proj-baner-kitchen', name:'Island Kitchen — Baner Villa', category:'kitchen', location:'Baner, Pune', tag:'Modular Kitchen',
-      photos:[
-        { key:'p-kitchen-1',  url:'', label:'Cover Photo' },
-        { key:'p-kitchen-1b', url:'', label:'Photo 2' },
-        { key:'p-kitchen-1c', url:'', label:'Photo 3' },
-        { key:'p-kitchen-1d', url:'', label:'Photo 4' },
-      ]},
-    { id:'proj-kharadi-bed', name:'Master Bedroom Suite', category:'bedroom', location:'Kharadi, Pune', tag:'Bedroom Interior',
-      photos:[
-        { key:'p-bedroom-1',  url:'', label:'Cover Photo' },
-        { key:'p-bedroom-1b', url:'', label:'Photo 2' },
-        { key:'p-bedroom-1c', url:'', label:'Photo 3' },
-        { key:'p-bedroom-1d', url:'', label:'Photo 4' },
-      ]},
-    { id:'proj-hadapsar-kitchen', name:'L-Shape Kitchen — Hadapsar', category:'kitchen', location:'Hadapsar, Pune', tag:'Modular Kitchen',
-      photos:[
-        { key:'p-kitchen-2',  url:'', label:'Cover Photo' },
-        { key:'p-kitchen-2b', url:'', label:'Photo 2' },
-        { key:'p-kitchen-2c', url:'', label:'Photo 3' },
-        { key:'p-kitchen-2d', url:'', label:'Photo 4' },
-      ]},
-    { id:'proj-wakad-wardrobe', name:'Walk-in Wardrobe', category:'furniture', location:'Wakad, Pune', tag:'Wardrobe System',
-      photos:[
-        { key:'p-furniture-1',  url:'', label:'Cover Photo' },
-        { key:'p-furniture-1b', url:'', label:'Photo 2' },
-        { key:'p-furniture-1c', url:'', label:'Photo 3' },
-        { key:'p-furniture-1d', url:'', label:'Photo 4' },
-      ]},
-    { id:'proj-patil-home', name:'The Patil Home', category:'renovation', location:'Wakad, Pune', tag:'Full Home Renovation · 4BHK',
-      photos:[
-        { key:'p-turnkey-2',  url:'', label:'Cover Photo' },
-        { key:'p-turnkey-2b', url:'', label:'Photo 2' },
-        { key:'p-turnkey-2c', url:'', label:'Photo 3' },
-        { key:'p-turnkey-2d', url:'', label:'Photo 4' },
-        { key:'p-turnkey-2e', url:'', label:'Photo 5' },
-      ]},
-    { id:'proj-aundh-living', name:'Contemporary Living Room', category:'furniture', location:'Aundh, Pune', tag:'Living Room & TV Unit',
-      photos:[
-        { key:'p-living-1',  url:'', label:'Cover Photo' },
-        { key:'p-living-1b', url:'', label:'Photo 2' },
-        { key:'p-living-1c', url:'', label:'Photo 3' },
-        { key:'p-living-1d', url:'', label:'Photo 4' },
-      ]},
-    { id:'proj-kp-bedroom', name:"Kids' Study Bedroom", category:'bedroom', location:'Koregaon Park, Pune', tag:'Bedroom & Study',
-      photos:[
-        { key:'p-bedroom-2',  url:'', label:'Cover Photo' },
-        { key:'p-bedroom-2b', url:'', label:'Photo 2' },
-        { key:'p-bedroom-2c', url:'', label:'Photo 3' },
-        { key:'p-bedroom-2d', url:'', label:'Photo 4' },
-      ]},
-    { id:'proj-nibm-kitchen', name:'Parallel Kitchen — NIBM Road', category:'kitchen', location:'NIBM Road, Pune', tag:'Modular Kitchen',
-      photos:[
-        { key:'p-kitchen-3',  url:'', label:'Cover Photo' },
-        { key:'p-kitchen-3b', url:'', label:'Photo 2' },
-        { key:'p-kitchen-3c', url:'', label:'Photo 3' },
-        { key:'p-kitchen-3d', url:'', label:'Photo 4' },
-      ]},
-    { id:'proj-hinjewadi-office', name:'Corporate Office Interior', category:'commercial', location:'Hinjewadi, Pune', tag:'Commercial — Office',
-      photos:[
-        { key:'p-commercial-1',  url:'', label:'Cover Photo' },
-        { key:'p-commercial-1b', url:'', label:'Photo 2' },
-        { key:'p-commercial-1c', url:'', label:'Photo 3' },
-        { key:'p-commercial-1d', url:'', label:'Photo 4' },
-      ]},
-  ];
-
-  /* ════ STATE ════ */
-  const changes = {};
-  PAGES.forEach(p => { changes[p.id] = {}; });
-  ACCESSORY_PAGES.forEach(p => { changes[p.id] = {}; });
-  changes['portfolio-projects'] = {};
-
-  let videoUrls = {};
-  let sheetCsvUrl = '';
-  let dirtyItems = 0;
-
-  /* ════ ICONS ════ */
-  function iconSVG(type) {
-    const icons = {
-      home: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
-      kitchen: '<path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>',
-      furniture: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>',
-      portfolio: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
-      about: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>',
-    };
-    return icons[type] || icons.home;
-  }
-
-  /* ════ RENDER IMAGES TAB ════ */
-  function render() {
-    const container = document.getElementById('sections-container');
-    container.innerHTML = '';
-    PAGES.forEach(page => {
-      const sec = document.createElement('div');
-      sec.className = 'section';
-      sec.innerHTML = `
-        <div class="section-head">
-          <div class="section-head-left">
-            <div class="section-icon ic-${page.icon}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${iconSVG(page.icon)}</svg>
-            </div>
-            <div>
-              <div class="section-label">${page.label}</div>
-              <span class="section-file">${page.file}</span>
-            </div>
-          </div>
-        </div>
-        <div class="img-grid" id="grid-${page.id}"></div>`;
-      container.appendChild(sec);
-      const grid = sec.querySelector(`#grid-${page.id}`);
-      page.slots.forEach(slot => renderImageCard(grid, page.id, slot, page.folder || 'images'));
-    });
-  }
-
-  /* ════ RENDER ACCESSORIES TAB (3×3) ════ */
-  function renderAccessories() {
-    const container = document.getElementById('accessories-container');
-    container.innerHTML = '';
-    ACCESSORY_PAGES.forEach(page => {
-      const sec = document.createElement('div');
-      sec.className = 'section';
-      sec.innerHTML = `
-        <div class="section-head">
-          <div class="section-head-left">
-            <div class="section-icon ic-${page.icon}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${iconSVG(page.icon)}</svg>
-            </div>
-            <div>
-              <div class="section-label">${page.label}</div>
-              <span class="section-file">${page.folder}/</span>
-            </div>
-          </div>
-        </div>
-        <div class="img-grid-3col" id="grid-${page.id}"></div>`;
-      container.appendChild(sec);
-      const grid = sec.querySelector(`#grid-${page.id}`);
-      page.slots.forEach(slot => renderImageCard(grid, page.id, slot, page.folder));
-    });
-  }
-
-  /* ════ RENDER PORTFOLIO PROJECTS TAB (2×2 cover cards) ════ */
-  function renderPortfolioProjects() {
-    const container = document.getElementById('portfolio-projects-container');
-    container.innerHTML = '';
-    if (!PROJECTS.length) {
-      container.innerHTML = '<p style="color:var(--muted);font-size:.85rem;padding:1rem 0;">No projects yet. Add one above!</p>';
-      return;
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
-    PROJECTS.forEach(proj => {
-      const group = document.createElement('div');
-      group.className = 'project-group';
-      group.id = `projgroup-${proj.id}`;
-      group.innerHTML = `
-        <div class="project-group-head">
-          <div>
-            <div class="project-group-title">${proj.name}</div>
-            <div class="project-group-meta">${proj.tag} · ${proj.location}</div>
-          </div>
-          <div class="project-group-actions">
-            <button class="btn-add-photo" onclick="addPhotoToProject('${proj.id}')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-              Add Photo
-            </button>
-            <button class="btn-delete-project" onclick="deleteProject('${proj.id}')">Delete Project</button>
-          </div>
-        </div>
-        <div class="img-grid-2col" id="photos-${proj.id}"></div>`;
-      container.appendChild(group);
-      const grid = group.querySelector(`#photos-${proj.id}`);
-      proj.photos.forEach(photo => renderProjectPhotoCard(grid, proj.id, photo));
-    });
-  }
 
-  /* ════ RENDER SINGLE IMAGE CARD ════ */
-  function renderImageCard(grid, pageId, slot, folder) {
-    const card = document.createElement('div');
-    card.className = 'img-card';
-    card.id = `card-${pageId}-${slot.key}`;
-    const currentVal = (changes[pageId] && changes[pageId][slot.key]) || slot.url || '';
-    const previewSrc = currentVal || `${folder}/${slot.filename}`;
-    card.innerHTML = `
-      <div class="img-preview">
-        <div class="placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>${folder}/${slot.filename}</span>
-        </div>
-        <img ${previewSrc ? `src="${previewSrc}"` : ''} alt="${slot.alt}"
-          onload="this.style.opacity=1;this.previousElementSibling.style.display='none'"
-          onerror="this.style.display='none';this.previousElementSibling.style.display='flex'"
-          style="opacity:0;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
-        <div class="status-dot"></div>
-      </div>
-      <div class="img-info">
-        <div class="img-slot-name">${slot.label}</div>
-        <div class="img-alt">${slot.alt}</div>
-        <code class="img-current">${folder}/${slot.filename}</code>
-        <button class="btn-upload" onclick="openUploadWidget('${pageId}','${slot.key}','${folder}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
-          Upload Photo
-        </button>
-        <div class="cloudinary-not-configured" id="cld-warn-${pageId}-${slot.key}">
-          ⚠️ Set CLOUDINARY_CLOUD_NAME &amp; CLOUDINARY_UPLOAD_PRESET at top of script first.
-        </div>
-        <div class="upload-or">or paste URL</div>
-        <div class="input-row">
-          <input class="url-input" type="url" id="input-${pageId}-${slot.key}" placeholder="Paste image URL…" value="${currentVal}" />
-          <button class="btn-apply" onclick="applyChange('${pageId}','${slot.key}')">Apply</button>
-        </div>
-      </div>`;
-    grid.appendChild(card);
-    card.querySelector('.url-input').addEventListener('keydown', e => { if (e.key==='Enter') applyChange(pageId, slot.key); });
-  }
+    /* ════════════════════════════════════════════
+       IMAGE SLOTS — all images across the site
+    ════════════════════════════════════════════ */
+    const PAGES = [
+      {
+        id: 'brand',
+        label: 'Brand Assets (All Pages)',
+        file: 'logo.png',
+        icon: 'home',
+        slots: [
+          { key: 'logo', filename: 'logo.png', label: 'Company Logo', alt: 'Puniya Interiors Logo' }
+        ]
+      },
+      {
+        id: 'index',
+        label: 'Home Page',
+        file: 'index.html',
+        icon: 'home',
+        slots: [
+          { key: 'hero-photo-1', filename: 'hero-photo-1.jpg', label: 'Hero Photo 1', alt: 'Premium modular kitchen by Puniya Interiors, Pune' },
+          { key: 'hero-photo-2', filename: 'hero-photo-2.jpg', label: 'Hero Photo 2', alt: 'Custom wardrobe and bedroom interior' },
+          { key: 'hero-photo-3', filename: 'hero-photo-3.jpg', label: 'Hero Photo 3', alt: 'Living room with TV unit' },
+          { key: 'hero-photo-4', filename: 'hero-photo-4.jpg', label: 'Hero Photo 4', alt: 'False ceiling with cove lighting' },
+          { key: 'hero-photo-5', filename: 'hero-photo-5.jpg', label: 'Hero Photo 5', alt: 'Complete home renovation' },
+          { key: 'kitchen-card', filename: 'kitchen-card.jpg', label: 'Services — Kitchen', alt: 'Modular kitchen design card' },
+          { key: 'furniture-card', filename: 'furniture-card.jpg', label: 'Services — Furniture', alt: 'Custom furniture card' },
+          { key: 'ceiling-card', filename: 'ceiling-card.jpg', label: 'Services — Ceiling', alt: 'False ceiling card' },
+          { key: 'before-room', filename: 'before-room.jpg', label: 'Before/After — BEFORE', alt: 'Before renovation photo' },
+          { key: 'after-room', filename: 'after-room.jpg', label: 'Before/After — AFTER', alt: 'After renovation photo' },
+        ]
+      },
+      {
+        id: 'kitchens',
+        label: 'Modular Kitchens Page',
+        file: 'modular-kitchens.html',
+        icon: 'kitchen',
+        slots: [
+          { key: 'kitchen-hero', filename: 'kitchen-hero.jpg', label: 'Hero Banner', alt: 'Premium modular kitchen hero' },
+          { key: 'kitchen-portrait', filename: 'kitchen-portrait.jpg', label: 'Feature Portrait', alt: 'Elegant modular kitchen portrait' },
+          { key: 'kitchen-straight', filename: 'kitchen-straight.jpg', label: 'Straight/L-shape', alt: 'Straight L-shape modular kitchen' },
+          { key: 'kitchen-island', filename: 'kitchen-island.jpg', label: 'Island Kitchen', alt: 'Island kitchen Pune' },
+          { key: 'k-gallery-1', filename: 'k-gallery-1.jpg', label: 'Kitchen Gallery 1', alt: 'Kitchen project 1' },
+          { key: 'k-gallery-2', filename: 'k-gallery-2.jpg', label: 'Kitchen Gallery 2', alt: 'Kitchen project 2' },
+          { key: 'k-gallery-3', filename: 'k-gallery-3.jpg', label: 'Kitchen Gallery 3', alt: 'Kitchen project 3' },
+          { key: 'k-gallery-4', filename: 'k-gallery-4.jpg', label: 'Kitchen Gallery 4', alt: 'Kitchen project 4' },
+          { key: 'k-gallery-5', filename: 'k-gallery-5.jpg', label: 'Kitchen Gallery 5', alt: 'Kitchen project 5' },
+          // ── Category Showcase Images ──
+          { key: 'k-cat-acrylic-1',  filename: 'k-cat-acrylic-1.jpg',  label: 'Category: Acrylic #1',   alt: 'High-gloss acrylic modular kitchen' },
+          { key: 'k-cat-acrylic-2',  filename: 'k-cat-acrylic-2.jpg',  label: 'Category: Acrylic #2',   alt: 'Parallel acrylic modular kitchen' },
+          { key: 'k-cat-acrylic-3',  filename: 'k-cat-acrylic-3.jpg',  label: 'Category: Acrylic #3',   alt: 'Straight kitchen with tall unit' },
+          { key: 'k-cat-laminate-1', filename: 'k-cat-laminate-1.jpg', label: 'Category: Laminate #1',  alt: 'L-shape laminate finish kitchen' },
+          { key: 'k-cat-laminate-2', filename: 'k-cat-laminate-2.jpg', label: 'Category: Laminate #2',  alt: 'Woodgrain laminate kitchen' },
+          { key: 'k-cat-laminate-3', filename: 'k-cat-laminate-3.jpg', label: 'Category: Laminate #3',  alt: 'Two-tone laminate kitchen' },
+          { key: 'k-cat-island-1',   filename: 'k-cat-island-1.jpg',   label: 'Category: Island #1',    alt: 'Island kitchen with breakfast counter' },
+          { key: 'k-cat-island-2',   filename: 'k-cat-island-2.jpg',   label: 'Category: Island #2',    alt: 'Compact kitchen with breakfast bar' },
+          { key: 'k-cat-parallel-1', filename: 'k-cat-parallel-1.jpg', label: 'Category: Parallel #1',  alt: 'U-shape open kitchen' },
+        ]
+      },
+      {
+        id: 'furniture',
+        label: 'Custom Furniture Page',
+        file: 'custom-furniture.html',
+        icon: 'furniture',
+        slots: [
+          { key: 'furniture-hero', filename: 'furniture-hero.jpg', label: 'Hero Banner', alt: 'Complete interior solutions hero' },
+          { key: 'balcony-card', filename: 'balcony-card.jpg', label: 'Balcony Section', alt: 'Balcony interior design' },
+          { key: 'wallpaper-card', filename: 'wallpaper-card.jpg', label: 'Wallpaper Section', alt: 'Custom designed wallpapers' },
+          { key: 'office-card', filename: 'office-card.jpg', label: 'Office Section', alt: 'Office interior design' },
+          { key: 'shop-card', filename: 'shop-card.jpg', label: 'Shop Section', alt: 'Retail shop interior design' },
+          { key: 'mall-card', filename: 'mall-card.jpg', label: 'Mall Section', alt: 'Mall and commercial interior' },
+          { key: 'craftsmanship', filename: 'craftsmanship.jpg', label: 'Craftsmanship', alt: 'Craftsmen at work' },
+          { key: 'f-gallery-1', filename: 'f-gallery-1.jpg', label: 'Furniture Gallery 1', alt: 'Wardrobe project' },
+          { key: 'f-gallery-2', filename: 'f-gallery-2.jpg', label: 'Furniture Gallery 2', alt: 'Living room project' },
+          { key: 'f-gallery-3', filename: 'f-gallery-3.jpg', label: 'Furniture Gallery 3', alt: 'Bedroom project' },
+          { key: 'f-gallery-4', filename: 'f-gallery-4.jpg', label: 'Furniture Gallery 4', alt: 'False ceiling project' },
+          { key: 'f-gallery-5', filename: 'f-gallery-5.jpg', label: 'Furniture Gallery 5', alt: 'Entrance design' },
+          // ── Category Showcase Images ──
+          { key: 'f-cat-wardrobe-1',   filename: 'f-cat-wardrobe-1.jpg',   label: 'Category: Wardrobe #1',    alt: 'Built-in wardrobe with mirror' },
+          { key: 'f-cat-wardrobe-2',   filename: 'f-cat-wardrobe-2.jpg',   label: 'Category: Wardrobe #2',    alt: 'Walk-in wardrobe with island dresser' },
+          { key: 'f-cat-bedroom-1',    filename: 'f-cat-bedroom-1.jpg',    label: 'Category: Bedroom #1',     alt: 'Master bedroom with headboard' },
+          { key: 'f-cat-bedroom-2',    filename: 'f-cat-bedroom-2.jpg',    label: 'Category: Bedroom #2',     alt: 'Kids study bedroom furniture' },
+          { key: 'f-cat-living-1',     filename: 'f-cat-living-1.jpg',     label: 'Category: Living Room #1', alt: 'Contemporary TV unit and living room' },
+          { key: 'f-cat-living-2',     filename: 'f-cat-living-2.jpg',     label: 'Category: Living Room #2', alt: 'Sofa wall panelling' },
+          { key: 'f-cat-ceiling-1',    filename: 'f-cat-ceiling-1.jpg',    label: 'Category: Ceiling #1',     alt: 'False ceiling with cove lighting' },
+          { key: 'f-cat-ceiling-2',    filename: 'f-cat-ceiling-2.jpg',    label: 'Category: Ceiling #2',     alt: 'POP false ceiling design' },
+          { key: 'f-cat-commercial-1', filename: 'f-cat-commercial-1.jpg', label: 'Category: Office #1',      alt: 'Corporate office fit-out' },
+        ]
+      },
+      {
+        id: 'about',
+        label: 'About Page',
+        file: 'about.html',
+        icon: 'about',
+        slots: [
+          { key: 'about-hero', filename: 'about-hero.jpg', label: 'Hero Banner', alt: 'Puniya Interiors showroom and team in Dhanori, Pune' },
+          { key: 'founder', filename: 'founder.jpg', label: 'Founder Portrait', alt: 'Founder of Puniya Interiors, Dhanori, Pune' },
+          { key: 'team-1', filename: 'team-1.jpg', label: 'Founder Card Photo', alt: 'Founder of Puniya Interiors — Interior Designer, Dhanori Pune' },
+        ]
+      },
+      {
+        id: 'portfolio',
+        label: 'Portfolio Page',
+        file: 'portfolio.html',
+        icon: 'portfolio',
+        slots: [
+          { key: 'portfolio-hero', filename: 'portfolio-hero.jpg', label: 'Hero Banner', alt: 'Completed interior projects hero' },
 
-  /* ════ RENDER PROJECT PHOTO CARD ════ */
-  function renderProjectPhotoCard(grid, projId, photo) {
-    const card = document.createElement('div');
-    card.className = 'img-card';
-    card.id = `card-proj-${projId}-${photo.key}`;
-    const previewSrc = photo.url || `images/projects/${photo.key}.jpg`;
-    card.innerHTML = `
-      <button class="btn-remove-photo" onclick="removePhotoFromProject('${projId}','${photo.key}')" title="Remove photo">×</button>
-      <div class="img-preview">
-        <div class="placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>${photo.label}</span>
-        </div>
-        <img ${photo.url ? `src="${photo.url}"` : ''} alt="${photo.label}"
-          onload="this.style.opacity=1;this.previousElementSibling.style.display='none'"
-          onerror="this.style.display='none';this.previousElementSibling.style.display='flex'"
-          style="opacity:0;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
-        <div class="status-dot"></div>
-      </div>
-      <div class="img-info">
-        <div class="img-slot-name">${photo.label}</div>
-        <button class="btn-upload" onclick="openProjectPhotoUpload('${projId}','${photo.key}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
-          Upload Photo
-        </button>
-        <div class="cloudinary-not-configured" id="cld-warn-proj-${projId}-${photo.key}">
-          ⚠️ Set CLOUDINARY credentials first.
-        </div>
-        <div class="upload-or">or paste URL</div>
-        <div class="input-row">
-          <input class="url-input" type="url" id="input-proj-${projId}-${photo.key}" placeholder="Paste image URL…" value="${photo.url||''}" />
-          <button class="btn-apply" onclick="applyProjectPhotoChange('${projId}','${photo.key}')">Apply</button>
-        </div>
-      </div>`;
-    grid.appendChild(card);
-    card.querySelector('.url-input').addEventListener('keydown', e => { if (e.key==='Enter') applyProjectPhotoChange(projId, photo.key); });
-  }
+          // ── Project 1: The Kulkarni Residence ──
+          { key: 'p-turnkey-1', filename: 'p-turnkey-1.jpg', label: 'Kulkarni Residence — Cover', alt: '3BHK renovation Viman Nagar' },
+          { key: 'p-turnkey-1b', filename: 'p-turnkey-1b.jpg', label: 'Kulkarni Residence — Photo 2', alt: '3BHK renovation photo 2' },
+          { key: 'p-turnkey-1c', filename: 'p-turnkey-1c.jpg', label: 'Kulkarni Residence — Photo 3', alt: '3BHK renovation photo 3' },
+          { key: 'p-turnkey-1d', filename: 'p-turnkey-1d.jpg', label: 'Kulkarni Residence — Photo 4', alt: '3BHK renovation photo 4' },
+          { key: 'p-turnkey-1e', filename: 'p-turnkey-1e.jpg', label: 'Kulkarni Residence — Photo 5', alt: '3BHK renovation photo 5' },
 
-  /* ════ APPLY CHANGE (static slots) ════ */
-  function applyChange(pageId, slotKey) {
-    const input = document.getElementById(`input-${pageId}-${slotKey}`);
-    const url = input.value.trim();
-    if (!url) return;
-    if (!changes[pageId]) changes[pageId] = {};
-    changes[pageId][slotKey] = url;
-    const card = document.getElementById(`card-${pageId}-${slotKey}`);
-    if (card) {
-      const img = card.querySelector('img');
-      const ph = card.querySelector('.placeholder');
-      img.style.opacity = '0'; img.style.display = '';
-      img.onload = () => { img.style.opacity='1'; if(ph) ph.style.display='none'; };
-      img.onerror = () => { img.style.display='none'; if(ph) ph.style.display='flex'; };
-      img.src = url;
-      card.classList.remove('saved'); card.classList.add('dirty');
-    }
-    markDirty();
-    showToast('Preview updated!', true);
-  }
+          // ── Project 2: Island Kitchen — Baner ──
+          { key: 'p-kitchen-1', filename: 'p-kitchen-1.jpg', label: 'Island Kitchen — Cover', alt: 'Island modular kitchen Baner' },
+          { key: 'p-kitchen-1b', filename: 'p-kitchen-1b.jpg', label: 'Island Kitchen — Photo 2', alt: 'Island kitchen photo 2' },
+          { key: 'p-kitchen-1c', filename: 'p-kitchen-1c.jpg', label: 'Island Kitchen — Photo 3', alt: 'Island kitchen photo 3' },
+          { key: 'p-kitchen-1d', filename: 'p-kitchen-1d.jpg', label: 'Island Kitchen — Photo 4', alt: 'Island kitchen photo 4' },
 
-  /* ════ APPLY PROJECT PHOTO CHANGE ════ */
-  function applyProjectPhotoChange(projId, photoKey) {
-    const input = document.getElementById(`input-proj-${projId}-${photoKey}`);
-    const url = input.value.trim();
-    if (!url) return;
-    const proj = PROJECTS.find(p => p.id === projId);
-    if (!proj) return;
-    const photo = proj.photos.find(ph => ph.key === photoKey);
-    if (photo) photo.url = url;
-    const card = document.getElementById(`card-proj-${projId}-${photoKey}`);
-    if (card) {
-      const img = card.querySelector('img');
-      const ph = card.querySelector('.placeholder');
-      img.style.opacity='0'; img.style.display='';
-      img.onload=()=>{ img.style.opacity='1'; if(ph) ph.style.display='none'; };
-      img.onerror=()=>{ img.style.display='none'; if(ph) ph.style.display='flex'; };
-      img.src = url;
-      card.classList.remove('saved'); card.classList.add('dirty');
-    }
-    markDirty();
-    showToast('Photo updated!', true);
-  }
+          // ── Project 3: Master Bedroom — Kharadi ──
+          { key: 'p-bedroom-1', filename: 'p-bedroom-1.jpg', label: 'Master Bedroom — Cover', alt: 'Master bedroom Kharadi' },
+          { key: 'p-bedroom-1b', filename: 'p-bedroom-1b.jpg', label: 'Master Bedroom — Photo 2', alt: 'Master bedroom photo 2' },
+          { key: 'p-bedroom-1c', filename: 'p-bedroom-1c.jpg', label: 'Master Bedroom — Photo 3', alt: 'Master bedroom photo 3' },
+          { key: 'p-bedroom-1d', filename: 'p-bedroom-1d.jpg', label: 'Master Bedroom — Photo 4', alt: 'Master bedroom photo 4' },
 
-  /* ════ PROJECT MANAGEMENT ════ */
-  function createProject() {
-    const name = document.getElementById('new-proj-name').value.trim();
-    const category = document.getElementById('new-proj-category').value;
-    const location = document.getElementById('new-proj-location').value.trim();
-    const tag = document.getElementById('new-proj-tag').value.trim();
-    if (!name) { showToast('Please enter a project name.', false); return; }
-    const id = 'proj-' + Date.now();
-    const newProj = { id, name, category, location: location||'Pune', tag: tag||name,
-      photos:[{ key: id+'-cover', url:'', label:'Cover Photo' }] };
-    PROJECTS.unshift(newProj);
-    document.getElementById('new-proj-name').value = '';
-    document.getElementById('new-proj-location').value = '';
-    document.getElementById('new-proj-tag').value = '';
-    renderPortfolioProjects();
-    markDirty();
-    showToast('Project created! Upload photos now.', true);
-    // Scroll to new project
-    setTimeout(() => { document.getElementById(`projgroup-${id}`)?.scrollIntoView({ behavior:'smooth', block:'start' }); }, 100);
-  }
+          // ── Project 4: L-Shape Kitchen — Hadapsar ──
+          { key: 'p-kitchen-2', filename: 'p-kitchen-2.jpg', label: 'L-Shape Kitchen — Cover', alt: 'L-shape kitchen Hadapsar' },
+          { key: 'p-kitchen-2b', filename: 'p-kitchen-2b.jpg', label: 'L-Shape Kitchen — Photo 2', alt: 'L-shape kitchen photo 2' },
+          { key: 'p-kitchen-2c', filename: 'p-kitchen-2c.jpg', label: 'L-Shape Kitchen — Photo 3', alt: 'L-shape kitchen photo 3' },
+          { key: 'p-kitchen-2d', filename: 'p-kitchen-2d.jpg', label: 'L-Shape Kitchen — Photo 4', alt: 'L-shape kitchen photo 4' },
 
-  function addPhotoToProject(projId) {
-    const proj = PROJECTS.find(p => p.id === projId);
-    if (!proj) return;
-    const n = proj.photos.length + 1;
-    const newPhoto = { key: projId+'-photo-'+Date.now(), url:'', label:'Photo '+n };
-    proj.photos.push(newPhoto);
-    const grid = document.getElementById(`photos-${projId}`);
-    if (grid) renderProjectPhotoCard(grid, projId, newPhoto);
-    markDirty();
-    showToast('Photo slot added!', true);
-  }
+          // ── Project 5: Walk-in Wardrobe — Wakad ──
+          { key: 'p-furniture-1', filename: 'p-furniture-1.jpg', label: 'Walk-in Wardrobe — Cover', alt: 'Walk-in wardrobe Wakad' },
+          { key: 'p-furniture-1b', filename: 'p-furniture-1b.jpg', label: 'Walk-in Wardrobe — Photo 2', alt: 'Walk-in wardrobe photo 2' },
+          { key: 'p-furniture-1c', filename: 'p-furniture-1c.jpg', label: 'Walk-in Wardrobe — Photo 3', alt: 'Walk-in wardrobe photo 3' },
+          { key: 'p-furniture-1d', filename: 'p-furniture-1d.jpg', label: 'Walk-in Wardrobe — Photo 4', alt: 'Walk-in wardrobe photo 4' },
 
-  function removePhotoFromProject(projId, photoKey) {
-    if (!confirm('Remove this photo slot?')) return;
-    const proj = PROJECTS.find(p => p.id === projId);
-    if (!proj) return;
-    proj.photos = proj.photos.filter(ph => ph.key !== photoKey);
-    const card = document.getElementById(`card-proj-${projId}-${photoKey}`);
-    if (card) card.remove();
-    markDirty();
-    showToast('Photo removed.', false);
-  }
+          // ── Project 6: The Patil Home — Wakad ──
+          { key: 'p-turnkey-2', filename: 'p-turnkey-2.jpg', label: 'Patil Home — Cover', alt: '4BHK renovation Wakad' },
+          { key: 'p-turnkey-2b', filename: 'p-turnkey-2b.jpg', label: 'Patil Home — Photo 2', alt: 'Patil home photo 2' },
+          { key: 'p-turnkey-2c', filename: 'p-turnkey-2c.jpg', label: 'Patil Home — Photo 3', alt: 'Patil home photo 3' },
+          { key: 'p-turnkey-2d', filename: 'p-turnkey-2d.jpg', label: 'Patil Home — Photo 4', alt: 'Patil home photo 4' },
+          { key: 'p-turnkey-2e', filename: 'p-turnkey-2e.jpg', label: 'Patil Home — Photo 5', alt: 'Patil home photo 5' },
 
-  function deleteProject(projId) {
-    if (!confirm('Delete this entire project? This cannot be undone.')) return;
-    PROJECTS = PROJECTS.filter(p => p.id !== projId);
-    renderPortfolioProjects();
-    markDirty();
-    showToast('Project deleted.', false);
-  }
+          // ── Project 7: Contemporary Living Room — Aundh ──
+          { key: 'p-living-1', filename: 'p-living-1.jpg', label: 'Living Room — Cover', alt: 'Contemporary living room Aundh' },
+          { key: 'p-living-1b', filename: 'p-living-1b.jpg', label: 'Living Room — Photo 2', alt: 'Living room photo 2' },
+          { key: 'p-living-1c', filename: 'p-living-1c.jpg', label: 'Living Room — Photo 3', alt: 'Living room photo 3' },
+          { key: 'p-living-1d', filename: 'p-living-1d.jpg', label: 'Living Room — Photo 4', alt: 'Living room photo 4' },
 
-  /* ════ CLOUDINARY UPLOAD ════ */
-  function cloudinaryConfigOk() {
-    return CLOUDINARY_CLOUD_NAME !== 'YOUR_CLOUD_NAME' && CLOUDINARY_UPLOAD_PRESET !== 'YOUR_UPLOAD_PRESET';
-  }
+          // ── Project 8: Kids Study Bedroom — Koregaon Park ──
+          { key: 'p-bedroom-2', filename: 'p-bedroom-2.jpg', label: "Kids' Bedroom — Cover", alt: 'Kids study bedroom' },
+          { key: 'p-bedroom-2b', filename: 'p-bedroom-2b.jpg', label: "Kids' Bedroom — Photo 2", alt: 'Kids bedroom photo 2' },
+          { key: 'p-bedroom-2c', filename: 'p-bedroom-2c.jpg', label: "Kids' Bedroom — Photo 3", alt: 'Kids bedroom photo 3' },
+          { key: 'p-bedroom-2d', filename: 'p-bedroom-2d.jpg', label: "Kids' Bedroom — Photo 4", alt: 'Kids bedroom photo 4' },
 
-  function openUploadWidget(pageId, slotKey, folder) {
-    if (!cloudinaryConfigOk()) {
-      const w = document.getElementById(`cld-warn-${pageId}-${slotKey}`);
-      if (w) w.style.display='block';
-      showToast('Set Cloudinary credentials first!', false); return;
-    }
-    const subFolder = 'puniya/' + folder.replace('images/','').replace('images','site');
-    cloudinary.createUploadWidget({
-      cloudName: CLOUDINARY_CLOUD_NAME, uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-      folder: subFolder, sources:['local','camera','url'], multiple:false,
-      resourceType:'image', clientAllowedFormats:['jpg','jpeg','png','webp'],
-      maxFileSize:10000000,
-      styles:{ palette:{ window:'#FFFFFF', tabIcon:'#A67C52', link:'#A67C52', action:'#A67C52', inProgress:'#A67C52', complete:'#5a9a6a', sourceBg:'#F7F5F0' } }
-    }, (error, result) => {
-      if (!error && result && result.event==='success') {
-        const url = result.info.secure_url;
-        const input = document.getElementById(`input-${pageId}-${slotKey}`);
-        if (input) input.value = url;
-        applyChange(pageId, slotKey);
-        saveToSheet(slotKey, url, folder);
-        showToast('Photo uploaded & saved!', true);
-      }
-    }).open();
-  }
+          // ── Project 9: Parallel Kitchen — NIBM Road ──
+          { key: 'p-kitchen-3', filename: 'p-kitchen-3.jpg', label: 'Parallel Kitchen — Cover', alt: 'Parallel kitchen NIBM Road' },
+          { key: 'p-kitchen-3b', filename: 'p-kitchen-3b.jpg', label: 'Parallel Kitchen — Photo 2', alt: 'Parallel kitchen photo 2' },
+          { key: 'p-kitchen-3c', filename: 'p-kitchen-3c.jpg', label: 'Parallel Kitchen — Photo 3', alt: 'Parallel kitchen photo 3' },
+          { key: 'p-kitchen-3d', filename: 'p-kitchen-3d.jpg', label: 'Parallel Kitchen — Photo 4', alt: 'Parallel kitchen photo 4' },
 
-  function openProjectPhotoUpload(projId, photoKey) {
-    if (!cloudinaryConfigOk()) {
-      const w = document.getElementById(`cld-warn-proj-${projId}-${photoKey}`);
-      if (w) w.style.display='block';
-      showToast('Set Cloudinary credentials first!', false); return;
-    }
-    cloudinary.createUploadWidget({
-      cloudName: CLOUDINARY_CLOUD_NAME, uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-      folder: 'puniya/projects', sources:['local','camera','url'], multiple:false,
-      resourceType:'image', clientAllowedFormats:['jpg','jpeg','png','webp'],
-      maxFileSize:10000000,
-      styles:{ palette:{ window:'#FFFFFF', tabIcon:'#A67C52', link:'#A67C52', action:'#A67C52', inProgress:'#A67C52', complete:'#5a9a6a', sourceBg:'#F7F5F0' } }
-    }, (error, result) => {
-      if (!error && result && result.event==='success') {
-        const url = result.info.secure_url;
-        const input = document.getElementById(`input-proj-${projId}-${photoKey}`);
-        if (input) input.value = url;
-        applyProjectPhotoChange(projId, photoKey);
-        saveToSheet(photoKey, url, 'images/projects');
-        showToast('Project photo uploaded!', true);
-      }
-    }).open();
-  }
+          // ── Project 10: Corporate Office — Hinjewadi ──
+          { key: 'p-commercial-1', filename: 'p-commercial-1.jpg', label: 'Corporate Office — Cover', alt: 'Office interior Hinjewadi' },
+          { key: 'p-commercial-1b', filename: 'p-commercial-1b.jpg', label: 'Corporate Office — Photo 2', alt: 'Office interior photo 2' },
+          { key: 'p-commercial-1c', filename: 'p-commercial-1c.jpg', label: 'Corporate Office — Photo 3', alt: 'Office interior photo 3' },
+          { key: 'p-commercial-1d', filename: 'p-commercial-1d.jpg', label: 'Corporate Office — Photo 4', alt: 'Office interior photo 4' },
+        ]
+      },
+    ];
 
-  function openVideoUploadWidget(slotKey) {
-    if (!cloudinaryConfigOk()) {
-      const w = document.getElementById(`vcld-warn-${slotKey}`);
-      if (w) w.style.display='block';
-      showToast('Set Cloudinary credentials first!', false); return;
-    }
-    cloudinary.createUploadWidget({
-      cloudName: CLOUDINARY_CLOUD_NAME, uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-      folder:'puniya/videos', sources:['local','url'], multiple:false,
-      resourceType:'video', clientAllowedFormats:['mp4','mov','webm'], maxFileSize:200000000,
-      styles:{ palette:{ window:'#FFFFFF', tabIcon:'#5a9a6a', link:'#5a9a6a', action:'#5a9a6a', complete:'#5a9a6a', sourceBg:'#F7F5F0' } }
-    }, (error, result) => {
-      if (!error && result && result.event==='success') {
-        const url = result.info.secure_url;
-        const input = document.getElementById(`vmanual-${slotKey}`);
-        if (input) input.value = url;
-        applyManualVideo(slotKey);
-        showToast('Video uploaded & applied!', true);
-      }
-    }).open();
-  }
-
-  /* ════ SAVE TO GOOGLE SHEET (via Apps Script) ════ */
-  function saveToSheet(slotKey, url, folder) {
-    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL') return; // not wired yet
-    fetch(APPS_SCRIPT_URL, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'saveImage', slot_key:slotKey, image_url:url, folder })
-    }).catch(() => {});
-  }
-
-  function saveAllProjectsToSheet() {
-    if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL') return;
-    fetch(APPS_SCRIPT_URL, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'saveProjects', projects: PROJECTS })
-    }).catch(() => {});
-  }
-
-  /* ════ LOAD IMAGES FROM SHEET ════ */
-  async function loadImagesFromSheet() {
-    if (SHEET_CSV_URL === 'YOUR_GOOGLE_SHEET_CSV_URL') return;
-    try {
-      const res = await fetch(SHEET_CSV_URL + '&t='+Date.now(), {cache:'no-store'});
-      if (!res.ok) return;
-      const rows = parseCSVGeneric(await res.text());
-      rows.forEach(row => {
-        if (!row.slot_key || !row.image_url) return;
-        // Try static pages
-        for (const page of [...PAGES, ...ACCESSORY_PAGES]) {
-          const slot = page.slots.find(s => s.key === row.slot_key);
-          if (slot) {
-            if (!changes[page.id]) changes[page.id] = {};
-            changes[page.id][row.slot_key] = row.image_url;
-            const input = document.getElementById(`input-${page.id}-${row.slot_key}`);
-            if (input) { input.value = row.image_url; }
-            const card = document.getElementById(`card-${page.id}-${row.slot_key}`);
-            if (card) { const img = card.querySelector('img'); if(img){ img.src=row.image_url; img.style.opacity='1'; } }
-            return;
-          }
-        }
-        // Try project photos
-        for (const proj of PROJECTS) {
-          const photo = proj.photos.find(ph => ph.key === row.slot_key);
-          if (photo) { photo.url = row.image_url; return; }
-        }
-      });
-    } catch(e) { console.warn('Sheet load error:', e); }
-  }
-
-  function parseCSVGeneric(txt) {
-    const lines = txt.trim().split('\n');
-    const hdrs = lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,'').toLowerCase());
-    return lines.slice(1).map(line=>{
-      const cols=[]; let cur='',q=false;
-      for(const ch of line){ if(ch==='"') q=!q; else if(ch===','&&!q){cols.push(cur.trim());cur='';} else cur+=ch; }
-      cols.push(cur.trim());
-      const o={};
-      hdrs.forEach((h,i)=>o[h]=(cols[i]||'').replace(/^"|"$/g,'').trim());
-      return o;
-    });
-  }
-
-  /* ════ MARK DIRTY ════ */
-  function markDirty() {
-    dirtyItems++;
-    document.getElementById('dirty-count').textContent = dirtyItems;
-    document.getElementById('save-panel').classList.add('show');
-  }
-
-  function updateSavePanel() {
-    const panel = document.getElementById('save-panel');
-    panel.classList.toggle('show', dirtyItems > 0);
-  }
-
-  /* ════ SAVE ALL ════ */
-  function saveAll() {
-    saveAllProjectsToSheet();
-    // Persist projects to localStorage as backup
-    try { localStorage.setItem('pi_projects', JSON.stringify(PROJECTS)); } catch(e){}
-    // Mark all cards saved
-    document.querySelectorAll('.img-card.dirty').forEach(c=>{ c.classList.remove('dirty'); c.classList.add('saved'); });
-    dirtyItems = 0;
-    document.getElementById('save-panel').classList.remove('show');
-    showToast('All changes saved!', true);
-  }
-
-  function discardChanges() {
+    /* ════════════════════════════════════════════
+       STATE
+    ════════════════════════════════════════════ */
+    // changes[pageId][slotKey] = newUrl
+    const changes = {};
     PAGES.forEach(p => { changes[p.id] = {}; });
-    ACCESSORY_PAGES.forEach(p => { changes[p.id] = {}; });
-    document.querySelectorAll('.img-card').forEach(c=>c.classList.remove('dirty','saved'));
-    document.querySelectorAll('.url-input').forEach(i=>i.value='');
-    dirtyItems = 0;
-    document.getElementById('save-panel').classList.remove('show');
-    showToast('Changes discarded.', false);
-  }
 
-  /* ════ TOAST ════ */
-  let toastTimer;
-  function showToast(msg, success=false) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'show'+(success?' success':'');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(()=>{ t.className=''; }, 2800);
-  }
+    /* ════════════════════════════════════════════
+       RENDER
+    ════════════════════════════════════════════ */
+    function iconSVG(type) {
+      const icons = {
+        home: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+        kitchen: '<path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>',
+        furniture: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>',
+        portfolio: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+        about: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+        video: '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>',
+      };
+      return icons[type] || icons.home;
+    }
 
-  /* ════ TABS ════ */
-  function switchTab(tab) {
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-    document.getElementById('tab-'+tab).classList.add('active');
-    document.getElementById('panel-'+tab).classList.add('active');
-  }
+    function render() {
+      const container = document.getElementById('sections-container');
+      container.innerHTML = '';
 
-  /* ════ VIDEO SLOTS ════ */
-  const VIDEO_SLOTS = [
-    { key:'video-1', label:'Video 1', desc:'Full Home Renovation', filename:'video-1.mp4' },
-    { key:'video-2', label:'Video 2', desc:'Island Kitchen Reveal', filename:'video-2.mp4' },
-    { key:'video-3', label:'Video 3', desc:'Master Suite Walkthrough', filename:'video-3.mp4' },
-  ];
-
-  function renderVideoSlots() {
-    const grid = document.getElementById('video-slots-grid');
-    grid.innerHTML = '';
-    VIDEO_SLOTS.forEach(slot => {
-      const entry = videoUrls[slot.key];
-      const url = entry ? entry.url : '';
-      const source = entry ? entry.source : '';
-      const hasUrl = !!url;
-      const card = document.createElement('div');
-      card.className = 'video-slot-card'+(hasUrl?' connected':'');
-      card.id = 'vcard-'+slot.key;
-      card.innerHTML = `
-        <div class="vid-preview">
-          <div class="vid-placeholder" id="vph-${slot.key}" style="${hasUrl?'display:none':''}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-            <span>No video connected</span>
-          </div>
-          <video id="vid-${slot.key}" src="${url}" style="display:${hasUrl?'block':'none'};" preload="metadata" muted playsinline controls></video>
-          <div class="vid-badge">${slot.label}</div>
-          <div class="vid-status-dot"></div>
+      PAGES.forEach(page => {
+        const sec = document.createElement('div');
+        sec.className = 'section';
+        sec.innerHTML = `
+      <div class="section-head">
+        <div class="section-icon ic-${page.icon}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${iconSVG(page.icon)}</svg>
         </div>
-        <div class="vid-info">
-          <div class="vid-label">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-            ${slot.desc}
+        <div>
+          <div class="section-label">${page.label}</div>
+          <span class="section-file">${page.file}</span>
+        </div>
+      </div>
+      <div class="img-grid" id="grid-${page.id}"></div>
+    `;
+        container.appendChild(sec);
+
+        const grid = sec.querySelector(`#grid-${page.id}`);
+        page.slots.forEach(slot => {
+          const isVideo = slot.type === 'video';
+          const card = document.createElement('div');
+          card.className = 'img-card';
+          card.id = `card-${page.id}-${slot.key}`;
+          const currentVal = changes[page.id][slot.key] || '';
+          const folder = isVideo ? 'videos' : 'images';
+          // Images: always show local path as preview (they exist in the repo)
+          // Videos: only load if user has pasted a real URL (avoids broken network requests)
+          const previewSrc = isVideo
+            ? ((currentVal && currentVal.startsWith('http')) ? currentVal : '')
+            : (currentVal || `${folder}/${slot.filename}`);
+
+          if (isVideo) {
+            card.innerHTML = `
+          <div class="img-preview" style="background:#111;">
+            <div class="placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              <span>videos/${slot.filename}</span>
+            </div>
+            <video id="vid-${page.id}-${slot.key}" ${previewSrc ? `src="${previewSrc}"` : ''}
+              style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none;"
+              ${previewSrc ? 'preload="metadata"' : 'preload="none"'} muted playsinline controls></video>
+            <div class="status-dot"></div>
           </div>
-          <code class="vid-url-display ${hasUrl?'has-url':'no-url'}" id="vurl-display-${slot.key}">
-            ${url || 'Not connected — upload or paste URL below'}
-          </code>
-          ${source==='sheet'
-            ? `<div class="vid-sheet-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg> Loaded from Google Sheet</div>`
-            : `<button class="btn-upload btn-upload-video" onclick="openVideoUploadWidget('${slot.key}')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
-                Upload Video
-               </button>
-               <div class="cloudinary-not-configured" id="vcld-warn-${slot.key}">⚠️ Set Cloudinary credentials first.</div>
-               <div class="upload-or">or paste URL</div>
-               <div class="vid-manual-row">
-                 <input class="vid-manual-input" id="vmanual-${slot.key}" type="url" placeholder="Paste .mp4 URL…" value="${source==='manual'?url:''}" />
-                 <button class="btn-apply" onclick="applyManualVideo('${slot.key}')">Apply</button>
-               </div>`}
-        </div>`;
-      grid.appendChild(card);
-      if (url) {
-        const vidEl = card.querySelector('video');
-        if (vidEl) vidEl.addEventListener('error', ()=>{
-          vidEl.style.display='none';
-          card.querySelector('.vid-placeholder').style.display='';
-          card.classList.remove('connected');
-          document.getElementById('vurl-display-'+slot.key).className='vid-url-display no-url';
-          document.getElementById('vurl-display-'+slot.key).textContent='Error loading: '+url;
-        });
-      }
-    });
-  }
-
-  function applyManualVideo(key) {
-    const input = document.getElementById('vmanual-'+key);
-    const url = input.value.trim();
-    if (!url) return;
-    videoUrls[key] = { url, source:'manual' };
-    try { localStorage.setItem('pi_video_urls', JSON.stringify(videoUrls)); } catch(e){}
-    renderVideoSlots();
-    showToast('Video URL saved!', true);
-  }
-
-  /* ════ GOOGLE SHEET — VIDEO ════ */
-  function setSheetStatus(type, msg, showRefresh) {
-    const el = document.getElementById('sheet-status');
-    const icon = document.getElementById('sheet-status-icon');
-    const text = document.getElementById('sheet-status-text');
-    const btn = document.getElementById('btn-refresh-sheet');
-    el.className='sheet-status '+type;
-    text.textContent=msg;
-    btn.style.display=showRefresh?'inline-block':'none';
-    const icons={
-      ok:'<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
-      err:'<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
-      loading:'<line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>'
-    };
-    icon.innerHTML=icons[type]||'';
-  }
-
-  async function connectSheet() {
-    const url = document.getElementById('sheet-csv-url').value.trim();
-    if (!url) { showToast('Paste your CSV URL first.', false); return; }
-    sheetCsvUrl = url;
-    await fetchSheetData(url);
-  }
-
-  async function refreshSheet() { if (sheetCsvUrl) await fetchSheetData(sheetCsvUrl); }
-
-  async function fetchSheetData(url) {
-    setSheetStatus('loading','Connecting…',false);
-    try {
-      const res = await fetch(url+'&t='+Date.now(),{cache:'no-store'});
-      if (!res.ok) throw new Error('HTTP '+res.status);
-      const rows = parseCSVGeneric(await res.text());
-      VIDEO_SLOTS.forEach(s=>{ if(videoUrls[s.key]?.source==='sheet') delete videoUrls[s.key]; });
-      let loaded=0;
-      rows.forEach(row=>{
-        const key=(row.slot_key||'').trim();
-        const cloudUrl=(row.cloudinary_url||'').trim();
-        if(VIDEO_SLOTS.find(s=>s.key===key)&&cloudUrl){ videoUrls[key]={url:cloudUrl,source:'sheet'}; loaded++; }
-      });
-      if (!loaded) throw new Error('No matching slot_key values found.');
-      try { localStorage.setItem('pi_video_urls', JSON.stringify(videoUrls)); localStorage.setItem('pi_sheet_url',url); } catch(e){}
-      document.getElementById('vid-connected-badge').style.display='inline';
-      setSheetStatus('ok',loaded+' video(s) loaded.',true);
-      renderVideoSlots();
-      showToast(loaded+' videos connected!', true);
-    } catch(err) { setSheetStatus('err','Failed: '+err.message,false); showToast('Could not load sheet.', false); }
-  }
-
-  function restoreSheetConnection() {
-    try {
-      const savedVideos = localStorage.getItem('pi_video_urls');
-      if (savedVideos) Object.assign(videoUrls, JSON.parse(savedVideos));
-      const savedUrl = localStorage.getItem('pi_sheet_url');
-      if (savedUrl) { sheetCsvUrl=savedUrl; document.getElementById('sheet-csv-url').value=savedUrl; }
-      const hasSheet=Object.values(videoUrls).some(v=>v.source==='sheet');
-      if (hasSheet) document.getElementById('vid-connected-badge').style.display='inline';
-    } catch(e){}
-  }
-
-  function restoreProjects() {
-    try {
-      const saved = localStorage.getItem('pi_projects');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Merge saved URLs into default PROJECTS structure
-        parsed.forEach(savedProj => {
-          const existing = PROJECTS.find(p => p.id === savedProj.id);
-          if (existing) {
-            savedProj.photos.forEach(savedPhoto => {
-              const ep = existing.photos.find(ph => ph.key === savedPhoto.key);
-              if (ep && savedPhoto.url) ep.url = savedPhoto.url;
+          <div class="img-info">
+            <div class="img-slot-name" style="display:flex;align-items:center;gap:6px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" style="width:14px;height:14px;flex-shrink:0;"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              ${slot.label}
+            </div>
+            <div class="img-alt">${slot.alt}</div>
+            <code class="img-current">videos/${slot.filename}</code>
+            <div style="font-size:.72rem;color:var(--muted);margin:.35rem 0 .55rem;line-height:1.5;background:#f5f3ef;border-radius:6px;padding:.45rem .6rem;">
+              \u2139\ufe0f Upload your video to <strong>Google Drive</strong> (share \u2192 Anyone with link), <strong>YouTube</strong> (unlisted), or any host \u2014 then paste the direct <code style="font-size:.7rem;">.mp4</code> URL below.
+            </div>
+            <div class="input-row">
+              <input class="url-input" type="url" id="input-${page.id}-${slot.key}"
+                placeholder="Paste video URL (.mp4 / YouTube / Drive)\u2026"
+                value="${currentVal}" />
+              <button class="btn-apply" onclick="applyVideoChange('${page.id}','${slot.key}')">Apply</button>
+            </div>
+          </div>
+        `;
+            grid.appendChild(card);
+            const vid = card.querySelector('video');
+            const ph = card.querySelector('.placeholder');
+            if (previewSrc) { vid.style.display = ''; ph.style.display = 'none'; }
+            vid.addEventListener('loadedmetadata', () => { vid.style.display = ''; ph.style.display = 'none'; });
+            vid.addEventListener('error', () => { vid.style.display = 'none'; ph.style.display = 'flex'; });
+            card.querySelector('.url-input').addEventListener('keydown', e => {
+              if (e.key === 'Enter') applyVideoChange(page.id, slot.key);
             });
           } else {
-            PROJECTS.push(savedProj); // new custom project
+            card.innerHTML = `
+          <div class="img-preview">
+            <div class="placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span>images/${slot.filename}</span>
+            </div>
+            <img ${previewSrc ? `src="${previewSrc}"` : ''} alt="${slot.alt}"
+              onload="this.style.opacity=1;this.previousElementSibling.style.display='none'"
+              onerror="this.style.display='none';this.previousElementSibling.style.display='flex'"
+              style="opacity:0;position:absolute;inset:0;" />
+            <div class="status-dot"></div>
+          </div>
+          <div class="img-info">
+            <div class="img-slot-name">${slot.label}</div>
+            <div class="img-alt">${slot.alt}</div>
+            <code class="img-current">images/${slot.filename}</code>
+            <div class="input-row">
+              <input class="url-input" type="url" id="input-${page.id}-${slot.key}"
+                placeholder="Paste new image URL\u2026"
+                value="${currentVal}" />
+              <button class="btn-apply" onclick="applyChange('${page.id}','${slot.key}')">Apply</button>
+            </div>
+          </div>
+        `;
+            grid.appendChild(card);
+            card.querySelector('.url-input').addEventListener('keydown', e => {
+              if (e.key === 'Enter') applyChange(page.id, slot.key);
+            });
           }
         });
-      }
-    } catch(e){}
-  }
-
-  /* ════ AUTH ════ */
-  async function tryLogin() {
-    const val = document.getElementById('pwd').value;
-    const hash = await sha256(val);
-    if (hash === CORRECT_HASH) {
-      sessionStorage.setItem('pi_auth','1');
-      document.getElementById('login').style.display='none';
-      document.getElementById('app').style.display='block';
-      init();
-    } else {
-      document.getElementById('login-err').classList.add('show');
-      document.getElementById('pwd').value='';
+      });
     }
-  }
 
-  function init() {
-    restoreProjects();
-    render();
-    renderAccessories();
-    renderPortfolioProjects();
-    renderVideoSlots();
-    restoreSheetConnection();
-    loadImagesFromSheet();
-  }
+    /* ════════════════════════════════════════════
+       APPLY CHANGE
+    ════════════════════════════════════════════ */
+    function applyChange(pageId, slotKey) {
+      const input = document.getElementById(`input-${pageId}-${slotKey}`);
+      const url = input.value.trim();
+      const card = document.getElementById(`card-${pageId}-${slotKey}`);
+      if (!url) return;
 
-  document.getElementById('login-btn').addEventListener('click', tryLogin);
-  document.getElementById('pwd').addEventListener('keydown', e=>{ if(e.key==='Enter') tryLogin(); });
-  document.getElementById('btn-logout').addEventListener('click', ()=>{ sessionStorage.removeItem('pi_auth'); location.reload(); });
-  document.getElementById('btn-save-all').addEventListener('click', saveAll);
-  document.getElementById('btn-download-panel').addEventListener('click', saveAll);
-  document.getElementById('btn-discard').addEventListener('click', discardChanges);
+      changes[pageId][slotKey] = url;
 
-  if (sessionStorage.getItem('pi_auth')==='1') {
-    document.getElementById('login').style.display='none';
-    document.getElementById('app').style.display='block';
-    init();
-  }
+      // Update preview
+      const img = card.querySelector('img');
+      const placeholder = card.querySelector('.placeholder');
+      img.style.opacity = '0';
+      img.style.display = '';
+      img.onload = () => { img.style.opacity = '1'; placeholder.style.display = 'none'; };
+      img.onerror = () => { img.style.display = 'none'; placeholder.style.display = 'flex'; };
+      img.src = url;
+
+      card.classList.remove('saved');
+      card.classList.add('dirty');
+      updateSavePanel();
+      showToast('Preview updated — remember to download your files.', false);
+    }
+
+    function applyVideoChange(pageId, slotKey) {
+      const input = document.getElementById(`input-${pageId}-${slotKey}`);
+      const url = input.value.trim();
+      const card = document.getElementById(`card-${pageId}-${slotKey}`);
+      if (!url) return;
+      changes[pageId][slotKey] = url;
+      const vid = card.querySelector('video');
+      const ph = card.querySelector('.placeholder');
+      vid.src = url;
+      vid.style.display = '';
+      ph.style.display = 'none';
+      card.classList.remove('saved');
+      card.classList.add('dirty');
+      updateSavePanel();
+      showToast('Video URL saved \u2014 remember to download your files.', false);
+    }
+
+
+    /* ════════════════════════════════════════════
+       COUNT DIRTY
+    ════════════════════════════════════════════ */
+    function dirtyCount() {
+      return PAGES.reduce((sum, p) => sum + Object.keys(changes[p.id]).length, 0);
+    }
+
+    function updateSavePanel() {
+      const n = dirtyCount();
+      const panel = document.getElementById('save-panel');
+      document.getElementById('dirty-count').textContent = n;
+      panel.classList.toggle('show', n > 0);
+    }
+
+    /* ════════════════════════════════════════════
+       GENERATE UPDATED HTML
+       We embed the original HTML as template strings
+       and do string replacement of image src values.
+       Since we can't read the actual files at runtime
+       in a static HTML page, we give the user clear
+       instructions and a copy-paste diff instead.
+    ════════════════════════════════════════════ */
+    function generateInstructions() {
+      const lines = [];
+      PAGES.forEach(page => {
+        const pageChanges = changes[page.id];
+        if (!Object.keys(pageChanges).length) return;
+        lines.push(`\n── ${page.file} ──`);
+        Object.entries(pageChanges).forEach(([key, newUrl]) => {
+          lines.push(`  images/${key}.jpg  →  ${newUrl}`);
+        });
+      });
+      return lines.join('\n');
+    }
+
+    function downloadInstructions() {
+      const n = dirtyCount();
+      if (!n) { showToast('No changes to download.', false); return; }
+
+      const content = `PUNIYA INTERIORS — IMAGE UPDATE INSTRUCTIONS
+Generated: ${new Date().toLocaleString('en-IN')}
+Changes: ${n} image(s)
+${'='.repeat(55)}
+
+HOW TO APPLY:
+For each line below, open the HTML file in a text editor,
+find the old filename, and replace it with the new URL.
+${generateInstructions()}
+
+${'='.repeat(55)}
+TIP: Use Find & Replace (Ctrl+H) in your text editor.
+Search for: images/FILENAME.jpg
+Replace with: the new URL
+`.trim();
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'image-update-instructions.txt';
+      a.click();
+
+      // Also try to generate the actual HTML replacements
+      downloadHTMLFiles();
+    }
+
+    /* ════════════════════════════════════════════
+       DOWNLOAD HTML — read uploaded files + replace
+       Since the HTML files were uploaded, we can
+       fetch them from /mnt/user-data/uploads/ path
+       but that's server-side. Instead we'll make a
+       JS blob per page showing the find/replace diff.
+    ════════════════════════════════════════════ */
+    function downloadHTMLFiles() {
+      PAGES.forEach(page => {
+        const pageChanges = changes[page.id];
+        if (!Object.keys(pageChanges).length) return;
+
+        // Build a find-replace map
+        let script = `<!-- FIND & REPLACE IN ${page.file} -->\n`;
+        script += `<!-- Open ${page.file} in your text editor and make these replacements: -->\n\n`;
+        Object.entries(pageChanges).forEach(([key, newUrl]) => {
+          script += `FIND:    src="images/${key}.jpg"\nREPLACE: src="${newUrl}"\n\n`;
+          script += `FIND:    src="images/${key}.png"\nREPLACE: src="${newUrl}"\n\n`;
+        });
+
+        const blob = new Blob([script], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `update-${page.file}.txt`;
+        setTimeout(() => a.click(), 200 * PAGES.indexOf(page));
+      });
+
+      showToast(`Downloaded ${dirtyCount()} update instruction file(s)!`, true);
+
+      // Mark all as saved
+      PAGES.forEach(page => {
+        Object.keys(changes[page.id]).forEach(key => {
+          const card = document.getElementById(`card-${page.id}-${key}`);
+          if (card) { card.classList.remove('dirty'); card.classList.add('saved'); }
+        });
+      });
+    }
+
+    function discardChanges() {
+      PAGES.forEach(p => { changes[p.id] = {}; });
+      document.querySelectorAll('.img-card').forEach(c => c.classList.remove('dirty', 'saved'));
+      document.querySelectorAll('.url-input').forEach(i => i.value = '');
+      updateSavePanel();
+      showToast('All changes discarded.', false);
+    }
+
+    /* ════════════════════════════════════════════
+       TOAST
+    ════════════════════════════════════════════ */
+    let toastTimer;
+    function showToast(msg, success = false) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'show' + (success ? ' success' : '');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { t.className = ''; }, 2800);
+    }
+
+    /* ════════════════════════════════════════════
+       VIDEO SLOTS CONFIG (declared early — used by auth block)
+    ════════════════════════════════════════════ */
+    const VIDEO_SLOTS = [
+      { key: 'video-1', label: 'Video 1', desc: 'Full Home Renovation', filename: 'video-1.mp4' },
+      { key: 'video-2', label: 'Video 2', desc: 'Island Kitchen Reveal', filename: 'video-2.mp4' },
+      { key: 'video-3', label: 'Video 3', desc: 'Master Suite Walkthrough', filename: 'video-3.mp4' },
+    ];
+
+    // videoUrls[key] = { url, source } — source: 'sheet' | 'manual'
+    const videoUrls = {};
+
+    /* ════════════════════════════════════════════
+       AUTH
+    ════════════════════════════════════════════ */
+    async function tryLogin() {
+      const val = document.getElementById('pwd').value;
+      const hash = await sha256(val);
+      // Securely verify against the pre-computed hash
+      if (hash === CORRECT_HASH) {
+        sessionStorage.setItem('pi_auth', '1');
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        render();
+        renderVideoSlots();
+        restoreSheetConnection();
+      } else {
+        document.getElementById('login-err').classList.add('show');
+        document.getElementById('pwd').value = '';
+      }
+    }
+
+    document.getElementById('login-btn').addEventListener('click', tryLogin);
+    document.getElementById('pwd').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+    document.getElementById('btn-logout').addEventListener('click', () => {
+      sessionStorage.removeItem('pi_auth');
+      location.reload();
+    });
+    document.getElementById('btn-save-all').addEventListener('click', downloadHTMLFiles);
+    document.getElementById('btn-download-panel').addEventListener('click', downloadInstructions);
+    document.getElementById('btn-discard').addEventListener('click', discardChanges);
+
+    // Auto-login if session active
+    if (sessionStorage.getItem('pi_auth') === '1') {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      render();
+      renderVideoSlots();
+      restoreSheetConnection();
+    }
+
+    /* ════════════════════════════════════════════
+       TAB SWITCHER
+    ════════════════════════════════════════════ */
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+
+    function renderVideoSlots() {
+      const grid = document.getElementById('video-slots-grid');
+      grid.innerHTML = '';
+      VIDEO_SLOTS.forEach(slot => {
+        const entry = videoUrls[slot.key];
+        const url = entry ? entry.url : '';
+        const source = entry ? entry.source : '';
+        const hasUrl = !!url;
+
+        const card = document.createElement('div');
+        card.className = 'video-slot-card' + (hasUrl ? ' connected' : '');
+        card.id = 'vcard-' + slot.key;
+        card.innerHTML = `
+          <div class="vid-preview">
+            <div class="vid-placeholder" id="vph-${slot.key}" style="${hasUrl ? 'display:none' : ''}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              <span>No video connected</span>
+            </div>
+            <video id="vid-${slot.key}" src="${url}"
+              style="display:${hasUrl ? 'block' : 'none'};"
+              preload="metadata" muted playsinline controls></video>
+            <div class="vid-badge">${slot.label}</div>
+            <div class="vid-status-dot"></div>
+          </div>
+          <div class="vid-info">
+            <div class="vid-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              ${slot.desc}
+            </div>
+            <code class="vid-url-display ${hasUrl ? 'has-url' : 'no-url'}" id="vurl-display-${slot.key}">
+              ${url ? url : 'Not connected — waiting for sheet or manual URL'}
+            </code>
+            ${source === 'sheet'
+            ? `<div class="vid-sheet-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg> Loaded from Google Sheet</div>`
+            : `<div class="vid-manual-row">
+                  <input class="vid-manual-input" id="vmanual-${slot.key}" type="url"
+                    placeholder="Or paste Cloudinary .mp4 URL directly…"
+                    value="${source === 'manual' ? url : ''}" />
+                  <button class="btn-apply" onclick="applyManualVideo('${slot.key}')">Apply</button>
+                </div>
+                <div class="vid-sheet-note" style="margin-top:.35rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  Connect a sheet above to manage all videos centrally
+                </div>`
+          }
+          </div>
+        `;
+        grid.appendChild(card);
+
+        // Handle video load errors
+        const vidEl = card.querySelector('video');
+        if (vidEl && url) {
+          vidEl.addEventListener('error', () => {
+            vidEl.style.display = 'none';
+            card.querySelector('.vid-placeholder').style.display = '';
+            card.classList.remove('connected');
+            card.classList.add('error-state');
+            document.getElementById('vurl-display-' + slot.key).className = 'vid-url-display no-url';
+            document.getElementById('vurl-display-' + slot.key).textContent = 'Error loading: ' + url;
+          });
+        }
+      });
+    }
+
+    function applyManualVideo(key) {
+      const input = document.getElementById('vmanual-' + key);
+      const url = input.value.trim();
+      if (!url) return;
+      videoUrls[key] = { url, source: 'manual' };
+      saveVideoUrlsToSession();
+      renderVideoSlots();
+      showToast('Video URL saved. Download updated files to go live.', false);
+    }
+
+    /* ════════════════════════════════════════════
+       GOOGLE SHEET CONNECTION
+    ════════════════════════════════════════════ */
+    let sheetCsvUrl = '';
+
+    function setSheetStatus(type, msg, showRefresh) {
+      const el = document.getElementById('sheet-status');
+      const icon = document.getElementById('sheet-status-icon');
+      const text = document.getElementById('sheet-status-text');
+      const btn = document.getElementById('btn-refresh-sheet');
+      el.className = 'sheet-status ' + type;
+      text.textContent = msg;
+      btn.style.display = showRefresh ? 'inline-block' : 'none';
+      const icons = {
+        ok: '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+        err: '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+        loading: '<line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>'
+      };
+      icon.innerHTML = icons[type] || '';
+    }
+
+    async function connectSheet() {
+      const input = document.getElementById('sheet-csv-url');
+      const url = input.value.trim();
+      if (!url) { showToast('Please paste your Google Sheet CSV URL first.', false); return; }
+      sheetCsvUrl = url;
+      await fetchSheetData(url);
+    }
+
+    async function refreshSheet() {
+      if (!sheetCsvUrl) return;
+      await fetchSheetData(sheetCsvUrl);
+    }
+
+    async function fetchSheetData(url) {
+      setSheetStatus('loading', 'Connecting to sheet…', false);
+      try {
+        // Direct fetch — same strategy as SP Driving School gallery
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const csv = await res.text();
+        const rows = parseCSV(csv);
+
+        if (!rows.length) {
+          throw new Error('Sheet appears empty. Make sure it has rows with slot_key and cloudinary_url columns.');
+        }
+
+        // Clear existing sheet entries
+        VIDEO_SLOTS.forEach(s => {
+          if (videoUrls[s.key] && videoUrls[s.key].source === 'sheet') delete videoUrls[s.key];
+        });
+
+        let loaded = 0;
+        rows.forEach(row => {
+          const key = (row.slot_key || '').trim();
+          const cloudUrl = (row.cloudinary_url || '').trim();
+          if (VIDEO_SLOTS.find(s => s.key === key) && cloudUrl) {
+            videoUrls[key] = { url: cloudUrl, source: 'sheet' };
+            loaded++;
+          }
+        });
+
+        if (loaded === 0) {
+          throw new Error('No matching slot_key values found. Check your sheet has video-1, video-2, video-3 in the slot_key column.');
+        }
+
+        saveVideoUrlsToSession();
+        localStorage.setItem('pi_sheet_url', url);
+        document.getElementById('sheet-csv-url').value = url;
+
+        document.getElementById('vid-connected-badge').style.display = 'inline';
+        setSheetStatus('ok', loaded + ' video(s) loaded from sheet successfully.', true);
+        renderVideoSlots();
+        showToast(loaded + ' videos connected from sheet!', true);
+
+      } catch (err) {
+        setSheetStatus('err', 'Failed: ' + err.message, false);
+        showToast('Could not load sheet. Check the URL is a published CSV.', false);
+      }
+    }
+
+    function parseCSV(txt) {
+      const lines = txt.trim().split('\n');
+      const hdrs = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+      return lines.slice(1).map(line => {
+        const cols = []; let cur = '', q = false;
+        for (const ch of line) {
+          if (ch === '"') q = !q;
+          else if (ch === ',' && !q) { cols.push(cur.trim()); cur = ''; }
+          else cur += ch;
+        }
+        cols.push(cur.trim());
+        const o = {};
+        hdrs.forEach((h, i) => o[h] = (cols[i] || '').replace(/^"|"$/g, '').trim());
+        return o;
+      }).filter(r => r.slot_key && r.cloudinary_url && r.cloudinary_url.startsWith('http'));
+    }
+
+    function saveVideoUrlsToSession() {
+      localStorage.setItem('pi_video_urls', JSON.stringify(videoUrls));
+    }
+
+    function restoreSheetConnection() {
+      // Restore video URLs
+      try {
+        const saved = localStorage.getItem('pi_video_urls');
+        if (saved) {
+          Object.assign(videoUrls, JSON.parse(saved));
+          const hasSheet = Object.values(videoUrls).some(v => v.source === 'sheet');
+          if (hasSheet) document.getElementById('vid-connected-badge').style.display = 'inline';
+        }
+      } catch (e) { }
+
+      // Restore sheet URL in input
+      const savedSheetUrl = localStorage.getItem('pi_sheet_url');
+      if (savedSheetUrl) {
+        sheetCsvUrl = savedSheetUrl;
+        document.getElementById('sheet-csv-url').value = savedSheetUrl;
+        const hasSheet = Object.values(videoUrls).some(v => v.source === 'sheet');
+        if (hasSheet) {
+          setSheetStatus('ok', 'Sheet connected — ' + Object.values(videoUrls).filter(v => v.source === 'sheet').length + ' video(s) loaded.', true);
+          document.getElementById('vid-connected-badge').style.display = 'inline';
+        } else {
+          // URL saved but no video data — re-fetch automatically
+          fetchSheetData(savedSheetUrl);
+          return; // renderVideoSlots called inside fetchSheetData
+        }
+      }
+
+      renderVideoSlots();
+    }
+
+    /* ════════════════════════════════════════════
+       CATEGORY IMAGE SLOTS — Kitchen & Furniture
+    ════════════════════════════════════════════ */
+    const KITCHEN_CAT_SLOTS = [
+      { key: 'k-cat-acrylic-1',  filename: 'k-cat-acrylic-1.jpg',  label: 'Acrylic #1',   desc: 'High-gloss acrylic finish kitchen', cat: 'Acrylic',  catColor: '#B8945A', tags: 'all acrylic straight' },
+      { key: 'k-cat-laminate-1', filename: 'k-cat-laminate-1.jpg', label: 'Laminate #1',  desc: 'L-shape laminate finish kitchen',   cat: 'Laminate', catColor: '#5a8a6a', tags: 'all laminate straight' },
+      { key: 'k-cat-island-1',   filename: 'k-cat-island-1.jpg',   label: 'Island #1',    desc: 'Island kitchen with breakfast bar',  cat: 'Island',   catColor: '#7a5a9a', tags: 'all island' },
+      { key: 'k-cat-acrylic-2',  filename: 'k-cat-acrylic-2.jpg',  label: 'Acrylic #2',   desc: 'Parallel acrylic kitchen',          cat: 'Acrylic',  catColor: '#B8945A', tags: 'all acrylic island' },
+      { key: 'k-cat-laminate-2', filename: 'k-cat-laminate-2.jpg', label: 'Laminate #2',  desc: 'Woodgrain laminate kitchen',         cat: 'Laminate', catColor: '#5a8a6a', tags: 'all laminate straight' },
+      { key: 'k-cat-parallel-1', filename: 'k-cat-parallel-1.jpg', label: 'Parallel #1',  desc: 'U-shape or parallel kitchen',       cat: 'Island',   catColor: '#7a5a9a', tags: 'all island' },
+      { key: 'k-cat-acrylic-3',  filename: 'k-cat-acrylic-3.jpg',  label: 'Acrylic #3',   desc: 'Straight kitchen with tall unit',   cat: 'Acrylic',  catColor: '#B8945A', tags: 'all acrylic straight' },
+      { key: 'k-cat-laminate-3', filename: 'k-cat-laminate-3.jpg', label: 'Laminate #3',  desc: 'Two-tone laminate kitchen',         cat: 'Laminate', catColor: '#5a8a6a', tags: 'all laminate' },
+      { key: 'k-cat-island-2',   filename: 'k-cat-island-2.jpg',   label: 'Island #2',    desc: 'Compact kitchen with breakfast bar', cat: 'Island',   catColor: '#7a5a9a', tags: 'all straight island' },
+    ];
+
+    const FURNITURE_CAT_SLOTS = [
+      { key: 'f-cat-wardrobe-1',   filename: 'f-cat-wardrobe-1.jpg',   label: 'Wardrobe #1',    desc: 'Built-in wardrobe with mirror',        cat: 'Wardrobe',    catColor: '#B8945A', tags: 'all bedroom wardrobe' },
+      { key: 'f-cat-living-1',     filename: 'f-cat-living-1.jpg',     label: 'Living Room #1', desc: 'Contemporary TV unit & living room',    cat: 'Living',      catColor: '#5a7a9a', tags: 'all living' },
+      { key: 'f-cat-bedroom-1',    filename: 'f-cat-bedroom-1.jpg',    label: 'Bedroom #1',     desc: 'Master bedroom with headboard',         cat: 'Bedroom',     catColor: '#9a5a7a', tags: 'all bedroom' },
+      { key: 'f-cat-ceiling-1',    filename: 'f-cat-ceiling-1.jpg',    label: 'Ceiling #1',     desc: 'False ceiling with cove lighting',      cat: 'Ceiling',     catColor: '#5a9a8a', tags: 'all ceiling' },
+      { key: 'f-cat-wardrobe-2',   filename: 'f-cat-wardrobe-2.jpg',   label: 'Wardrobe #2',    desc: 'Walk-in wardrobe with island dresser',  cat: 'Wardrobe',    catColor: '#B8945A', tags: 'all wardrobe bedroom' },
+      { key: 'f-cat-commercial-1', filename: 'f-cat-commercial-1.jpg', label: 'Office #1',      desc: 'Corporate office fit-out',              cat: 'Commercial',  catColor: '#6a5a9a', tags: 'all commercial' },
+      { key: 'f-cat-living-2',     filename: 'f-cat-living-2.jpg',     label: 'Living Room #2', desc: 'Sofa wall panelling & décor',           cat: 'Living',      catColor: '#5a7a9a', tags: 'all living' },
+      { key: 'f-cat-ceiling-2',    filename: 'f-cat-ceiling-2.jpg',    label: 'Ceiling #2',     desc: 'POP false ceiling design',              cat: 'Ceiling',     catColor: '#5a9a8a', tags: 'all ceiling' },
+      { key: 'f-cat-bedroom-2',    filename: 'f-cat-bedroom-2.jpg',    label: 'Bedroom #2',     desc: "Kids' study bedroom furniture",         cat: 'Bedroom',     catColor: '#9a5a7a', tags: 'all bedroom' },
+    ];
+
+    // In-memory store for category uploads: { key: dataURL }
+    const catUploads = {};
+    let catUploadCount = 0;
+
+    function buildUploadGrid(slots, containerId) {
+      const grid = document.getElementById(containerId);
+      if (!grid) return;
+      grid.innerHTML = '';
+      slots.forEach(slot => {
+        const div = document.createElement('div');
+        div.className = 'upload-slot';
+        div.id = 'uslot-' + slot.key;
+        div.innerHTML = `
+          <input type="file" accept="image/jpeg,image/png,image/webp,image/jpg"
+            title="Click to upload ${slot.label}" onchange="handleUpload(event,'${slot.key}')"/>
+          <div class="upload-slot-preview">
+            <div class="upload-slot-empty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+                <path d="M12 8v4M10 10h4" stroke-width="2"/>
+              </svg>
+              <span>Click to upload<br/><em style="font-size:.7rem;opacity:.7">${slot.filename}</em></span>
+            </div>
+            <img src="images/${slot.filename}" alt="${slot.desc}"
+              style="position:absolute;inset:0;opacity:0;"
+              onload="this.style.opacity=1;this.parentElement.classList.add('has-loaded');this.previousElementSibling.style.display='none';document.getElementById('uslot-${slot.key}').classList.add('has-image');"
+              onerror="this.style.display='none'" />
+            <div class="upload-slot-overlay">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Change Photo
+            </div>
+            <div class="upload-slot-status"></div>
+          </div>
+          <div class="upload-slot-info">
+            <div class="upload-slot-title">${slot.label}</div>
+            <div class="upload-slot-desc">${slot.desc}</div>
+            <span class="upload-slot-cat" style="background:${slot.catColor};">${slot.cat}</span>
+            <code class="upload-slot-filename">images/${slot.filename}</code>
+          </div>
+        `;
+        // Drag & drop
+        div.addEventListener('dragover', e => { e.preventDefault(); div.classList.add('drag-over'); });
+        div.addEventListener('dragleave', () => div.classList.remove('drag-over'));
+        div.addEventListener('drop', e => {
+          e.preventDefault(); div.classList.remove('drag-over');
+          const file = e.dataTransfer.files[0];
+          if (file && file.type.startsWith('image/')) processImageFile(file, slot.key);
+        });
+        grid.appendChild(div);
+      });
+    }
+
+    function handleUpload(e, key) {
+      const file = e.target.files[0];
+      if (!file) return;
+      processImageFile(file, key);
+    }
+
+    function processImageFile(file, key) {
+      if (file.size > 12 * 1024 * 1024) {
+        showToast('File too large — please use an image under 12MB.', false); return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        const dataUrl = ev.target.result;
+        catUploads[key] = dataUrl;
+        catUploadCount++;
+
+        const slot = document.getElementById('uslot-' + key);
+        if (!slot) return;
+        slot.classList.add('has-image');
+
+        const preview = slot.querySelector('.upload-slot-preview');
+        let img = preview.querySelector('img');
+        const empty = preview.querySelector('.upload-slot-empty');
+        if (!img) { img = document.createElement('img'); img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;'; preview.appendChild(img); }
+        img.src = dataUrl;
+        img.style.opacity = '1';
+        img.style.display = '';
+        if (empty) empty.style.display = 'none';
+
+        // Update badge count
+        const badge = document.getElementById('cat-count-badge');
+        badge.textContent = Object.keys(catUploads).length;
+        badge.style.display = 'inline';
+
+        showToast('✓ ' + key + ' uploaded — ready to download.', true);
+        updateSavePanel();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderCategoryTab() {
+      buildUploadGrid(KITCHEN_CAT_SLOTS, 'cat-kitchen-grid');
+      buildUploadGrid(FURNITURE_CAT_SLOTS, 'cat-furniture-grid');
+    }
+
+    // Extend switchTab to also init category tab on first open
+    const _origSwitchTab = typeof switchTab === 'function' ? switchTab : null;
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+      if (tab === 'category') renderCategoryTab();
+    }
   </script>
 </body>
+
 </html>
