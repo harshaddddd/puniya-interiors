@@ -39,77 +39,64 @@
 /* comp-card-body for flex layout */
 .comp-card-body { flex: 1; min-width: 0; }
 
-/* ══ CATEGORY GALLERY ══ */
-.cat-tabs {
-  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+/* ══ COMPONENT CARDS WITH IMAGES ══ */
+.comp-card-v2 {
+  background: var(--bg-primary, #fff);
+  border: 1px solid var(--border-color, #e0d9ce);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: box-shadow 0.28s ease, transform 0.28s ease;
+  display: flex;
+  flex-direction: column;
 }
-.cat-tab {
-  background: var(--bg-primary,#fff);
-  border: 1.5px solid var(--border-color,#d8d0c4);
-  color: var(--text-secondary,#7a7268);
-  font-family: inherit; font-size: .8rem; font-weight: 600;
-  letter-spacing: .05em; padding: .45rem 1.1rem;
-  border-radius: 100px; cursor: pointer; transition: all .22s ease;
+.comp-card-v2:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.10); transform: translateY(-3px); }
+.comp-card-v2-header {
+  padding: 1.25rem 1.25rem 0.75rem;
+  display: flex; align-items: flex-start; gap: 0.85rem;
 }
-.cat-tab:hover { border-color: var(--accent,#B8945A); color: var(--accent,#B8945A); }
-.cat-tab.active { background: var(--accent,#B8945A); border-color: var(--accent,#B8945A); color: #fff; }
-.cat-gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  grid-auto-rows: 260px;
+.comp-card-v2-header .comp-icon { flex-shrink: 0; margin: 0; }
+.comp-card-v2-header h4 { font-size: 1rem; font-weight: 600; color: var(--text-primary, #1A1410); margin-bottom: 0.25rem; }
+.comp-card-v2-header p { font-size: 0.82rem; color: var(--text-secondary, #7a7268); line-height: 1.55; margin: 0; }
+.comp-img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: auto; }
+.comp-img-slot {
+  position: relative; aspect-ratio: 4/3;
+  background: var(--bg-secondary, #EAE6DF); overflow: hidden; cursor: pointer;
 }
-.cat-item {
-  position: relative; border-radius: 12px; overflow: hidden;
-  background: var(--bg-secondary,#EAE6DF); cursor: pointer;
-  transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
+.comp-img-slot img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; transition: transform 0.4s ease, opacity 0.3s; opacity: 0;
 }
-.cat-item img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .45s ease; }
-.cat-item:hover img { transform: scale(1.06); }
-.cat-item:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.16); }
-.cat-item.cat-span-v { grid-row: span 2; }
-.cat-item.cat-span-h { grid-column: span 2; }
-.cat-item-label {
-  position:absolute; bottom:0; left:0; right:0;
-  padding:.85rem 1rem;
-  background:linear-gradient(to top,rgba(20,16,10,.85) 0%,transparent 100%);
-  display:flex; align-items:center; gap:8px;
-  transform:translateY(4px); opacity:0; transition:all .3s ease;
+.comp-img-slot img.loaded { opacity: 1; }
+.comp-img-slot:hover img { transform: scale(1.07); }
+.comp-img-slot-empty {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 5px; color: var(--border-color, #c8c0b4);
 }
-.cat-item:hover .cat-item-label { transform:translateY(0); opacity:1; }
-.cat-badge {
-  font-size:.65rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
-  background:var(--accent,#B8945A); color:#fff;
-  padding:2px 8px; border-radius:4px; white-space:nowrap; flex-shrink:0;
+.comp-img-slot-empty svg { width: 22px; height: 22px; opacity: 0.5; }
+.comp-img-slot-empty span { font-size: 0.62rem; letter-spacing: 0.04em; opacity: 0.7; text-align: center; padding: 0 4px; }
+.comp-img-slot.has-img .comp-img-slot-empty { display: none; }
+.comp-img-slot:first-child::after {
+  content: attr(data-num); position: absolute; bottom: 5px; left: 6px;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em;
+  background: rgba(26,20,16,0.55); color: rgba(255,255,255,0.85);
+  padding: 1px 6px; border-radius: 3px; pointer-events: none;
 }
-.cat-item-label span:last-child {
-  font-size:.78rem; color:rgba(255,255,255,.9);
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+.img-lightbox {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s;
 }
-.cat-item.cat-hidden { opacity:0; pointer-events:none; transform:scale(0.96); }
-.cat-lightbox {
-  position:fixed; inset:0; background:rgba(0,0,0,.9);
-  display:flex; align-items:center; justify-content:center;
-  z-index:9999; opacity:0; pointer-events:none; transition:opacity .3s ease;
+.img-lightbox.open { opacity: 1; pointer-events: all; }
+.img-lightbox img { max-width: 90vw; max-height: 88vh; object-fit: contain; border-radius: 8px; }
+.img-lightbox-close {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  background: rgba(255,255,255,0.1); border: none; color: #fff;
+  width: 40px; height: 40px; border-radius: 50%; font-size: 1.3rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
 }
-.cat-lightbox.open { opacity:1; pointer-events:all; }
-.cat-lightbox img { max-width:90vw; max-height:88vh; object-fit:contain; border-radius:8px; }
-.cat-lightbox-close {
-  position:absolute; top:1.5rem; right:1.5rem;
-  background:rgba(255,255,255,.1); border:none; color:#fff;
-  width:42px; height:42px; border-radius:50%; cursor:pointer; font-size:1.4rem;
-  display:flex; align-items:center; justify-content:center; transition:background .2s;
-}
-.cat-lightbox-close:hover { background:rgba(255,255,255,.25); }
-@media (max-width:900px){
-  .cat-gallery-grid { grid-template-columns:repeat(2,1fr); grid-auto-rows:220px; }
-  .cat-item.cat-span-v { grid-row:span 1; }
-}
-@media (max-width:600px){
-  .cat-gallery-grid { grid-template-columns:1fr; grid-auto-rows:200px; }
-  .cat-item.cat-span-h { grid-column:span 1; }
-  .cat-item-label { opacity:1; transform:none; }
-}
+.img-lightbox-close:hover { background: rgba(255,255,255,0.22); }
 </style>
 </head>
 <body>
@@ -195,87 +182,125 @@
 
       <div class="components-grid" style="margin-top:3rem;">
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><rect x="9" y="13" width="6" height="8"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Hydraulic Bed</h4>
-          <p>Gas-lift hydraulic storage beds that open smoothly to reveal a full under-mattress storage compartment. Premium upholstered headboard included.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><rect x="9" y="13" width="6" height="8"/></svg></div>
+              <div><h4>Hydraulic Bed</h4><p>Gas-lift hydraulic storage beds that open smoothly to reveal a full under-mattress storage compartment. Premium upholstered headboard included.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M2 11h20M7 7V5a1 1 0 011-1h8a1 1 0 011 1v2"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Drawer Bed</h4>
-          <p>Beds with built-in pull-out drawers on the sides — perfect for linen, seasonal clothing, and extra storage without compromising the bedroom aesthetic.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M2 11h20M7 7V5a1 1 0 011-1h8a1 1 0 011 1v2"/></svg></div>
+              <div><h4>Drawer Bed</h4><p>Beds with built-in pull-out drawers on the sides — perfect for linen, seasonal clothing, and extra storage without compromising the bedroom aesthetic.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H5a2 2 0 00-2 2v5M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3"/><path d="M12 8v8M8 12h8"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Wall Mounted Bed</h4>
-          <p>Murphy-style wall-mounted folding beds — ideal for studio apartments and guest rooms. Folds away cleanly to free up the full floor space when not in use.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H5a2 2 0 00-2 2v5M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3"/><path d="M12 8v8M8 12h8"/></svg></div>
+              <div><h4>Wall Mounted Bed</h4><p>Murphy-style wall-mounted folding beds — ideal for studio apartments and guest rooms. Folds away cleanly to free up the full floor space when not in use.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Foam Headboard</h4>
-          <p>Custom upholstered foam headboards in premium fabric, velvet, or leatherette. Wall-fixed or bed-integrated, designed to anchor your bedroom's visual identity.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+              <div><h4>Foam Headboard</h4><p>Custom upholstered foam headboards in premium fabric, velvet, or leatherette. Wall-fixed or bed-integrated, designed to anchor your bedroom's visual identity.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="2" width="18" height="20" rx="2"/><path d="M8 2v20M3 8h5M3 14h5M16 8h5M16 14h5"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Wardrobes — Full System</h4>
-          <p>Floor-to-ceiling wardrobes with: <strong>Drawers</strong>, <strong>Cloth Hanging</strong>, <strong>Built-in Dressing Mirror</strong>, <strong>Organisers</strong>, <strong>Iron Board</strong>, and dedicated compartments for every need. Soft-close Hettich fittings throughout.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="2" width="18" height="20" rx="2"/><path d="M8 2v20M3 8h5M3 14h5M16 8h5M16 14h5"/></svg></div>
+              <div><h4>Wardrobes — Full System</h4><p>Floor-to-ceiling wardrobes with: <strong>Drawers</strong>, <strong>Cloth Hanging</strong>, <strong>Built-in Dressing Mirror</strong>, <strong>Organisers</strong>, <strong>Iron Board</strong>, and dedicated compartments for every need. Soft-close Hettich fittings throughout.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="6" height="4" rx="1"/><rect x="9" y="3" width="6" height="4" rx="1"/><rect x="16" y="3" width="6" height="4" rx="1"/><path d="M2 9h20M2 13h20M2 17h20M2 21h20"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Side Tables</h4>
-          <p>Custom bedside tables designed to match your bed and wardrobe — with integrated charging points, drawers, or open shelving. Any size, any finish.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="6" height="4" rx="1"/><rect x="9" y="3" width="6" height="4" rx="1"/><rect x="16" y="3" width="6" height="4" rx="1"/><path d="M2 9h20M2 13h20M2 17h20M2 21h20"/></svg></div>
+              <div><h4>Side Tables</h4><p>Custom bedside tables designed to match your bed and wardrobe — with integrated charging points, drawers, or open shelving. Any size, any finish.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M2 19h20M9 3v16M15 3v4"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Study Table</h4>
-          <p>Wall-mounted or free-standing study tables with overhead shelves, cable management, and a dedicated workspace for children and home-office needs.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M2 19h20M9 3v16M15 3v4"/></svg></div>
+              <div><h4>Study Table</h4><p>Wall-mounted or free-standing study tables with overhead shelves, cable management, and a dedicated workspace for children and home-office needs.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><polyline points="14 3 14 9 20 9"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Book Rack</h4>
-          <p>Open or closed book racks — wall-mounted floating shelves, built-in alcove shelving, or freestanding units. Designed to display your collection beautifully.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 19V5a2 2 0 012-2h8l6 6v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><polyline points="14 3 14 9 20 9"/></svg></div>
+              <div><h4>Book Rack</h4><p>Open or closed book racks — wall-mounted floating shelves, built-in alcove shelving, or freestanding units. Designed to display your collection beautifully.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H5a2 2 0 00-2 2v5M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Loft Storage</h4>
-          <p>Overhead loft cabinets above wardrobes for seasonal storage. Smooth-action lift-up or hinged doors — maximizing every vertical inch of your bedroom.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H5a2 2 0 00-2 2v5M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3"/></svg></div>
+              <div><h4>Loft Storage</h4><p>Overhead loft cabinets above wardrobes for seasonal storage. Smooth-action lift-up or hinged doors — maximizing every vertical inch of your bedroom.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/><circle cx="15" cy="6" r="1"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Wall Décor</h4>
-          <p>Feature walls with paneling, fluted panels, back-painted glass, wallpapers, or textured finishes — transforming a plain wall into your bedroom's signature statement.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/><circle cx="15" cy="6" r="1"/></svg></div>
+              <div><h4>Wall Décor</h4><p>Feature walls with paneling, fluted panels, back-painted glass, wallpapers, or textured finishes — transforming a plain wall into your bedroom's signature statement.</p></div>
             </div>
-        </div>
-
-      </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-hydbed-1.jpg" alt="Hydraulic bed lifted open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-hydbed-2.jpg" alt="Under-mattress storage" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-hydbed-3.jpg" alt="Hydraulic bed closed" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-drawerbed-1.jpg" alt="Drawer bed side" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-drawerbed-2.jpg" alt="Drawer pulled out" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-drawerbed-3.jpg" alt="Drawer bed detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wallbed-1.jpg" alt="Wall bed folded up" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wallbed-2.jpg" alt="Wall bed extended" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wallbed-3.jpg" alt="Wall bed room view" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-headboard-1.jpg" alt="Velvet headboard" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-headboard-2.jpg" alt="Leatherette headboard" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-headboard-3.jpg" alt="Fabric headboard" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wardrobe-1.jpg" alt="Wardrobe full view" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wardrobe-2.jpg" alt="Wardrobe interior layout" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wardrobe-3.jpg" alt="Wardrobe mirror detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-sidetable-1.jpg" alt="Side table with drawer" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-sidetable-2.jpg" alt="Side table charging point" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-sidetable-3.jpg" alt="Side table bedside pair" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-study-1.jpg" alt="Study table wall-mounted" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-study-2.jpg" alt="Study table with shelves" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-study-3.jpg" alt="Study table kids room" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-bookrack-1.jpg" alt="Book rack floating shelves" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-bookrack-2.jpg" alt="Book rack alcove built-in" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-bookrack-3.jpg" alt="Book rack display" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-loft-1.jpg" alt="Loft above wardrobe" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-loft-2.jpg" alt="Loft lift-up door open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-loft-3.jpg" alt="Loft closed view" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-walldecor-1.jpg" alt="Fluted panel feature wall" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-walldecor-2.jpg" alt="Back-painted glass wall" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-walldecor-3.jpg" alt="Textured feature wall" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
     </div>
   </section>
 
@@ -291,63 +316,89 @@
 
       <div class="components-grid" style="margin-top:3rem;">
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-          <div class="comp-card-body">
-              <h4>TV Unit with Louvers</h4>
-          <p>Statement TV units with textured <strong>louver panels</strong>, concealed wire management, backlit floating shelves, and integrated bar/display niches. The centrepiece your living room deserves.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+              <div><h4>TV Unit with Louvers</h4><p>Statement TV units with textured <strong>louver panels</strong>, concealed wire management, backlit floating shelves, and integrated bar/display niches. The centrepiece your living room deserves.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Mandir</h4>
-          <p>Beautifully crafted wooden mandirs — wall-mounted, free-standing, or integrated into your living room unit. Traditional craftsmanship with clean, contemporary lines.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div><h4>Mandir</h4><p>Beautifully crafted wooden mandirs — wall-mounted, free-standing, or integrated into your living room unit. Traditional craftsmanship with clean, contemporary lines.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 9V7a2 2 0 00-2-2H6a2 2 0 00-2 2v2M2 11v5a2 2 0 002 2h16a2 2 0 002-2v-5a2 2 0 00-2-2H4a2 2 0 00-2 2z"/><path d="M6 18v2M18 18v2"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Sofa Set</h4>
-          <p>Custom upholstered sofa sets designed to your living room's dimensions and aesthetic — fabric, velvet, or leatherette in any configuration: L-shape, sectional, or classic 3+1+1.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 9V7a2 2 0 00-2-2H6a2 2 0 00-2 2v2M2 11v5a2 2 0 002 2h16a2 2 0 002-2v-5a2 2 0 00-2-2H4a2 2 0 00-2 2z"/><path d="M6 18v2M18 18v2"/></svg></div>
+              <div><h4>Sofa Set</h4><p>Custom upholstered sofa sets designed to your living room's dimensions and aesthetic — fabric, velvet, or leatherette in any configuration: L-shape, sectional, or classic 3+1+1.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Back Wall Décor</h4>
-          <p>Feature accent walls with fluted panels, CNC-cut patterns, wallpaper, textured paint, or stone cladding — creating a visual anchor for your entire living room.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
+              <div><h4>Back Wall Décor</h4><p>Feature accent walls with fluted panels, CNC-cut patterns, wallpaper, textured paint, or stone cladding — creating a visual anchor for your entire living room.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
-          <div class="comp-card-body">
-              <h4>False Ceiling</h4>
-          <p>Living room false ceilings with cove lighting, POP designs, coffered panels, and integrated lighting zones — transforming a flat ceiling into an architectural feature.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+              <div><h4>False Ceiling</h4><p>Living room false ceilings with cove lighting, POP designs, coffered panels, and integrated lighting zones — transforming a flat ceiling into an architectural feature.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Room Partition</h4>
-          <p>Stylish partitions in CNC-cut wood, fluted glass, or metal frames — dividing living and dining areas with visual interest rather than solid walls.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
+              <div><h4>Room Partition</h4><p>Stylish partitions in CNC-cut wood, fluted glass, or metal frames — dividing living and dining areas with visual interest rather than solid walls.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M2 10h20M2 14h20M7 7V3M17 7V3"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Dining Table</h4>
-          <p>Custom dining tables in <strong>Folding</strong> and <strong>Wall-Mounted</strong> configurations — perfect for compact apartments. Also available as fixed 4/6/8-seater sets with matching chairs.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M2 10h20M2 14h20M7 7V3M17 7V3"/></svg></div>
+              <div><h4>Dining Table</h4><p>Custom dining tables in <strong>Folding</strong> and <strong>Wall-Mounted</strong> configurations — perfect for compact apartments. Also available as fixed 4/6/8-seater sets with matching chairs.</p></div>
             </div>
-        </div>
-
-      </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tvunit-1.jpg" alt="TV unit louver panels" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tvunit-2.jpg" alt="TV unit backlit shelves" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tvunit-3.jpg" alt="TV unit full room view" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-mandir-1.jpg" alt="Mandir teak wood" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-mandir-2.jpg" alt="Mandir with lighting" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-mandir-3.jpg" alt="Mandir detail carving" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-sofa-1.jpg" alt="Sofa set L-shape" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-sofa-2.jpg" alt="Sofa fabric detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-sofa-3.jpg" alt="Sofa living room view" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-backwall-1.jpg" alt="Back wall with panels" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-backwall-2.jpg" alt="Back wall painting" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-backwall-3.jpg" alt="Back wall textured finish" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-fceiling-lr-1.jpg" alt="Living room false ceiling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-fceiling-lr-2.jpg" alt="Cove ceiling with lights" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-fceiling-lr-3.jpg" alt="Coffered ceiling design" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-partition-1.jpg" alt="Glass room partition" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-partition-2.jpg" alt="CNC jali partition" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-partition-3.jpg" alt="Wooden partition" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-dining-1.jpg" alt="Dining table 6-seater" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-dining-2.jpg" alt="Dining table 4-seater" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-dining-3.jpg" alt="Dining table with unit" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
     </div>
   </section>
 
@@ -363,55 +414,77 @@
 
       <div class="components-grid" style="margin-top:3rem;">
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v6M15 3v6"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Wall Paneling</h4>
-          <p>Fluted wood panels, PU-finished boards, or textured wall cladding at the entrance — creating a warm, hotel-lobby arrival experience the moment you step in.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v6M15 3v6"/></svg></div>
+              <div><h4>Wall Paneling</h4><p>Fluted wood panels, PU-finished boards, or textured wall cladding at the entrance — creating a warm, hotel-lobby arrival experience the moment you step in.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Shoe Rack</h4>
-          <p>Concealed or open shoe storage designed for Indian homes — with seating bench, pull-out drawers, and ventilated panels to keep your entrance clean and organized.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+              <div><h4>Shoe Rack</h4><p>Concealed or open shoe storage designed for Indian homes — with seating bench, pull-out drawers, and ventilated panels to keep your entrance clean and organized.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Safety Door with Digital Lock</h4>
-          <p>Premium safety doors with biometric / PIN / card digital smart locks. Powder-coated steel frames with decorative panel inserts — security without compromising style.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
+              <div><h4>Safety Door with Digital Lock</h4><p>Premium safety doors with biometric / PIN / card digital smart locks. Powder-coated steel frames with decorative panel inserts — security without compromising style.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
-          <div class="comp-card-body">
-              <h4>CNC Jali</h4>
-          <p>Precision CNC-cut decorative screens in MDF or metal — used as room dividers, door panels, or feature walls. Geometric, floral, or custom pattern in any design you choose.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
+              <div><h4>CNC Jali</h4><p>Precision CNC-cut decorative screens in MDF or metal — used as room dividers, door panels, or feature walls. Geometric, floral, or custom pattern in any design you choose.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Name Plates</h4>
-          <p>Custom designer name plates in brass, stainless steel, acrylic, or wood — engraved, laser-cut, or backlit LED. The smallest detail that makes a powerful statement.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div><h4>Name Plates</h4><p>Custom designer name plates in brass, stainless steel, acrylic, or wood — engraved, laser-cut, or backlit LED. The smallest detail that makes a powerful statement.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-4M16 3l5 5-5 5M21 8H9"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Main Door</h4>
-          <p>Solid wood, engineered wood, or composite main doors with custom veneers, glass inserts, or carved panels. Complete with frames, seals, and a 10-year structural warranty.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-4M16 3l5 5-5 5M21 8H9"/></svg></div>
+              <div><h4>Main Door</h4><p>Solid wood, engineered wood, or composite main doors with custom veneers, glass inserts, or carved panels. Complete with frames, seals, and a 10-year structural warranty.</p></div>
             </div>
-        </div>
-
-      </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wallpanel-1.jpg" alt="Entrance wall paneling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wallpanel-2.jpg" alt="Panel detail fluted" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-wallpanel-3.jpg" alt="Panel with lighting" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-shoerack-1.jpg" alt="Shoe rack open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-shoerack-2.jpg" alt="Shoe rack closed" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-shoerack-3.jpg" alt="Shoe rack with seat" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-safedoor-1.jpg" alt="Safety door closed" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-safedoor-2.jpg" alt="Digital lock detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-safedoor-3.jpg" alt="Safety door open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-jali-1.jpg" alt="CNC jali entrance" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-jali-2.jpg" alt="CNC pattern detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-jali-3.jpg" alt="CNC jali backlit" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-nameplate-1.jpg" alt="Custom name plate" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-nameplate-2.jpg" alt="LED name plate" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-nameplate-3.jpg" alt="Metal name plate" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-maindoor-1.jpg" alt="Solid wood main door" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-maindoor-2.jpg" alt="Engineered main door" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-maindoor-3.jpg" alt="Main door with frame" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
     </div>
   </section>
 
@@ -459,55 +532,77 @@
 
       <div class="components-grid" style="margin-top:3rem;">
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
-          <div class="comp-card-body">
-              <h4>False Ceiling — POP &amp; Gypsum</h4>
-          <p>Coffered ceilings, dropped panels, cove designs, and multi-level ceilings in POP or gypsum board — transforming every room from top to bottom.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+              <div><h4>False Ceiling — POP &amp; Gypsum</h4><p>Coffered ceilings, dropped panels, cove designs, and multi-level ceilings in POP or gypsum board — transforming every room from top to bottom.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 20h20M4 20V10M8 20V6M12 20V2M16 20V8M20 20V14"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Painting</h4>
-          <p>Interior and exterior painting with premium Asian Paints or Berger finishes — texture paint, designer finishes, and meticulous preparation for a flawless result.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 20h20M4 20V10M8 20V6M12 20V2M16 20V8M20 20V14"/></svg></div>
+              <div><h4>Painting</h4><p>Interior and exterior painting with premium Asian Paints or Berger finishes — texture paint, designer finishes, and meticulous preparation for a flawless result.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Plumbing</h4>
-          <p>Kitchen and bathroom plumbing — pipe re-routing, new fixture installation, drainage upgrades, and waterproofing. Clean, code-compliant, and long-lasting work.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg></div>
+              <div><h4>Plumbing</h4><p>Kitchen and bathroom plumbing — pipe re-routing, new fixture installation, drainage upgrades, and waterproofing. Clean, code-compliant, and long-lasting work.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Renovation</h4>
-          <p>Complete home renovation — demolition, masonry, waterproofing, screeding, and rebuild. We handle gut renovations as smoothly as targeted room refreshes.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9"/><rect x="2" y="13" width="9" height="9"/><rect x="13" y="13" width="9" height="9"/></svg></div>
+              <div><h4>Renovation</h4><p>Complete home renovation — demolition, masonry, waterproofing, screeding, and rebuild. We handle gut renovations as smoothly as targeted room refreshes.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Tiling Work</h4>
-          <p>Expert tile-laying for kitchens, bathrooms, and living areas. Precise grouting, waterproofing, and levelling — so every tile sits perfectly flat and lasts for decades.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg></div>
+              <div><h4>Tiling Work</h4><p>Expert tile-laying for kitchens, bathrooms, and living areas. Precise grouting, waterproofing, and levelling — so every tile sits perfectly flat and lasts for decades.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Electrical &amp; Wiring</h4>
-          <p>Concealed wiring, circuit planning, switch-board upgrades, and point additions — done safely, to IS standards, coordinated with your furniture layout.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+              <div><h4>Electrical &amp; Wiring</h4><p>Concealed wiring, circuit planning, switch-board upgrades, and point additions — done safely, to IS standards, coordinated with your furniture layout.</p></div>
             </div>
-        </div>
-
-      </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-popceil-1.jpg" alt="POP false ceiling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-popceil-2.jpg" alt="Gypsum board ceiling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-popceil-3.jpg" alt="Multi-level ceiling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-painting-1.jpg" alt="Texture paint finish" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-painting-2.jpg" alt="Designer paint effect" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-painting-3.jpg" alt="Interior painting clean" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-plumbing-1.jpg" alt="Bathroom plumbing" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-plumbing-2.jpg" alt="Kitchen plumbing" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-plumbing-3.jpg" alt="Pipe re-routing" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-reno-1.jpg" alt="Demolition work" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-reno-2.jpg" alt="Masonry renovation" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-reno-3.jpg" alt="Completed renovation" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tiling-1.jpg" alt="Kitchen tiling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tiling-2.jpg" alt="Bathroom tiling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tiling-3.jpg" alt="Living room tiling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-electrical-1.jpg" alt="Concealed wiring" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-electrical-2.jpg" alt="Switchboard upgrade" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-electrical-3.jpg" alt="Circuit planning" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
     </div>
   </section>
 
@@ -523,55 +618,77 @@
 
       <div class="components-grid" style="margin-top:3rem;">
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="8" width="20" height="8" rx="2"/><path d="M6 8V5M18 8V5M6 16v3M18 16v3"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Panel Lights</h4>
-          <p><strong>Surface-mounted</strong> panel lights and <strong>rectangular LED panels</strong> for kitchens, offices, and utility spaces — uniform, glare-free illumination in warm or cool white.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="8" width="20" height="8" rx="2"/><path d="M6 8V5M18 8V5M6 16v3M18 16v3"/></svg></div>
+              <div><h4>Panel Lights</h4><p><strong>Surface-mounted</strong> panel lights and <strong>rectangular LED panels</strong> for kitchens, offices, and utility spaces — uniform, glare-free illumination in warm or cool white.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="12" y1="2" x2="12" y2="22"/><path d="M5 5.5l14 13M19 5.5L5 18.5"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Profile Lights</h4>
-          <p>Aluminum LED profile channels recessed into furniture edges, under cabinets, and ceiling coving. Creates a luxury glow that makes your kitchen and wardrobes look premium.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="12" y1="2" x2="12" y2="22"/><path d="M5 5.5l14 13M19 5.5L5 18.5"/></svg></div>
+              <div><h4>Profile Lights</h4><p>Aluminum LED profile channels recessed into furniture edges, under cabinets, and ceiling coving. Creates a luxury glow that makes your kitchen and wardrobes look premium.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Magnetic Lights</h4>
-          <p>Modern magnetic track systems — repositionable spotlights that click into a ceiling-mounted magnetic rail. Change your lighting layout any time without any electrical work.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+              <div><h4>Magnetic Lights</h4><p>Modern magnetic track systems — repositionable spotlights that click into a ceiling-mounted magnetic rail. Change your lighting layout any time without any electrical work.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="5" r="3"/><path d="M12 8v8M8 12l4 4 4-4"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Spot Lights</h4>
-          <p>Recessed downlights precisely aimed at artwork, décor items, and kitchen platforms — creating drama and depth with targeted illumination where it matters most.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="5" r="3"/><path d="M12 8v8M8 12l4 4 4-4"/></svg></div>
+              <div><h4>Spot Lights</h4><p>Recessed downlights precisely aimed at artwork, décor items, and kitchen platforms — creating drama and depth with targeted illumination where it matters most.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="6" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Track Lights</h4>
-          <p>Adjustable track lighting mounted to ceiling rails — ideal for kitchens, art walls, and retail-style living rooms. Aims precisely where you need it.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="6" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></div>
+              <div><h4>Track Lights</h4><p>Adjustable track lighting mounted to ceiling rails — ideal for kitchens, art walls, and retail-style living rooms. Aims precisely where you need it.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Cove Lights</h4>
-          <p>Indirect LED strips hidden inside false ceiling coves — washing the ceiling and walls with a warm ambient glow. The defining feature of any luxury living room.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+              <div><h4>Cove Lights</h4><p>Indirect LED strips hidden inside false ceiling coves — washing the ceiling and walls with a warm ambient glow. The defining feature of any luxury living room.</p></div>
             </div>
-        </div>
-
-      </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-panel-1.jpg" alt="Panel light living room" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-panel-2.jpg" alt="Panel light kitchen" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-panel-3.jpg" alt="Panel light detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-profile-1.jpg" alt="Profile light cove" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-profile-2.jpg" alt="Profile light wardrobe" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-profile-3.jpg" alt="Profile light strip" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-magnetic-1.jpg" alt="Magnetic track light" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-magnetic-2.jpg" alt="Magnetic spotlight" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-magnetic-3.jpg" alt="Magnetic flexible" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-spotlight-1.jpg" alt="Spotlights ceiling" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-spotlight-2.jpg" alt="Spotlight focus" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-spotlight-3.jpg" alt="Spotlights arrangement" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tracklight-1.jpg" alt="Track light rail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tracklight-2.jpg" alt="Track light kitchen" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-tracklight-3.jpg" alt="Track light living" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-covelight-1.jpg" alt="Cove light bedroom" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-covelight-2.jpg" alt="Cove light living room" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-covelight-3.jpg" alt="Cove light glow" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
     </div>
   </section>
 
@@ -622,31 +739,41 @@
 
       <div class="components-grid" style="margin-top:3rem;">
 
-        <div class="comp-card reveal reveal-delay-1">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Full Body Tiles</h4>
-          <p>Through-body porcelain tiles — the colour runs throughout the tile body, making chips virtually invisible. Premium-grade, 800x800mm and larger formats available.</p>
+        <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg></div>
+              <div><h4>Full Body Tiles</h4><p>Through-body porcelain tiles — the colour runs throughout the tile body, making chips virtually invisible. Premium-grade, 800x800mm and larger formats available.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-2">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Ceramic Tiles</h4>
-          <p>Glazed ceramic wall and floor tiles — a wide range of textures, patterns, and sizes for kitchens, bathrooms, and living areas. Budget-friendly without compromising look.</p>
+        <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg></div>
+              <div><h4>Ceramic Tiles</h4><p>Glazed ceramic wall and floor tiles — a wide range of textures, patterns, and sizes for kitchens, bathrooms, and living areas. Budget-friendly without compromising look.</p>
             </div>
         </div>
 
-        <div class="comp-card reveal reveal-delay-3">
-          <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-          <div class="comp-card-body">
-              <h4>Marble &amp; Natural Stone</h4>
-          <p>Italian, Indian, and imported marble for flooring, feature walls, kitchen platforms, and bathrooms. Sealed, polished, and professionally installed for lasting elegance.</p>
+        <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div><h4>Marble &amp; Natural Stone</h4><p>Italian, Indian, and imported marble for flooring, feature walls, kitchen platforms, and bathrooms. Sealed, polished, and professionally installed for lasting elegance.</p></div>
             </div>
-        </div>
-
-      </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-fulltile-1.jpg" alt="Full body tile floor" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-fulltile-2.jpg" alt="Full body tile large" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-fulltile-3.jpg" alt="Full body tile detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-ceramic-1.jpg" alt="Ceramic wall tile" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-ceramic-2.jpg" alt="Ceramic floor tile" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-ceramic-3.jpg" alt="Ceramic bathroom tile" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-marble-1.jpg" alt="Marble flooring" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-marble-2.jpg" alt="Natural stone tile" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/f-comp-marble-3.jpg" alt="Marble slab detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
     </div>
   </section>
 
@@ -732,96 +859,6 @@
   </section>
 
 
-  <!-- ══════════════════════════════════════════════════
-       FURNITURE CATEGORY SHOWCASE
-  ══════════════════════════════════════════════════ -->
-  <section id="category-gallery" style="padding:var(--section-padding);" aria-labelledby="fcat-heading">
-    <div class="container">
-      <div class="section-header text-center reveal">
-        <span class="eyebrow">Our Portfolio by Room</span>
-        <h2 id="fcat-heading">Explore Every <em>Space We Design</em></h2>
-        <p style="margin-top:1rem;margin-inline:auto;">From cosy bedrooms to elegant living rooms — browse our projects organized by room type and category.</p>
-      </div>
-
-      <!-- CATEGORY TABS -->
-      <div class="cat-tabs reveal" style="margin-top:2.5rem;">
-        <button class="cat-tab active" data-cat="all" onclick="filterFurnitureGallery(this,'all')">All Rooms</button>
-        <button class="cat-tab" data-cat="bedroom" onclick="filterFurnitureGallery(this,'bedroom')">Bedroom</button>
-        <button class="cat-tab" data-cat="living" onclick="filterFurnitureGallery(this,'living')">Living Room</button>
-        <button class="cat-tab" data-cat="wardrobe" onclick="filterFurnitureGallery(this,'wardrobe')">Wardrobes</button>
-        <button class="cat-tab" data-cat="ceiling" onclick="filterFurnitureGallery(this,'ceiling')">False Ceiling</button>
-        <button class="cat-tab" data-cat="commercial" onclick="filterFurnitureGallery(this,'commercial')">Commercial</button>
-      </div>
-
-      <!-- CATEGORY GRID -->
-      <div class="cat-gallery-grid" id="furniture-cat-grid" style="margin-top:2rem;">
-
-        <div class="cat-item cat-span-v reveal" data-cats="all bedroom wardrobe">
-          <img src="images/f-cat-wardrobe-1.jpg" alt="Built-in wardrobe with mirror by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D0C8B8,#C0B8A8)'" />
-          <div class="cat-item-label"><span class="cat-badge">Wardrobe</span><span>Floor-to-Ceiling Wardrobe — Kharadi</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-1" data-cats="all living">
-          <img src="images/f-cat-living-1.jpg" alt="Contemporary TV unit and living room design" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C8C0B0,#B8B0A0)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#5a7a9a;">Living</span><span>TV Unit — Baner</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-2" data-cats="all bedroom">
-          <img src="images/f-cat-bedroom-1.jpg" alt="Master bedroom with headboard and side units" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C0B8AE,#B0A8A0)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#9a5a7a;">Bedroom</span><span>Master Bedroom — Viman Nagar</span></div>
-        </div>
-
-        <div class="cat-item reveal reveal-delay-1" data-cats="all ceiling">
-          <img src="images/f-cat-ceiling-1.jpg" alt="False ceiling with cove lighting" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D4CCB8,#C4BCA8)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#5a9a8a;">Ceiling</span><span>Cove Lighting Ceiling — Hadapsar</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-2" data-cats="all wardrobe bedroom">
-          <img src="images/f-cat-wardrobe-2.jpg" alt="Walk-in wardrobe with island dresser" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#BDB5AA,#ADA5A0)'" />
-          <div class="cat-item-label"><span class="cat-badge">Wardrobe</span><span>Walk-In Wardrobe — Wakad</span></div>
-        </div>
-        <div class="cat-item cat-span-h reveal reveal-delay-3" data-cats="all commercial">
-          <img src="images/f-cat-commercial-1.jpg" alt="Corporate office interior by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C8C0B8,#B8B0A8)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#6a5a9a;">Office</span><span>Corporate Office Fit-Out — Hinjewadi</span></div>
-        </div>
-
-        <div class="cat-item reveal" data-cats="all living">
-          <img src="images/f-cat-living-2.jpg" alt="Living room with sofa wall panelling" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D0C4B4,#C0B4A4)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#5a7a9a;">Living</span><span>Wall Panelling — Kalyani Nagar</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-1" data-cats="all ceiling">
-          <img src="images/f-cat-ceiling-2.jpg" alt="Pop false ceiling with decorative lights" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C4BDB4,#B4ADA4)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#5a9a8a;">Ceiling</span><span>POP Ceiling Design — Aundh</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-2" data-cats="all bedroom">
-          <img src="images/f-cat-bedroom-2.jpg" alt="Kids bedroom with study unit" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C4BCB4,#B4ACA4)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#9a5a7a;">Bedroom</span><span>Kids' Study Bedroom — Koregaon Park</span></div>
-        </div>
-
-      </div><!-- /cat-gallery-grid -->
-
-      <div class="text-center reveal" style="margin-top:2.5rem;">
-        <a href="portfolio.html" class="btn btn-outline">View Full Portfolio →</a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- GALLERY STRIP — Recent Projects -->
-  <section class="gallery-strip" aria-labelledby="furniture-gallery-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Portfolio Highlights</span>
-        <h2 id="furniture-gallery-heading">Recent <em>Projects</em></h2>
-      </div>
-      <div class="gallery-strip-grid">
-        <div class="g-item reveal"><img src="images/f-gallery-1.jpg" alt="Wardrobe project by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#D8D0C4'" /></div>
-        <div class="g-item reveal reveal-delay-1"><img src="images/f-gallery-2.jpg" alt="Living room project by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#CABFB4'" /></div>
-        <div class="g-item reveal reveal-delay-2"><img src="images/f-gallery-3.jpg" alt="Bedroom project by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#C0B8AE'" /></div>
-        <div class="g-item reveal reveal-delay-1"><img src="images/f-gallery-4.jpg" alt="False ceiling project by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#D0C8BB'" /></div>
-        <div class="g-item reveal reveal-delay-2"><img src="images/f-gallery-5.jpg" alt="Entrance design by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#C8C0B4'" /></div>
-      </div>
-    </div>
-  </section>
-
-
   <!-- CTA -->
   <section class="cta-banner" aria-labelledby="furniture-cta-heading">
     <h2 id="furniture-cta-heading">Let's Design Your<br/><em>Perfect Space</em></h2>
@@ -865,15 +902,15 @@
     class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.122 1.529 5.859L.057 23.5l5.777-1.517A11.951 11.951 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.893 0-3.667-.52-5.184-1.426l-.371-.22-3.43.9.916-3.345-.242-.383A9.953 9.953 0 012 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
   </a>
-  <!-- LIGHTBOX -->
-  <div class="cat-lightbox" id="cat-lightbox-f" onclick="closeLightboxF()">
-    <button class="cat-lightbox-close" aria-label="Close">✕</button>
-    <img src="" alt="" id="lightbox-img-f" />
+  <!-- Lightbox -->
+  <div class="img-lightbox" id="img-lightbox-f" onclick="closeImgLightbox()">
+    <button class="img-lightbox-close" onclick="closeImgLightbox()" aria-label="Close">✕</button>
+    <img src="" alt="" id="lb-img-f" onclick="event.stopPropagation()" />
   </div>
 
   <script src="js/script.js" defer></script>
   <script>
-    /* Jumpnav scroll arrow */
+    /* Jumpnav scroll arrow — hide when scrolled to end */
     (function(){
       var nav=document.querySelector('.section-jumpnav');
       var inner=nav&&nav.querySelector('.jumpnav-inner');
@@ -883,28 +920,19 @@
       },{passive:true});
     })();
 
-    function filterFurnitureGallery(btn, cat) {
-      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('#furniture-cat-grid .cat-item').forEach(item => {
-        const cats = (item.dataset.cats || '').split(' ');
-        item.classList.toggle('cat-hidden', cat !== 'all' && !cats.includes(cat));
-      });
+    /* Component image lightbox */
+    function openImgLightbox(slot) {
+      var img = slot.querySelector('img');
+      if (!img || !img.classList.contains('loaded')) return;
+      var lb = document.getElementById('img-lightbox-f');
+      document.getElementById('lb-img-f').src = img.src;
+      document.getElementById('lb-img-f').alt = img.alt || '';
+      lb.classList.add('open');
     }
-
-    document.querySelectorAll('#furniture-cat-grid .cat-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        if (!img || !img.src) return;
-        document.getElementById('lightbox-img-f').src = img.src;
-        document.getElementById('lightbox-img-f').alt = img.alt || '';
-        document.getElementById('cat-lightbox-f').classList.add('open');
-      });
-    });
-    function closeLightboxF() {
-      document.getElementById('cat-lightbox-f').classList.remove('open');
+    function closeImgLightbox() {
+      document.getElementById('img-lightbox-f').classList.remove('open');
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightboxF(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeImgLightbox(); });
   </script>
 </body>
 </html>
