@@ -38,6 +38,128 @@
 }
 /* comp-card-body for flex layout */
 .comp-card-body { flex: 1; min-width: 0; }
+
+/* ══ CATEGORY GALLERY ══ */
+.cat-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cat-tab {
+  background: var(--bg-primary,#fff);
+  border: 1.5px solid var(--border-color,#d8d0c4);
+  color: var(--text-secondary,#7a7268);
+  font-family: inherit;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  padding: .45rem 1.1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all .22s ease;
+}
+.cat-tab:hover { border-color: var(--accent,#B8945A); color: var(--accent,#B8945A); }
+.cat-tab.active { background: var(--accent,#B8945A); border-color: var(--accent,#B8945A); color: #fff; }
+
+.cat-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  grid-auto-rows: 260px;
+}
+.cat-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-secondary,#EAE6DF);
+  cursor: pointer;
+  transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
+}
+.cat-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .45s ease;
+}
+.cat-item:hover img { transform: scale(1.06); }
+.cat-item:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.16); }
+.cat-item.cat-span-v { grid-row: span 2; }
+.cat-item.cat-span-h { grid-column: span 2; }
+.cat-item-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: .85rem 1rem;
+  background: linear-gradient(to top, rgba(20,16,10,.85) 0%, transparent 100%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: translateY(4px);
+  opacity: 0;
+  transition: all .3s ease;
+}
+.cat-item:hover .cat-item-label { transform: translateY(0); opacity: 1; }
+.cat-badge {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  background: var(--accent,#B8945A);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.cat-item-label span:last-child {
+  font-size: .78rem;
+  color: rgba(255,255,255,.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cat-item.cat-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96);
+}
+
+/* Lightbox overlay */
+.cat-lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.9);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.cat-lightbox.open { opacity: 1; pointer-events: all; }
+.cat-lightbox img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.cat-lightbox-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: rgba(255,255,255,.1); border: none;
+  color: #fff; width: 42px; height: 42px;
+  border-radius: 50%; cursor: pointer; font-size: 1.4rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.cat-lightbox-close:hover { background: rgba(255,255,255,.25); }
+
+@media (max-width: 900px) {
+  .cat-gallery-grid { grid-template-columns: repeat(2,1fr); grid-auto-rows: 220px; }
+  .cat-item.cat-span-v { grid-row: span 1; }
+}
+@media (max-width: 600px) {
+  .cat-gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+  .cat-item.cat-span-h { grid-column: span 1; }
+  .cat-item-label { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
@@ -432,12 +554,86 @@
   </section>
 
 
-  <!-- GALLERY STRIP -->
-  <section id="gallery" class="gallery-strip" aria-labelledby="gallery-heading">
+  <!-- ══════════════════════════════════════════════════
+       KITCHEN CATEGORY SHOWCASE — finish / style images
+  ══════════════════════════════════════════════════ -->
+  <section id="gallery" style="padding:var(--section-padding);background:var(--bg-secondary);" aria-labelledby="category-gallery-heading">
+    <div class="container">
+      <div class="section-header text-center reveal">
+        <span class="eyebrow">Kitchen Showcase</span>
+        <h2 id="category-gallery-heading">Explore by <em>Category</em></h2>
+        <p style="margin-top:1rem;margin-inline:auto;">Browse our work by kitchen style, finish, and layout type. Every project is custom-designed for the client's space and lifestyle.</p>
+      </div>
+
+      <!-- CATEGORY TABS -->
+      <div class="cat-tabs reveal" style="margin-top:2.5rem;">
+        <button class="cat-tab active" data-cat="all" onclick="filterKitchenGallery(this,'all')">All Projects</button>
+        <button class="cat-tab" data-cat="acrylic" onclick="filterKitchenGallery(this,'acrylic')">Acrylic Finish</button>
+        <button class="cat-tab" data-cat="laminate" onclick="filterKitchenGallery(this,'laminate')">Laminate Finish</button>
+        <button class="cat-tab" data-cat="straight" onclick="filterKitchenGallery(this,'straight')">Straight / L-Shape</button>
+        <button class="cat-tab" data-cat="island" onclick="filterKitchenGallery(this,'island')">Island / Parallel</button>
+      </div>
+
+      <!-- CATEGORY GRID -->
+      <div class="cat-gallery-grid" id="kitchen-cat-grid" style="margin-top:2rem;">
+
+        <!-- Row 1: hero span + 2 stacked -->
+        <div class="cat-item cat-span-v reveal" data-cats="all acrylic straight">
+          <img src="images/k-cat-acrylic-1.jpg" alt="High-gloss acrylic modular kitchen by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D4C8B8,#C0B4A4)'" />
+          <div class="cat-item-label"><span class="cat-badge">Acrylic</span><span>High-Gloss White Kitchen — Dhanori</span></div>
+        </div>
+        <div class="cat-item reveal reveal-delay-1" data-cats="all laminate straight">
+          <img src="images/k-cat-laminate-1.jpg" alt="Laminate finish L-shape kitchen" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C8C0B0,#B8AFA0)'" />
+          <div class="cat-item-label"><span class="cat-badge" style="background:#5a8a6a;">Laminate</span><span>L-Shape Kitchen — Viman Nagar</span></div>
+        </div>
+        <div class="cat-item reveal reveal-delay-2" data-cats="all island">
+          <img src="images/k-cat-island-1.jpg" alt="Island kitchen with breakfast counter" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#BFB8AE,#AFA8A0)'" />
+          <div class="cat-item-label"><span class="cat-badge" style="background:#7a5a9a;">Island</span><span>Island Counter Kitchen — Baner</span></div>
+        </div>
+
+        <!-- Row 2: 2 normal + 1 wide -->
+        <div class="cat-item reveal reveal-delay-1" data-cats="all acrylic island">
+          <img src="images/k-cat-acrylic-2.jpg" alt="Acrylic finish parallel kitchen" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D0C4B4,#C0B8A8)'" />
+          <div class="cat-item-label"><span class="cat-badge">Acrylic</span><span>Parallel Kitchen — Hadapsar</span></div>
+        </div>
+        <div class="cat-item reveal reveal-delay-2" data-cats="all laminate straight">
+          <img src="images/k-cat-laminate-2.jpg" alt="Laminate woodgrain straight kitchen" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C4BDB4,#B4ADA4)'" />
+          <div class="cat-item-label"><span class="cat-badge" style="background:#5a8a6a;">Laminate</span><span>Woodgrain Kitchen — Kharadi</span></div>
+        </div>
+        <div class="cat-item cat-span-h reveal reveal-delay-3" data-cats="all island">
+          <img src="images/k-cat-parallel-1.jpg" alt="Open plan U-shape kitchen with island" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C8C0B8,#B8B0A8)'" />
+          <div class="cat-item-label"><span class="cat-badge" style="background:#7a5a9a;">Island</span><span>U-Shape Open Kitchen — Wakad</span></div>
+        </div>
+
+        <!-- Row 3: 3 equal -->
+        <div class="cat-item reveal" data-cats="all acrylic straight">
+          <img src="images/k-cat-acrylic-3.jpg" alt="Acrylic finish with tandem drawer storage" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D4CBB8,#C4BAA8)'" />
+          <div class="cat-item-label"><span class="cat-badge">Acrylic</span><span>Straight Kitchen with Tall Unit — Kalyani Nagar</span></div>
+        </div>
+        <div class="cat-item reveal reveal-delay-1" data-cats="all laminate">
+          <img src="images/k-cat-laminate-3.jpg" alt="Two-tone laminate kitchen design" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#BDB8B0,#ADA8A0)'" />
+          <div class="cat-item-label"><span class="cat-badge" style="background:#5a8a6a;">Laminate</span><span>Two-Tone Kitchen — Aundh</span></div>
+        </div>
+        <div class="cat-item reveal reveal-delay-2" data-cats="all straight island">
+          <img src="images/k-cat-island-2.jpg" alt="Compact kitchen with rolling shutter unit" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C4BCB4,#B4ACA4)'" />
+          <div class="cat-item-label"><span class="cat-badge" style="background:#7a5a9a;">Island</span><span>Breakfast Bar Kitchen — Hinjewadi</span></div>
+        </div>
+
+      </div><!-- /cat-gallery-grid -->
+
+      <div class="text-center reveal" style="margin-top:2.5rem;">
+        <a href="portfolio.html" class="btn btn-outline">View All Kitchen Projects →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- GALLERY STRIP — Recent Projects -->
+  <section class="gallery-strip" aria-labelledby="gallery-heading">
     <div class="container">
       <div class="section-header reveal">
-        <span class="eyebrow">Our Work</span>
-        <h2 id="gallery-heading">Recent <em>Kitchen Projects</em></h2>
+        <span class="eyebrow">Recent Projects</span>
+        <h2 id="gallery-heading">Fresh From <em>Our Workshop</em></h2>
       </div>
       <div class="gallery-strip-grid">
         <div class="g-item reveal"><img src="images/k-gallery-1.jpg" alt="Kitchen project 1 by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#D8D0C4'" /></div>
@@ -497,47 +693,13 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.122 1.529 5.859L.057 23.5l5.777-1.517A11.951 11.951 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.893 0-3.667-.52-5.184-1.426l-.371-.22-3.43.9.916-3.345-.242-.383A9.953 9.953 0 012 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
   </a>
 
+  <!-- LIGHTBOX -->
+  <div class="cat-lightbox" id="cat-lightbox" onclick="closeLightbox()">
+    <button class="cat-lightbox-close" aria-label="Close">✕</button>
+    <img src="" alt="" id="lightbox-img" />
+  </div>
+
   <script src="js/script.js" defer></script>
-  <script>
-    /* ═══════════════════════════════════════════════════════
-       IMAGE SHEET LOADER — modular-kitchens.html
-       ⚠️  Paste your Google Sheet IMAGE CSV URL here.
-    ═══════════════════════════════════════════════════════ */
-    const IMAGE_SHEET_CSV_URL = 'YOUR_IMAGE_SHEET_CSV_URL_HERE';
-
-    async function loadImagesFromSheet() {
-      const url = IMAGE_SHEET_CSV_URL !== 'YOUR_IMAGE_SHEET_CSV_URL_HERE' ? IMAGE_SHEET_CSV_URL : null;
-      if (!url) return;
-      try {
-        const res = await fetch(url + '&t=' + Date.now(), { cache: 'no-store' });
-        if (!res.ok) return;
-        const rows = parseImageCSV(await res.text());
-        rows.forEach(row => {
-          if (!row.slot_key || !row.image_url) return;
-          document.querySelectorAll('img').forEach(img => {
-            if (img.src && img.src.includes(row.slot_key)) img.src = row.image_url;
-          });
-        });
-      } catch(e) { console.warn('PI: Could not load image sheet.', e); }
-    }
-
-    function parseImageCSV(txt) {
-      const lines = txt.trim().split('\n');
-      const hdrs = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g,'').toLowerCase());
-      return lines.slice(1).map(line => {
-        const cols=[]; let cur='',q=false;
-        for(const ch of line){ if(ch==='"') q=!q; else if(ch===','&&!q){cols.push(cur.trim());cur='';} else cur+=ch; }
-        cols.push(cur.trim());
-        const o={};
-        hdrs.forEach((h,i)=>o[h]=(cols[i]||'').replace(/^"|"$/g,'').trim());
-        return o;
-      }).filter(r=>r.slot_key&&r.image_url&&r.image_url.startsWith('http'));
-    }
-
-    loadImagesFromSheet();
-  </script>
-
-
   <script>
     /* Jumpnav scroll arrow */
     (function(){
@@ -548,6 +710,31 @@
         nav.classList.toggle('scrolled-end', inner.scrollLeft+inner.clientWidth>=inner.scrollWidth-8);
       },{passive:true});
     })();
+
+    /* Category gallery filter */
+    function filterKitchenGallery(btn, cat) {
+      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#kitchen-cat-grid .cat-item').forEach(item => {
+        const cats = (item.dataset.cats || '').split(' ');
+        item.classList.toggle('cat-hidden', cat !== 'all' && !cats.includes(cat));
+      });
+    }
+
+    /* Lightbox */
+    document.querySelectorAll('#kitchen-cat-grid .cat-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (!img || !img.src) return;
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox-img').alt = img.alt || '';
+        document.getElementById('cat-lightbox').classList.add('open');
+      });
+    });
+    function closeLightbox() {
+      document.getElementById('cat-lightbox').classList.remove('open');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>
