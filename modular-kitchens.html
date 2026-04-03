@@ -39,126 +39,115 @@
 /* comp-card-body for flex layout */
 .comp-card-body { flex: 1; min-width: 0; }
 
-/* ══ CATEGORY GALLERY ══ */
-.cat-tabs {
+/* ══ COMPONENT CARDS WITH IMAGES ══ */
+.comp-card-v2 {
+  background: var(--bg-primary, #fff);
+  border: 1px solid var(--border-color, #e0d9ce);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: box-shadow 0.28s ease, transform 0.28s ease;
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
 }
-.cat-tab {
-  background: var(--bg-primary,#fff);
-  border: 1.5px solid var(--border-color,#d8d0c4);
-  color: var(--text-secondary,#7a7268);
-  font-family: inherit;
-  font-size: .8rem;
+.comp-card-v2:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  transform: translateY(-3px);
+}
+.comp-card-v2-header {
+  padding: 1.25rem 1.25rem 0.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+.comp-card-v2-header .comp-icon {
+  flex-shrink: 0;
+  margin: 0;
+}
+.comp-card-v2-header h4 {
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: .05em;
-  padding: .45rem 1.1rem;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: all .22s ease;
+  color: var(--text-primary, #1A1410);
+  margin-bottom: 0.25rem;
 }
-.cat-tab:hover { border-color: var(--accent,#B8945A); color: var(--accent,#B8945A); }
-.cat-tab.active { background: var(--accent,#B8945A); border-color: var(--accent,#B8945A); color: #fff; }
-
-.cat-gallery-grid {
+.comp-card-v2-header p {
+  font-size: 0.82rem;
+  color: var(--text-secondary, #7a7268);
+  line-height: 1.55;
+  margin: 0;
+}
+/* 3-image row inside a comp card */
+.comp-img-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  grid-auto-rows: 260px;
+  gap: 3px;
+  margin-top: auto;
 }
-.cat-item {
+.comp-img-slot {
   position: relative;
-  border-radius: 12px;
+  aspect-ratio: 4/3;
+  background: var(--bg-secondary, #EAE6DF);
   overflow: hidden;
-  background: var(--bg-secondary,#EAE6DF);
   cursor: pointer;
-  transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
 }
-.cat-item img {
+.comp-img-slot img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  transition: transform .45s ease;
+  transition: transform 0.4s ease, opacity 0.3s;
+  opacity: 0;
 }
-.cat-item:hover img { transform: scale(1.06); }
-.cat-item:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.16); }
-.cat-item.cat-span-v { grid-row: span 2; }
-.cat-item.cat-span-h { grid-column: span 2; }
-.cat-item-label {
+.comp-img-slot img.loaded { opacity: 1; }
+.comp-img-slot:hover img { transform: scale(1.07); }
+.comp-img-slot-empty {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: .85rem 1rem;
-  background: linear-gradient(to top, rgba(20,16,10,.85) 0%, transparent 100%);
+  inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  transform: translateY(4px);
-  opacity: 0;
-  transition: all .3s ease;
+  justify-content: center;
+  gap: 5px;
+  color: var(--border-color, #c8c0b4);
 }
-.cat-item:hover .cat-item-label { transform: translateY(0); opacity: 1; }
-.cat-badge {
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  background: var(--accent,#B8945A);
-  color: #fff;
-  padding: 2px 8px;
-  border-radius: 4px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.cat-item-label span:last-child {
-  font-size: .78rem;
-  color: rgba(255,255,255,.9);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.cat-item.cat-hidden {
-  opacity: 0;
+.comp-img-slot-empty svg { width: 22px; height: 22px; opacity: 0.5; }
+.comp-img-slot-empty span { font-size: 0.62rem; letter-spacing: 0.04em; opacity: 0.7; text-align: center; padding: 0 4px; }
+.comp-img-slot.has-img .comp-img-slot-empty { display: none; }
+/* number badge on first slot */
+.comp-img-slot:first-child::after {
+  content: attr(data-num);
+  position: absolute;
+  bottom: 5px; left: 6px;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em;
+  background: rgba(26,20,16,0.55);
+  color: rgba(255,255,255,0.85);
+  padding: 1px 6px;
+  border-radius: 3px;
   pointer-events: none;
-  transform: scale(0.96);
 }
 
-/* Lightbox overlay */
-.cat-lightbox {
+/* Lightbox */
+.img-lightbox {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,.9);
+  background: rgba(0,0,0,0.92);
   display: flex; align-items: center; justify-content: center;
-  z-index: 9999;
-  opacity: 0; pointer-events: none;
-  transition: opacity .3s ease;
+  z-index: 9999; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
 }
-.cat-lightbox.open { opacity: 1; pointer-events: all; }
-.cat-lightbox img {
-  max-width: 90vw;
-  max-height: 88vh;
-  object-fit: contain;
-  border-radius: 8px;
+.img-lightbox.open { opacity: 1; pointer-events: all; }
+.img-lightbox img { max-width: 90vw; max-height: 88vh; object-fit: contain; border-radius: 8px; }
+.img-lightbox-close {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  background: rgba(255,255,255,0.1); border: none; color: #fff;
+  width: 40px; height: 40px; border-radius: 50%;
+  font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
 }
-.cat-lightbox-close {
-  position: absolute; top: 1.5rem; right: 1.5rem;
-  background: rgba(255,255,255,.1); border: none;
-  color: #fff; width: 42px; height: 42px;
-  border-radius: 50%; cursor: pointer; font-size: 1.4rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .2s;
-}
-.cat-lightbox-close:hover { background: rgba(255,255,255,.25); }
+.img-lightbox-close:hover { background: rgba(255,255,255,0.22); }
 
-@media (max-width: 900px) {
-  .cat-gallery-grid { grid-template-columns: repeat(2,1fr); grid-auto-rows: 220px; }
-  .cat-item.cat-span-v { grid-row: span 1; }
-}
+/* Responsive */
 @media (max-width: 600px) {
-  .cat-gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
-  .cat-item.cat-span-h { grid-column: span 1; }
-  .cat-item-label { opacity: 1; transform: none; }
+  .comp-img-row { grid-template-columns: repeat(3,1fr); gap: 2px; }
 }
 </style>
 </head>
@@ -291,7 +280,7 @@
   </section>
 
 
-  <!-- KITCHEN COMPONENTS — The full list, beautifully presented -->
+  <!-- KITCHEN COMPONENTS — with 3 images per category -->
   <section style="padding:var(--section-padding);background:var(--bg-secondary);" aria-labelledby="components-heading">
     <div class="container">
       <div class="section-header text-center reveal">
@@ -310,93 +299,120 @@
         </h3>
         <div class="components-grid">
 
-          <div class="comp-card reveal reveal-delay-1">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18"/></svg>
+          <!-- Tandems -->
+          <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18"/></svg></div>
+              <div><h4>Tandems</h4><p>Deep drawer systems with soft-close mechanism. Available in Acrylic, Laminate, and PU &amp; Deco finishes. Ideal for pots, pans, and daily essentials.</p></div>
             </div>
-            <div class="comp-card-body">
-              <h4>Tandems</h4>
-            <p>Deep drawer systems with soft-close mechanism. Available in Acrylic, Laminate, and PU &amp; Deco finishes. Ideal for pots, pans, and daily essentials.</p>
-            </div>
-          </div>
-
-          <div class="comp-card reveal reveal-delay-2">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="comp-card-body">
-              <h4>SS Stainless Steel Trolleys</h4>
-            <p>Premium stainless steel pull-out trolleys in Acrylic, Laminate, and PU &amp; Deco finishes. Rust-proof, hygienic, and built to last for decades.</p>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-tandem-1.jpg" alt="Tandem drawer kitchen" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-tandem-2.jpg" alt="Tandem drawer detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-tandem-3.jpg" alt="Tandem storage unit" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
             </div>
           </div>
 
-          <div class="comp-card reveal reveal-delay-3">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 9h6M2 15h6"/></svg>
+          <!-- SS Trolleys -->
+          <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div><h4>SS Stainless Steel Trolleys</h4><p>Premium stainless steel pull-out trolleys in Acrylic, Laminate, and PU &amp; Deco finishes. Rust-proof, hygienic, and built to last for decades.</p></div>
             </div>
-            <div class="comp-card-body">
-              <h4>Pantry Unit</h4>
-            <p>Floor-to-ceiling tall pantry with pull-out larder system. Organizes grains, spices, and dry goods beautifully — every shelf accessible with a single pull.</p>
-            </div>
-          </div>
-
-          <div class="comp-card reveal reveal-delay-1">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 8h18"/><circle cx="8" cy="5.5" r="1"/><circle cx="16" cy="5.5" r="1"/></svg>
-            </div>
-            <div class="comp-card-body">
-              <h4>Tall Unit</h4>
-            <p>Versatile full-height storage cabinet — perfect for an oven tower, microwave column, or an integrated pantry storage unit. Maximizes vertical space.</p>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-trolley-1.jpg" alt="SS trolley kitchen" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-trolley-2.jpg" alt="SS trolley detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-trolley-3.jpg" alt="SS trolley open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
             </div>
           </div>
 
-          <div class="comp-card reveal reveal-delay-2">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="2"/><circle cx="8" cy="18" r="2"/></svg>
+          <!-- Pantry Unit -->
+          <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 9h6M2 15h6"/></svg></div>
+              <div><h4>Pantry Unit</h4><p>Floor-to-ceiling tall pantry with pull-out larder system. Organizes grains, spices, and dry goods beautifully — every shelf accessible with a single pull.</p></div>
             </div>
-            <div class="comp-card-body">
-              <h4>Rolling Shutter Unit</h4>
-            <p>Sleek retractable shutter cabinet — hides appliances, creates a clean counter aesthetic. Smooth European roll mechanism with no swing clearance needed.</p>
-            </div>
-          </div>
-
-          <div class="comp-card reveal reveal-delay-3">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="9" rx="1"/><rect x="3" y="14" width="18" height="7" rx="1"/><path d="M12 12v2"/></svg>
-            </div>
-            <div class="comp-card-body">
-              <h4>Wicker Baskets</h4>
-            <p>Natural woven wicker pull-out baskets for vegetables, fruits, and onion storage. Breathable, traditional, and visually warm inside modern cabinetry.</p>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-pantry-1.jpg" alt="Pantry unit kitchen" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-pantry-2.jpg" alt="Pantry unit open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-pantry-3.jpg" alt="Pantry unit detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
             </div>
           </div>
 
-          <div class="comp-card reveal reveal-delay-1">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M16 3v18"/><path d="M2 12h20"/></svg>
+          <!-- Tall Unit -->
+          <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 8h18"/><circle cx="8" cy="5.5" r="1"/><circle cx="16" cy="5.5" r="1"/></svg></div>
+              <div><h4>Tall Unit</h4><p>Versatile full-height storage cabinet — perfect for an oven tower, microwave column, or an integrated pantry storage unit. Maximizes vertical space.</p></div>
             </div>
-            <div class="comp-card-body">
-              <h4>Crockery Cabinet with Glass</h4>
-            <p>Elegant display cabinets with hydraulic bar or hinges. Choose your glass: <strong>Fluted &amp; Clear</strong>, <strong>Black Tinted</strong>, or <strong>Frosted</strong> — for visual depth and a luxury showroom feel.</p>
-            </div>
-          </div>
-
-          <div class="comp-card reveal reveal-delay-2">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3"/></svg>
-            </div>
-            <div class="comp-card-body">
-              <h4>Loft (Overhead Storage)</h4>
-            <p>Maximized overhead loft cabinets with smooth-action lift-up or hinged doors. Ideal for seasonal storage without cluttering your main workspace.</p>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-tall-1.jpg" alt="Tall unit kitchen" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-tall-2.jpg" alt="Tall unit oven tower" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-tall-3.jpg" alt="Tall unit microwave" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
             </div>
           </div>
 
-          <div class="comp-card reveal reveal-delay-3">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="14" width="20" height="8" rx="1"/><path d="M2 14l4-8h12l4 8"/></svg>
+          <!-- Rolling Shutter -->
+          <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="2"/><circle cx="8" cy="18" r="2"/></svg></div>
+              <div><h4>Rolling Shutter Unit</h4><p>Sleek retractable shutter cabinet — hides appliances, creates a clean counter aesthetic. Smooth European roll mechanism with no swing clearance needed.</p></div>
             </div>
-            <div class="comp-card-body">
-              <h4>Platform Top — Quartz &amp; Granite</h4>
-            <p>Durable, heat-resistant platform tops in premium Quartz or Granite. With protective <strong>Platform Guards</strong> at edges — scratch-proof, stain-resistant, and elegantly finished.</p>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-shutter-1.jpg" alt="Rolling shutter unit" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-shutter-2.jpg" alt="Rolling shutter open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-shutter-3.jpg" alt="Rolling shutter closed" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
+
+          <!-- Wicker Baskets -->
+          <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="9" rx="1"/><rect x="3" y="14" width="18" height="7" rx="1"/><path d="M12 12v2"/></svg></div>
+              <div><h4>Wicker Baskets</h4><p>Natural woven wicker pull-out baskets for vegetables, fruits, and onion storage. Breathable, traditional, and visually warm inside modern cabinetry.</p></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-wicker-1.jpg" alt="Wicker basket unit" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-wicker-2.jpg" alt="Wicker basket detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-wicker-3.jpg" alt="Wicker basket installed" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
+
+          <!-- Crockery Cabinet -->
+          <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M16 3v18"/><path d="M2 12h20"/></svg></div>
+              <div><h4>Crockery Cabinet with Glass</h4><p>Elegant display cabinets with hydraulic bar or hinges. Choose your glass: <strong>Fluted &amp; Clear</strong>, <strong>Black Tinted</strong>, or <strong>Frosted</strong>.</p></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-crockery-1.jpg" alt="Crockery cabinet fluted" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-crockery-2.jpg" alt="Crockery cabinet tinted" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-crockery-3.jpg" alt="Crockery cabinet display" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
+
+          <!-- Loft -->
+          <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3"/></svg></div>
+              <div><h4>Loft (Overhead Storage)</h4><p>Maximized overhead loft cabinets with smooth-action lift-up or hinged doors. Ideal for seasonal storage without cluttering your main workspace.</p></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-loft-1.jpg" alt="Loft overhead storage" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-loft-2.jpg" alt="Loft lift-up door" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-loft-3.jpg" alt="Loft cabinet hinged" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
+
+          <!-- Platform Top -->
+          <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="14" width="20" height="8" rx="1"/><path d="M2 14l4-8h12l4 8"/></svg></div>
+              <div><h4>Platform Top — Quartz &amp; Granite</h4><p>Durable, heat-resistant platform tops in premium Quartz or Granite. With protective <strong>Platform Guards</strong> at edges — scratch-proof and elegantly finished.</p></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-platform-1.jpg" alt="Quartz platform top" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-platform-2.jpg" alt="Granite platform top" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-platform-3.jpg" alt="Platform edge guard" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
             </div>
           </div>
 
@@ -413,53 +429,68 @@
         </h3>
         <div class="components-grid">
 
-          <div class="comp-card reveal reveal-delay-1">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          <!-- Premium Handles -->
+          <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+              <div><h4>Premium Handles</h4><p>Profile handles, J-handles, bar handles, and handleless push-to-open options. Brushed gold, matte black, chrome, and stainless finishes available.</p></div>
             </div>
-            <div class="comp-card-body">
-              <h4>Premium Handles</h4>
-            <p>Profile handles, J-handles, bar handles, and handleless push-to-open options. Brushed gold, matte black, chrome, and stainless finishes available.</p>
-            </div>
-          </div>
-
-          <div class="comp-card reveal reveal-delay-2">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-            </div>
-            <div class="comp-card-body">
-              <h4>Magic Corner</h4>
-            <p>Clever rotating corner unit that brings every item stored in a deep corner cabinet forward to you. Zero wasted space, zero reaching awkwardly into the dark.</p>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-handle-1.jpg" alt="Bar handle gold" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-handle-2.jpg" alt="Profile handle black" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-handle-3.jpg" alt="Handleless push-to-open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
             </div>
           </div>
 
-          <div class="comp-card reveal reveal-delay-3">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 8h6M2 14h6M2 20h6"/></svg>
+          <!-- Magic Corner -->
+          <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+              <div><h4>Magic Corner</h4><p>Clever rotating corner unit that brings every item stored in a deep corner cabinet forward to you. Zero wasted space, zero reaching awkwardly into the dark.</p></div>
             </div>
-            <div class="comp-card-body">
-              <h4>Pantry Pull-Out Larder</h4>
-            <p>Full-extension pantry pull-out with multiple shelves and basket tiers. Turns a slim 150mm gap into a fully organized spice and dry goods station.</p>
-            </div>
-          </div>
-
-          <div class="comp-card reveal reveal-delay-1">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="comp-card-body">
-              <h4>Masala Pull-Out</h4>
-            <p>Dedicated pull-out spice drawer with tiered rows and removable containers. Every spice visible, accessible, and perfectly organized at your fingertips.</p>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-magic-1.jpg" alt="Magic corner unit" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-magic-2.jpg" alt="Magic corner extended" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-magic-3.jpg" alt="Magic corner Hafele" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
             </div>
           </div>
 
-          <div class="comp-card reveal reveal-delay-2">
-            <div class="comp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H5a2 2 0 00-2 2v5M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3M12 8v8M8 12h8"/></svg>
+          <!-- Pantry Pull-Out Larder -->
+          <div class="comp-card-v2 reveal reveal-delay-3">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 3v18M2 8h6M2 14h6M2 20h6"/></svg></div>
+              <div><h4>Pantry Pull-Out Larder</h4><p>Full-extension pantry pull-out with multiple shelves and basket tiers. Turns a slim 150mm gap into a fully organized spice and dry goods station.</p></div>
             </div>
-            <div class="comp-card-body">
-              <h4>DBR Pull-Down Lift-Up Basket Elevator</h4>
-            <p>Revolutionary wall cabinet elevator — brings upper shelves down to counter level with a gentle touch. No more tiptoe-reaching. Ergonomic, effortless, and beautiful.</p>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-larder-1.jpg" alt="Pull-out larder closed" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-larder-2.jpg" alt="Pull-out larder open" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-larder-3.jpg" alt="Pull-out larder shelves" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
+
+          <!-- Masala Pull-Out -->
+          <div class="comp-card-v2 reveal reveal-delay-1">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div><h4>Masala Pull-Out</h4><p>Dedicated pull-out spice drawer with tiered rows and removable containers. Every spice visible, accessible, and perfectly organized at your fingertips.</p></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-masala-1.jpg" alt="Masala pull-out unit" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-masala-2.jpg" alt="Masala spice drawer" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-masala-3.jpg" alt="Masala containers" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+            </div>
+          </div>
+
+          <!-- DBR Lift-Up -->
+          <div class="comp-card-v2 reveal reveal-delay-2">
+            <div class="comp-card-v2-header">
+              <div class="comp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H5a2 2 0 00-2 2v5M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3M12 8v8M8 12h8"/></svg></div>
+              <div><h4>DBR Pull-Down Lift-Up Basket Elevator</h4><p>Revolutionary wall cabinet elevator — brings upper shelves down to counter level with a gentle touch. No more tiptoe-reaching. Ergonomic, effortless, and beautiful.</p></div>
+            </div>
+            <div class="comp-img-row">
+              <div class="comp-img-slot" data-num="1" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-dbr-1.jpg" alt="DBR lift-up elevator" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-dbr-2.jpg" alt="DBR pulled down" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
+              <div class="comp-img-slot" onclick="openImgLightbox(this)"><div class="comp-img-slot-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add Photo</span></div><img src="images/k-comp-dbr-3.jpg" alt="DBR mechanism detail" loading="lazy" onload="this.classList.add('loaded');this.closest('.comp-img-slot').classList.add('has-img')" onerror="this.style.display='none'"/></div>
             </div>
           </div>
 
@@ -554,96 +585,7 @@
   </section>
 
 
-  <!-- ══════════════════════════════════════════════════
-       KITCHEN CATEGORY SHOWCASE — finish / style images
-  ══════════════════════════════════════════════════ -->
-  <section id="gallery" style="padding:var(--section-padding);background:var(--bg-secondary);" aria-labelledby="category-gallery-heading">
-    <div class="container">
-      <div class="section-header text-center reveal">
-        <span class="eyebrow">Kitchen Showcase</span>
-        <h2 id="category-gallery-heading">Explore by <em>Category</em></h2>
-        <p style="margin-top:1rem;margin-inline:auto;">Browse our work by kitchen style, finish, and layout type. Every project is custom-designed for the client's space and lifestyle.</p>
-      </div>
-
-      <!-- CATEGORY TABS -->
-      <div class="cat-tabs reveal" style="margin-top:2.5rem;">
-        <button class="cat-tab active" data-cat="all" onclick="filterKitchenGallery(this,'all')">All Projects</button>
-        <button class="cat-tab" data-cat="acrylic" onclick="filterKitchenGallery(this,'acrylic')">Acrylic Finish</button>
-        <button class="cat-tab" data-cat="laminate" onclick="filterKitchenGallery(this,'laminate')">Laminate Finish</button>
-        <button class="cat-tab" data-cat="straight" onclick="filterKitchenGallery(this,'straight')">Straight / L-Shape</button>
-        <button class="cat-tab" data-cat="island" onclick="filterKitchenGallery(this,'island')">Island / Parallel</button>
-      </div>
-
-      <!-- CATEGORY GRID -->
-      <div class="cat-gallery-grid" id="kitchen-cat-grid" style="margin-top:2rem;">
-
-        <!-- Row 1: hero span + 2 stacked -->
-        <div class="cat-item cat-span-v reveal" data-cats="all acrylic straight">
-          <img src="images/k-cat-acrylic-1.jpg" alt="High-gloss acrylic modular kitchen by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D4C8B8,#C0B4A4)'" />
-          <div class="cat-item-label"><span class="cat-badge">Acrylic</span><span>High-Gloss White Kitchen — Dhanori</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-1" data-cats="all laminate straight">
-          <img src="images/k-cat-laminate-1.jpg" alt="Laminate finish L-shape kitchen" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C8C0B0,#B8AFA0)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#5a8a6a;">Laminate</span><span>L-Shape Kitchen — Viman Nagar</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-2" data-cats="all island">
-          <img src="images/k-cat-island-1.jpg" alt="Island kitchen with breakfast counter" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#BFB8AE,#AFA8A0)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#7a5a9a;">Island</span><span>Island Counter Kitchen — Baner</span></div>
-        </div>
-
-        <!-- Row 2: 2 normal + 1 wide -->
-        <div class="cat-item reveal reveal-delay-1" data-cats="all acrylic island">
-          <img src="images/k-cat-acrylic-2.jpg" alt="Acrylic finish parallel kitchen" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D0C4B4,#C0B8A8)'" />
-          <div class="cat-item-label"><span class="cat-badge">Acrylic</span><span>Parallel Kitchen — Hadapsar</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-2" data-cats="all laminate straight">
-          <img src="images/k-cat-laminate-2.jpg" alt="Laminate woodgrain straight kitchen" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C4BDB4,#B4ADA4)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#5a8a6a;">Laminate</span><span>Woodgrain Kitchen — Kharadi</span></div>
-        </div>
-        <div class="cat-item cat-span-h reveal reveal-delay-3" data-cats="all island">
-          <img src="images/k-cat-parallel-1.jpg" alt="Open plan U-shape kitchen with island" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C8C0B8,#B8B0A8)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#7a5a9a;">Island</span><span>U-Shape Open Kitchen — Wakad</span></div>
-        </div>
-
-        <!-- Row 3: 3 equal -->
-        <div class="cat-item reveal" data-cats="all acrylic straight">
-          <img src="images/k-cat-acrylic-3.jpg" alt="Acrylic finish with tandem drawer storage" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#D4CBB8,#C4BAA8)'" />
-          <div class="cat-item-label"><span class="cat-badge">Acrylic</span><span>Straight Kitchen with Tall Unit — Kalyani Nagar</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-1" data-cats="all laminate">
-          <img src="images/k-cat-laminate-3.jpg" alt="Two-tone laminate kitchen design" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#BDB8B0,#ADA8A0)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#5a8a6a;">Laminate</span><span>Two-Tone Kitchen — Aundh</span></div>
-        </div>
-        <div class="cat-item reveal reveal-delay-2" data-cats="all straight island">
-          <img src="images/k-cat-island-2.jpg" alt="Compact kitchen with rolling shutter unit" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(160deg,#C4BCB4,#B4ACA4)'" />
-          <div class="cat-item-label"><span class="cat-badge" style="background:#7a5a9a;">Island</span><span>Breakfast Bar Kitchen — Hinjewadi</span></div>
-        </div>
-
-      </div><!-- /cat-gallery-grid -->
-
-      <div class="text-center reveal" style="margin-top:2.5rem;">
-        <a href="portfolio.html" class="btn btn-outline">View All Kitchen Projects →</a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- GALLERY STRIP — Recent Projects -->
-  <section class="gallery-strip" aria-labelledby="gallery-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Recent Projects</span>
-        <h2 id="gallery-heading">Fresh From <em>Our Workshop</em></h2>
-      </div>
-      <div class="gallery-strip-grid">
-        <div class="g-item reveal"><img src="images/k-gallery-1.jpg" alt="Kitchen project 1 by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#D8D0C4'" /></div>
-        <div class="g-item reveal reveal-delay-1"><img src="images/k-gallery-2.jpg" alt="Kitchen project 2 by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#CABFB4'" /></div>
-        <div class="g-item reveal reveal-delay-2"><img src="images/k-gallery-3.jpg" alt="Kitchen project 3 by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#C0B8AE'" /></div>
-        <div class="g-item reveal reveal-delay-1"><img src="images/k-gallery-4.jpg" alt="Kitchen project 4 by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#D0C8BB'" /></div>
-        <div class="g-item reveal reveal-delay-2"><img src="images/k-gallery-5.jpg" alt="Kitchen project 5 by Puniya Interiors" loading="lazy" onerror="this.parentElement.style.background='#C8C0B4'" /></div>
-      </div>
-    </div>
-  </section>
+  <!-- GALLERY STRIP — removed per client request -->
 
 
   <!-- CTA -->
@@ -693,12 +635,6 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.122 1.529 5.859L.057 23.5l5.777-1.517A11.951 11.951 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.893 0-3.667-.52-5.184-1.426l-.371-.22-3.43.9.916-3.345-.242-.383A9.953 9.953 0 012 12c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
   </a>
 
-  <!-- LIGHTBOX -->
-  <div class="cat-lightbox" id="cat-lightbox" onclick="closeLightbox()">
-    <button class="cat-lightbox-close" aria-label="Close">✕</button>
-    <img src="" alt="" id="lightbox-img" />
-  </div>
-
   <script src="js/script.js" defer></script>
   <script>
     /* Jumpnav scroll arrow */
@@ -711,30 +647,25 @@
       },{passive:true});
     })();
 
-    /* Category gallery filter */
-    function filterKitchenGallery(btn, cat) {
-      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('#kitchen-cat-grid .cat-item').forEach(item => {
-        const cats = (item.dataset.cats || '').split(' ');
-        item.classList.toggle('cat-hidden', cat !== 'all' && !cats.includes(cat));
-      });
+    /* Component image lightbox */
+    function openImgLightbox(slot) {
+      var img = slot.querySelector('img');
+      if (!img || !img.classList.contains('loaded')) return;
+      var lb = document.getElementById('img-lightbox');
+      document.getElementById('lb-img').src = img.src;
+      document.getElementById('lb-img').alt = img.alt || '';
+      lb.classList.add('open');
     }
-
-    /* Lightbox */
-    document.querySelectorAll('#kitchen-cat-grid .cat-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        if (!img || !img.src) return;
-        document.getElementById('lightbox-img').src = img.src;
-        document.getElementById('lightbox-img').alt = img.alt || '';
-        document.getElementById('cat-lightbox').classList.add('open');
-      });
-    });
-    function closeLightbox() {
-      document.getElementById('cat-lightbox').classList.remove('open');
+    function closeImgLightbox() {
+      document.getElementById('img-lightbox').classList.remove('open');
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeImgLightbox(); });
   </script>
+
+  <!-- Lightbox -->
+  <div class="img-lightbox" id="img-lightbox" onclick="closeImgLightbox()">
+    <button class="img-lightbox-close" onclick="closeImgLightbox()" aria-label="Close">✕</button>
+    <img src="" alt="" id="lb-img" onclick="event.stopPropagation()" />
+  </div>
 </body>
 </html>
